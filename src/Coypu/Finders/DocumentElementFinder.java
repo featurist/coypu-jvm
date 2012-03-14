@@ -1,14 +1,16 @@
-package Coypu.Finders
-{
-    internal class DocumentElementFinder : ElementFinder
-    {
-        public DocumentElementFinder(Driver driver) : base(driver, "Window",null)
-        {
-        }
+package Coypu.Finders;
+import Coypu.Driver;
+import Coypu.ElementFound;
 
-        internal override ElementFound Find()
-        {
-            return Driver.Window;
-        }
+public class DocumentElementFinder extends  ElementFinder
+{
+    public DocumentElementFinder(Driver driver)
+    {
+        super(driver, "Window",null);
+    }
+
+    public ElementFound Find()
+    {
+        return Driver.Window();
     }
 }

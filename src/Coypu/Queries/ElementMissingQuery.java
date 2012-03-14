@@ -1,6 +1,6 @@
 namespace Coypu.Queries
 {
-    internal class ElementMissingQuery : DriverScopeQuery<bool>
+    internal class ElementMissingQuery : DriverScopeQuery<Boolean>
     {
         public override object ExpectedResult
         {

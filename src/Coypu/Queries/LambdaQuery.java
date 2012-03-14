@@ -4,8 +4,8 @@ namespace Coypu.Queries
 {
     public class LambdaQuery<T> : Query<T>
     {
-        public TimeSpan Timeout { get; private set; }
-        public TimeSpan RetryInterval { get; private set; }
+        public  TimeSpan Timeout { get; private set; }
+        public  TimeSpan RetryInterval { get; private set; }
 
         private readonly Func<T> _query;
 

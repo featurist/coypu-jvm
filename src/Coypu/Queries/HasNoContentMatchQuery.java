@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Coypu.Queries
 {
-    internal class HasNoContentMatchQuery : DriverScopeQuery<bool>
+    internal class HasNoContentMatchQuery : DriverScopeQuery<Boolean>
     {
         private readonly Driver driver;
         private readonly Regex text;

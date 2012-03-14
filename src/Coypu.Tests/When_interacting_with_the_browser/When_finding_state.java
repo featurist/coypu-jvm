@@ -26,17 +26,17 @@ namespace Coypu.Tests.When_interacting_with_the_browser
         {
             bool queriedState1 = false;
             bool queriedState2 = false;
-            var state1 = new State(new LambdaQuery<bool>(() =>
+            var state1 = new State(new LambdaQuery<Boolean>(() =>
                                        {
                                            queriedState1 = true;
                                            return false;
                                        }));
-            var state2 = new State(new LambdaQuery<bool>(() =>
+            var state2 = new State(new LambdaQuery<Boolean>(() =>
                                        {
                                            queriedState2 = true;
                                            return true;
                                        }));
-            var state3 = new State(new LambdaQuery<bool>(() => true));
+            var state3 = new State(new LambdaQuery<Boolean>(() => true));
             state3.CheckCondition();
 
             var robustWrapper = new SpyRobustWrapper();
@@ -60,9 +60,9 @@ namespace Coypu.Tests.When_interacting_with_the_browser
         [Test]
         public void It_returns_the_state_that_was_found_first_Example_1()
         {
-            var state1 = new State(new AlwaysSucceedsQuery<bool>(true, true, TimeSpan.Zero, configuration.RetryInterval));
-            var state2 = new State(new AlwaysSucceedsQuery<bool>(false, true, TimeSpan.Zero, configuration.RetryInterval));
-            var state3 = new State(new AlwaysSucceedsQuery<bool>(false, true, TimeSpan.Zero, configuration.RetryInterval));
+            var state1 = new State(new AlwaysSucceedsQuery<Boolean>(true, true, TimeSpan .Zero, configuration.RetryInterval));
+            var state2 = new State(new AlwaysSucceedsQuery<Boolean>(false, true, TimeSpan .Zero, configuration.RetryInterval));
+            var state3 = new State(new AlwaysSucceedsQuery<Boolean>(false, true, TimeSpan .Zero, configuration.RetryInterval));
             
             var session = BuildSession(new ImmediateSingleExecutionFakeRobustWrapper());
             var foundState = session.FindState(state1, state2, state3);
@@ -73,9 +73,9 @@ namespace Coypu.Tests.When_interacting_with_the_browser
         [Test]
         public void It_returns_the_state_that_was_found_first_Example_2()
         {
-            var state1 = new State(new AlwaysSucceedsQuery<bool>(false, true, TimeSpan.Zero, configuration.RetryInterval));
-            var state2 = new State(new AlwaysSucceedsQuery<bool>(true, true, TimeSpan.Zero, configuration.RetryInterval));
-            var state3 = new State(new AlwaysSucceedsQuery<bool>(false, true, TimeSpan.Zero, configuration.RetryInterval));
+            var state1 = new State(new AlwaysSucceedsQuery<Boolean>(false, true, TimeSpan .Zero, configuration.RetryInterval));
+            var state2 = new State(new AlwaysSucceedsQuery<Boolean>(true, true, TimeSpan .Zero, configuration.RetryInterval));
+            var state3 = new State(new AlwaysSucceedsQuery<Boolean>(false, true, TimeSpan .Zero, configuration.RetryInterval));
 
             var session = BuildSession(new ImmediateSingleExecutionFakeRobustWrapper());
             var foundState = session.FindState(state1, state2, state3);
@@ -86,9 +86,9 @@ namespace Coypu.Tests.When_interacting_with_the_browser
         [Test]
         public void It_returns_the_state_that_was_found_first_Example_3()
         {
-            var state1 = new State(new AlwaysSucceedsQuery<bool>(false, true, TimeSpan.Zero, configuration.RetryInterval));
-            var state2 = new State(new AlwaysSucceedsQuery<bool>(false, true, TimeSpan.Zero, configuration.RetryInterval));
-            var state3 = new State(new AlwaysSucceedsQuery<bool>(true, true, TimeSpan.Zero, configuration.RetryInterval));
+            var state1 = new State(new AlwaysSucceedsQuery<Boolean>(false, true, TimeSpan .Zero, configuration.RetryInterval));
+            var state2 = new State(new AlwaysSucceedsQuery<Boolean>(false, true, TimeSpan .Zero, configuration.RetryInterval));
+            var state3 = new State(new AlwaysSucceedsQuery<Boolean>(true, true, TimeSpan .Zero, configuration.RetryInterval));
 
             var session = BuildSession(new ImmediateSingleExecutionFakeRobustWrapper());
             var foundState = session.FindState(state1, state2, state3);
@@ -102,12 +102,12 @@ namespace Coypu.Tests.When_interacting_with_the_browser
             var robustWrapper = new ImmediateSingleExecutionFakeRobustWrapper();
             var zeroTimeout1 = false;
             var zeroTimeout2 = false;
-            var state1 = new State(new LambdaQuery<bool>(() =>
+            var state1 = new State(new LambdaQuery<Boolean>(() =>
                                                              {
                                                                  zeroTimeout1 = robustWrapper.ZeroTimeout;
                                                                  return false;
                                                              }));
-            var state2 = new State(new LambdaQuery<bool>(() =>
+            var state2 = new State(new LambdaQuery<Boolean>(() =>
                                                              {
                                                                  zeroTimeout2 = robustWrapper.ZeroTimeout;
                                                                  return true;
@@ -126,8 +126,8 @@ namespace Coypu.Tests.When_interacting_with_the_browser
         [Test]
         public void When_query_returns_false_It_raises_an_exception()
         {
-            var state1 = new State(new AlwaysSucceedsQuery<bool>(false, true, TimeSpan.Zero, configuration.RetryInterval));
-            var state2 = new State(new AlwaysSucceedsQuery<bool>(false, true, TimeSpan.Zero, configuration.RetryInterval));
+            var state1 = new State(new AlwaysSucceedsQuery<Boolean>(false, true, TimeSpan .Zero, configuration.RetryInterval));
+            var state2 = new State(new AlwaysSucceedsQuery<Boolean>(false, true, TimeSpan .Zero, configuration.RetryInterval));
 
             var robustWrapper = new SpyRobustWrapper();
             robustWrapper.StubQueryResult(true, false);

@@ -1,6 +1,6 @@
 namespace Coypu.Queries
 {
-    internal class HasNoCssQuery : DriverScopeQuery<bool>
+    internal class HasNoCssQuery : DriverScopeQuery<Boolean>
     {
         private readonly Driver driver;
         private readonly string cssSelector;

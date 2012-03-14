@@ -10,7 +10,7 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
         [Test]
         public void When_a_query_succeeds_first_time_It_only_tries_once() 
         {
-            var alwaysSucceedsQuery = new AlwaysSucceedsQuery<object>(new object(),TimeSpan.Zero,TimeSpan.Zero);
+            var alwaysSucceedsQuery = new AlwaysSucceedsQuery<object>(new object(), TimeSpan .Zero, TimeSpan .Zero);
             var actualResult = new RetryUntilTimeoutRobustWrapper().Robustly(alwaysSucceedsQuery);
 
             Assert.That(alwaysSucceedsQuery.Tries, Is.EqualTo(1));
@@ -21,7 +21,7 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
         public void When_a_query_throws_an_exception_first_time_It_retries()
         {
             var result = new object();
-            var query = new ThrowsSecondTimeQuery<object>(result, TimeSpan.FromMilliseconds(100),TimeSpan.FromMilliseconds(10));
+            var query = new ThrowsSecondTimeQuery<object>(result, TimeSpan .FromMilliseconds(100), TimeSpan .FromMilliseconds(10));
 
             var actualReturnValue = new RetryUntilTimeoutRobustWrapper().Robustly(query);
 
@@ -32,7 +32,7 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
         [Test]
         public void When_a_query_always_throws_an_exception_It_rethrows_eventually()
         {
-            var query = new AlwaysThrowsQuery<object,TestException>(TimeSpan.FromMilliseconds(1000), TimeSpan.FromMilliseconds(20));
+            var query = new AlwaysThrowsQuery<object,TestException>( TimeSpan .FromMilliseconds(1000), TimeSpan .FromMilliseconds(20));
 
             Assert.Throws<TestException>(() => new RetryUntilTimeoutRobustWrapper().Robustly(query));
             Assert.That(query.Tries, Is.GreaterThan(2));
@@ -47,8 +47,8 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
 
         private void When_a_query_always_throws_an_exception_It_retries_until_the_timeout_is_reached(int timeoutMilliseconds, int intervalMilliseconds)
         {
-            var expectedTimeout = TimeSpan.FromMilliseconds(timeoutMilliseconds);
-            var retryInterval = TimeSpan.FromMilliseconds(intervalMilliseconds);
+            var expectedTimeout = TimeSpan .FromMilliseconds(timeoutMilliseconds);
+            var retryInterval = TimeSpan .FromMilliseconds(intervalMilliseconds);
 
             var query = new AlwaysThrowsQuery<object, TestException>(expectedTimeout, retryInterval);
 
@@ -69,11 +69,11 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
         [Test]
         public void When_a_query_throws_a_not_supported_exception_It_does_not_retry()
         {
-            var retryInterval = TimeSpan.FromMilliseconds(10);
+            var retryInterval = TimeSpan .FromMilliseconds(10);
             
             var robustness = new RetryUntilTimeoutRobustWrapper();
 
-            var query = new AlwaysThrowsQuery<object, NotSupportedException>(TimeSpan.FromMilliseconds(100), retryInterval);
+            var query = new AlwaysThrowsQuery<object, NotSupportedException>( TimeSpan .FromMilliseconds(100), retryInterval);
             Assert.Throws<NotSupportedException>(() => robustness.Robustly(query));
             Assert.That(query.Tries, Is.EqualTo(1));
         }
@@ -81,7 +81,7 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
         [Test]
         public void When_an_action_succeeds_first_time_It_only_tries_once()
         {
-            var alwaysSucceedsQuery = new AlwaysSucceedsQuery<object>(new object(),TimeSpan.Zero,TimeSpan.Zero);
+            var alwaysSucceedsQuery = new AlwaysSucceedsQuery<object>(new object(), TimeSpan .Zero, TimeSpan .Zero);
             new RetryUntilTimeoutRobustWrapper().Robustly(alwaysSucceedsQuery);
 
             Assert.That(alwaysSucceedsQuery.Tries, Is.EqualTo(1));
@@ -90,10 +90,10 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
         [Test]
         public void When_an_action_throws_an_exception_first_time_It_retries()
         {
-            var retryInterval = TimeSpan.FromMilliseconds(10);
+            var retryInterval = TimeSpan .FromMilliseconds(10);
 
             var result = new object();
-            var query = new ThrowsSecondTimeQuery<object>(result,TimeSpan.FromMilliseconds(100),retryInterval);
+            var query = new ThrowsSecondTimeQuery<object>(result, TimeSpan .FromMilliseconds(100),retryInterval);
 
             new RetryUntilTimeoutRobustWrapper().Robustly(query);
 
@@ -103,7 +103,7 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
         [Test]
         public void When_an_action_always_throws_an_exception_It_rethrows_eventually()
         {
-            var query = new AlwaysThrowsQuery<object, TestException>(TimeSpan.FromMilliseconds(100),TimeSpan.FromMilliseconds(10));
+            var query = new AlwaysThrowsQuery<object, TestException>( TimeSpan .FromMilliseconds(100), TimeSpan .FromMilliseconds(10));
 
             Assert.Throws<TestException>(() => new RetryUntilTimeoutRobustWrapper().Robustly(query));
             Assert.That(query.Tries, Is.GreaterThan(2));
@@ -118,8 +118,8 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
 
         private void When_an_action_always_throws_an_exception_It_retries_until_the_timeout_is_reached(int timeoutMilliseconds, int intervalMilliseconds)
         {
-            var expectedTimeout = TimeSpan.FromMilliseconds(timeoutMilliseconds);
-            var retryInterval = TimeSpan.FromMilliseconds(intervalMilliseconds);
+            var expectedTimeout = TimeSpan .FromMilliseconds(timeoutMilliseconds);
+            var retryInterval = TimeSpan .FromMilliseconds(intervalMilliseconds);
 
             var query = new AlwaysThrowsQuery<object, TestException>(expectedTimeout,retryInterval);
 
@@ -140,11 +140,11 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
         [Test]
         public void When_an_action_throws_a_not_supported_exception_It_does_not_retry()
         {
-            var retryInterval = TimeSpan.FromMilliseconds(10);
+            var retryInterval = TimeSpan .FromMilliseconds(10);
 
             var robustness = new RetryUntilTimeoutRobustWrapper();
 
-            var query = new AlwaysThrowsQuery<object, NotSupportedException>(TimeSpan.FromMilliseconds(100), retryInterval);
+            var query = new AlwaysThrowsQuery<object, NotSupportedException>( TimeSpan .FromMilliseconds(100), retryInterval);
             Assert.Throws<NotSupportedException>(() => robustness.Robustly(query));
             Assert.That(query.Tries, Is.EqualTo(1));
         }

@@ -8,7 +8,7 @@ namespace Coypu.Robustness
 {
     public class RetryUntilTimeoutRobustWrapper : RobustWrapper
     {
-        public void TryUntil(BrowserAction tryThis, Query<bool> until, TimeSpan overrallTimeout, TimeSpan waitBeforeRetry)
+        public void TryUntil(BrowserAction tryThis, Query<Boolean> until,  TimeSpan overrallTimeout,  TimeSpan waitBeforeRetry)
         {
             var outcome = Robustly(new ActionSatisfiesPredicateQuery(tryThis, until, overrallTimeout, until.RetryInterval, waitBeforeRetry, this));
             if (!outcome)
@@ -16,9 +16,9 @@ namespace Coypu.Robustness
         }
 
         public bool ZeroTimeout { get; set; }
-        private TimeSpan? overrideTimeout;
+        private TimeSpan ? overrideTimeout;
 
-        public void SetOverrideTimeout(TimeSpan timeout)
+        public void SetOverrideTimeout( TimeSpan timeout)
         {
             overrideTimeout = timeout;
         }
@@ -59,12 +59,12 @@ namespace Coypu.Robustness
             }
         }
 
-        private TimeSpan Timeout<TResult>(Query<TResult> query)
+        private  TimeSpan Timeout<TResult>(Query<TResult> query)
         {
-            TimeSpan timeout;
+             TimeSpan timeout;
             if (ZeroTimeout)
             {
-                timeout = TimeSpan.Zero;
+                timeout = TimeSpan .Zero;
             }
             else if (overrideTimeout.HasValue)
             {
@@ -77,19 +77,19 @@ namespace Coypu.Robustness
             return timeout;
         }
 
-        private void WaitForInterval(TimeSpan interval)
+        private void WaitForInterval( TimeSpan interval)
         {
             Thread.Sleep(interval);
         }
 
-        private bool ExpectedResultNotFoundWithinTimeout<TResult>(object expectedResult, TResult result, Stopwatch stopWatch, TimeSpan timeout, TimeSpan interval)
+        private bool ExpectedResultNotFoundWithinTimeout<TResult>(object expectedResult, TResult result, Stopwatch stopWatch,  TimeSpan timeout,  TimeSpan interval)
         {
             return expectedResult != null && !result.Equals(expectedResult) && !TimeoutReached(stopWatch, timeout, interval);
         }
 
-        private bool TimeoutReached(Stopwatch stopWatch, TimeSpan timeout, TimeSpan interval)
+        private bool TimeoutReached(Stopwatch stopWatch,  TimeSpan timeout,  TimeSpan interval)
         {
-            var elapsedTimeToNextCall = TimeSpan.FromMilliseconds(stopWatch.ElapsedMilliseconds) + interval;
+            var elapsedTimeToNextCall = TimeSpan .FromMilliseconds(stopWatch.ElapsedMilliseconds) + interval;
             var timeoutReached = elapsedTimeToNextCall >= timeout;
 
             return timeoutReached;

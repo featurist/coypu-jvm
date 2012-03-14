@@ -1,6 +1,6 @@
 namespace Coypu.Queries
 {
-    internal class HasDialogQuery : DriverScopeQuery<bool>
+    internal class HasDialogQuery : DriverScopeQuery<Boolean>
     {
         private readonly Driver driver;
         private readonly string text;

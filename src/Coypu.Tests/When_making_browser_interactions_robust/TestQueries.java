@@ -10,13 +10,13 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
         private T result;
         private readonly T actualResult;
         private readonly T expecting;
-        private readonly TimeSpan _timeout;
-        private readonly TimeSpan _retryInterval;
+        private readonly  TimeSpan _timeout;
+        private readonly  TimeSpan _retryInterval;
 
         public int Tries { get; set; }
         public long LastCall { get; set; }
 
-        public AlwaysSucceedsQuery(T actualResult, TimeSpan timeout, TimeSpan retryInterval)
+        public AlwaysSucceedsQuery(T actualResult,  TimeSpan timeout,  TimeSpan retryInterval)
         {
             _timeout = timeout;
             _retryInterval = retryInterval;
@@ -24,7 +24,7 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
             stopWatch.Start();
         }
 
-        public AlwaysSucceedsQuery(T actualResult, T expecting, TimeSpan timeout, TimeSpan retryInterval)
+        public AlwaysSucceedsQuery(T actualResult, T expecting,  TimeSpan timeout,  TimeSpan retryInterval)
             : this(actualResult,timeout,retryInterval)
         {
             this.expecting = expecting;
@@ -48,12 +48,12 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
             get { return result; }
         }
 
-        public TimeSpan Timeout
+        public  TimeSpan Timeout
         {
             get { return _timeout; }
         }
 
-        public TimeSpan RetryInterval
+        public  TimeSpan RetryInterval
         {
             get { return _retryInterval; }
         }
@@ -62,10 +62,10 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
     public class ThrowsSecondTimeQuery<T> : Query<T>
     {
         private readonly T result;
-        private readonly TimeSpan _retryInterval;
-        public TimeSpan Timeout { get; set; }
+        private readonly  TimeSpan _retryInterval;
+        public  TimeSpan Timeout { get; set; }
 
-        public ThrowsSecondTimeQuery(T result, TimeSpan timeout, TimeSpan retryInterval)
+        public ThrowsSecondTimeQuery(T result,  TimeSpan timeout,  TimeSpan retryInterval)
         {
             this.result = result;
             _retryInterval = retryInterval;
@@ -91,7 +91,7 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
 
         public int Tries { get; set; }
 
-        public TimeSpan RetryInterval
+        public  TimeSpan RetryInterval
         {
             get { return _retryInterval; }
         }
@@ -99,10 +99,10 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
 
     public class AlwaysThrowsQuery<TResult,TException> : Query<TResult> where TException : Exception
     {
-        private readonly TimeSpan _retryInterval;
+        private readonly  TimeSpan _retryInterval;
         private readonly Stopwatch stopWatch = new Stopwatch();
         
-        public AlwaysThrowsQuery(TimeSpan timeout, TimeSpan retryInterval)
+        public AlwaysThrowsQuery( TimeSpan timeout,  TimeSpan retryInterval)
         {
             _retryInterval = retryInterval;
             Timeout = timeout;
@@ -130,9 +130,9 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
         public int Tries { get; set; }
         public long LastCall { get; set; }
 
-        public TimeSpan Timeout { get; set; }
+        public  TimeSpan Timeout { get; set; }
 
-        public TimeSpan RetryInterval
+        public  TimeSpan RetryInterval
         {
             get { return _retryInterval; }
         }
@@ -145,10 +145,10 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
         private readonly T actualResult;
         private readonly T expectedResult;
         private readonly int throwsHowManyTimes;
-        private readonly TimeSpan _timeout;
-        private readonly TimeSpan _retryInterval;
+        private readonly  TimeSpan _timeout;
+        private readonly  TimeSpan _retryInterval;
 
-        public ThrowsThenSubsequentlySucceedsQuery(T actualResult, T expectedResult, int throwsHowManyTimes, TimeSpan timeout, TimeSpan retryInterval)
+        public ThrowsThenSubsequentlySucceedsQuery(T actualResult, T expectedResult, int throwsHowManyTimes,  TimeSpan timeout,  TimeSpan retryInterval)
         {
             stopWatch.Start();
             this.actualResult = actualResult;
@@ -183,12 +183,12 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
         public long LastCall { get; set; }
 
 
-        public TimeSpan Timeout
+        public  TimeSpan Timeout
         {
             get { return _timeout; }
         }
 
-        public TimeSpan RetryInterval
+        public  TimeSpan RetryInterval
         {
             get { return _retryInterval; }
         }

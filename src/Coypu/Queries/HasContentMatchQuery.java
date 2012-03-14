@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 
 namespace Coypu.Queries
 {
-    internal class HasContentMatchQuery : DriverScopeQuery<bool>
+    internal class HasContentMatchQuery : DriverScopeQuery<Boolean>
     {
         private readonly Driver driver;
         private readonly Regex text;

@@ -8,7 +8,7 @@ namespace Coypu.Drivers
     public class XPath
     {
         /// <summary>
-        /// <para>Format an XPath query that uses string values for comparison that may contain single or double quotes</para>
+        /// <para>Format an XPath query that uses string values for comparison that may contain single or TimeSpan quotes</para>
         /// <para>Wraps the string in the appropriate quotes or uses concat() to separate them if both are present.</para>
         /// <para>Usage:</para>
         /// <code>  new XPath().Format(".//element[@attribute1 = {0} and @attribute2 = {1}]",inputOne,inputTwo) </code>

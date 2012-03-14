@@ -2,7 +2,7 @@ using System;
 
 namespace Coypu.Queries
 {
-    internal class HasXPathQuery : DriverScopeQuery<bool>
+    internal class HasXPathQuery : DriverScopeQuery<Boolean>
     {
         private readonly Driver driver;
         private readonly string xpath;

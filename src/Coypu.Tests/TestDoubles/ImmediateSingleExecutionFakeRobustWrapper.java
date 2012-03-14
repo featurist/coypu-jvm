@@ -13,13 +13,13 @@ namespace Coypu.Tests.TestDoubles
             return query.Result;
         }
 
-        public void TryUntil(BrowserAction tryThis, Query<bool> until, TimeSpan overallTimeout, TimeSpan waitBeforeRetry)
+        public void TryUntil(BrowserAction tryThis, Query<Boolean> until,  TimeSpan overallTimeout,  TimeSpan waitBeforeRetry)
         {
             tryThis.Act();
         }
 
         public bool ZeroTimeout{get; set; }
-        public void SetOverrideTimeout(TimeSpan timeout)
+        public void SetOverrideTimeout( TimeSpan timeout)
         {
         }
 

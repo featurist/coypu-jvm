@@ -33,9 +33,9 @@ namespace Coypu.Tests.When_interacting_with_the_browser
         [TestCase(false, 321)]
         public void It_tries_clicking_robustly_until_expected_conditions_met(bool stubUntil, int waitBeforeRetrySecs)
         {
-            var waitBetweenRetries = TimeSpan.FromSeconds(waitBeforeRetrySecs);
+            var waitBetweenRetries = TimeSpan .FromSeconds(waitBeforeRetrySecs);
             var buttonToBeClicked = StubButtonToBeClicked("Some button locator");
-            var overallTimeout  = TimeSpan.FromMilliseconds(waitBeforeRetrySecs + 1000);
+            var overallTimeout  = TimeSpan .FromMilliseconds(waitBeforeRetrySecs + 1000);
 
             var options = new Options {Timeout = overallTimeout};
             browserSession.ClickButton("Some button locator", new LambdaPredicateQuery(() => stubUntil), waitBetweenRetries, options);
@@ -57,7 +57,7 @@ namespace Coypu.Tests.When_interacting_with_the_browser
         public void It_waits_between_find_and_click_as_configured(int waitMs)
         {
             var stubButtonToBeClicked = StubButtonToBeClicked("Some button locator");
-            var expectedWait = TimeSpan.FromMilliseconds(waitMs);
+            var expectedWait = TimeSpan .FromMilliseconds(waitMs);
             configuration.WaitBeforeClick = expectedWait;
 
             var waiterCalled = false;

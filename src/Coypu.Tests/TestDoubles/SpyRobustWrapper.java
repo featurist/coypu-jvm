@@ -43,13 +43,13 @@ namespace Coypu.Tests.TestDoubles
             return default(T);
         }
 
-        public void TryUntil(BrowserAction tryThis, Query<bool> until, TimeSpan overallTimeout, TimeSpan waitBeforeRetry)
+        public void TryUntil(BrowserAction tryThis, Query<Boolean> until,  TimeSpan overallTimeout,  TimeSpan waitBeforeRetry)
         {
             DeferredTryUntils.Add(new TryUntilArgs(tryThis, until, overallTimeout, waitBeforeRetry));
         }
 
         public bool ZeroTimeout { get; set; }
-        public void SetOverrideTimeout(TimeSpan timeout)
+        public void SetOverrideTimeout( TimeSpan timeout)
         {
         }
 
@@ -69,12 +69,12 @@ namespace Coypu.Tests.TestDoubles
 
         public class TryUntilArgs
         {
-            public TimeSpan OverallTimeout { get; private set; }
-            public TimeSpan WaitBeforeRetry { get; private set; }
+            public  TimeSpan OverallTimeout { get; private set; }
+            public  TimeSpan WaitBeforeRetry { get; private set; }
             public BrowserAction TryThisBrowserAction { get; private set; }
-            public Query<bool> Until { get; private set; }
+            public Query<Boolean> Until { get; private set; }
 
-            public TryUntilArgs(BrowserAction tryThis, Query<bool> until, TimeSpan overallTimeout, TimeSpan waitBeforeRetry)
+            public TryUntilArgs(BrowserAction tryThis, Query<Boolean> until,  TimeSpan overallTimeout,  TimeSpan waitBeforeRetry)
             {
                 OverallTimeout = overallTimeout;
                 WaitBeforeRetry = waitBeforeRetry;

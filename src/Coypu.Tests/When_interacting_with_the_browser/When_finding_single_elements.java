@@ -71,7 +71,7 @@ namespace Coypu.Tests.When_interacting_with_the_browser
         {
             var locator = "Find me " + DateTime.Now.Ticks;
 
-            var individualTimeout = TimeSpan.FromMilliseconds(DateTime.UtcNow.Millisecond);
+            var individualTimeout = TimeSpan .FromMilliseconds(DateTime.UtcNow.Millisecond);
 
             var expectedImmediateResult = new StubElement();
             var expectedDeferredResult = new StubElement();

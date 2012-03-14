@@ -4,8 +4,8 @@ package Coypu;
 /// </summary>
 public class Options
 {
-    final double DEFAULT_TIMEOUT_SECONDS = 1;
-    final double DEFAULT_INTERVAL_SECONDS = 0.1;
+    final TimeSpan DEFAULT_TIMEOUT_SECONDS = 1;
+    final TimeSpan DEFAULT_INTERVAL_SECONDS = 0.1;
 
     /// <summary>
     /// New default options
@@ -22,23 +22,43 @@ public class Options
     /// <para>When retrying, how long to wait for elements to appear or actions to complete without error.</para>
     /// <para>Default: 1sec</para>
     /// </summary>
-    public double Timeout;
+    public TimeSpan Timeout;
 
     /// <summary>
     /// <para>How long to wait between retries</para>
     /// <para>Default: 100ms</para>
     /// </summary>
-    public double RetryInterval;
+    public TimeSpan RetryInterval;
 
     /// <summary>
     /// <para>How long to wait between finding an element and clicking it.</para>
     /// <para>Default: zero</para>
     /// </summary>
-    public double WaitBeforeClick;
+    public TimeSpan WaitBeforeClick;
 
     /// <summary>
     /// <para>By default Coypu will exclude any invisible elements, this allows you to override that behaviour</para>
     /// <para>Default: true</para>
     /// </summary>
     public boolean ConsiderInvisibleElements;
+}
+
+public class TimeSpan 
+{
+    private final double milliseconds;
+
+    private TimeSpan(double milliseconds) {
+
+        this.milliseconds = milliseconds;
+    }
+
+    public TimeSpan FromSeconds(double seconds)
+    {
+        return new TimeSpan(seconds / 1000);
+    }
+
+    public TimeSpan FromMilliseconds(double milliseconds)
+    {
+        return new TimeSpan(milliseconds);
+    }
 }

@@ -1,9 +1,12 @@
 package Coypu.Queries;
+
+import Coypu.TimeSpan;
+
 public interface Query<TReturn>
 {
     void Run();
     Object ExpectedResult();
     TReturn Result();
-    double Timeout ();
-    double RetryInterval();
+    TimeSpan Timeout ();
+    TimeSpan RetryInterval();
 }

@@ -1,6 +1,6 @@
 namespace Coypu.Queries
 {
-    internal class HasNoXPathQuery : DriverScopeQuery<bool>
+    internal class HasNoXPathQuery : DriverScopeQuery<Boolean>
     {
         private readonly Driver driver;
         private readonly string xpath;

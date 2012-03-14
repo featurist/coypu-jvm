@@ -39,7 +39,7 @@ namespace Coypu.Tests.When_interacting_with_the_browser
             return RunQueryAndCheckTiming<object>();
         }
 
-        protected object RunQueryAndCheckTiming(TimeSpan timeout)
+        protected object RunQueryAndCheckTiming( TimeSpan timeout)
         {
             return RunQueryAndCheckTiming<object>(timeout);
         }
@@ -49,7 +49,7 @@ namespace Coypu.Tests.When_interacting_with_the_browser
             return RunQueryAndCheckTiming<T>(configuration.Timeout);
         }
 
-        protected T RunQueryAndCheckTiming<T>(TimeSpan timeout)
+        protected T RunQueryAndCheckTiming<T>( TimeSpan timeout)
         {
             var query = spyRobustWrapper.QueriesRan<T>().Single();
             RunQueryAndCheckTiming(query, timeout);
@@ -57,7 +57,7 @@ namespace Coypu.Tests.When_interacting_with_the_browser
             return query.Result;
         }
 
-        protected T RunQueryAndCheckTiming<T>(TimeSpan timeout, int index)
+        protected T RunQueryAndCheckTiming<T>( TimeSpan timeout, int index)
         {
             var query = spyRobustWrapper.QueriesRan<T>().ElementAt(index);
             RunQueryAndCheckTiming(query, timeout);
@@ -70,7 +70,7 @@ namespace Coypu.Tests.When_interacting_with_the_browser
             return RunQueryAndCheckTiming(query, configuration.Timeout);
         }
 
-        protected T RunQueryAndCheckTiming<T>(Query<T> query, TimeSpan timeout)
+        protected T RunQueryAndCheckTiming<T>(Query<T> query,  TimeSpan timeout)
         {
             query.Run();
 
@@ -115,18 +115,18 @@ namespace Coypu.Tests.When_interacting_with_the_browser
 
     public class FakeWaiter : Waiter
     {
-        private Action<TimeSpan> doOnWait = ms => { };
+        private Action< TimeSpan > doOnWait = ms => { };
 
         #region Waiter Members
 
-        public void Wait(TimeSpan duration)
+        public void Wait( TimeSpan duration)
         {
             doOnWait(duration);
         }
 
         #endregion
 
-        public void DoOnWait(Action<TimeSpan> action)
+        public void DoOnWait(Action< TimeSpan > action)
         {
             doOnWait = action;
         }

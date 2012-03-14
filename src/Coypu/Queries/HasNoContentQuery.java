@@ -1,6 +1,6 @@
 namespace Coypu.Queries
 {
-    internal class HasNoContentQuery : DriverScopeQuery<bool>
+    internal class HasNoContentQuery : DriverScopeQuery<Boolean>
     {
         private readonly Driver driver;
         private readonly string text;

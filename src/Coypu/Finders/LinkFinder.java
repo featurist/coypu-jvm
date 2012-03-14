@@ -1,12 +1,17 @@
-namespace Coypu.Finders
-{
-    internal class LinkFinder : ElementFinder
-    {
-        internal LinkFinder(Driver driver, string locator, DriverScope scope) : base(driver, locator, scope) { }
+package Coypu.Finders;
+import Coypu.Driver;
+import Coypu.DriverScope;
+import Coypu.ElementFound;
 
-        internal override ElementFound Find()
-        {
-            return Driver.FindLink(Locator, Scope);
-        }
+public class LinkFinder extends ElementFinder
+{
+    public LinkFinder(Driver driver, String locator, DriverScope scope)
+    {
+        super(driver, locator, scope);
+    }
+
+    public ElementFound Find()
+    {
+        return Driver.FindLink(Locator(), Scope);
     }
 }

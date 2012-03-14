@@ -1,41 +1,40 @@
-﻿using System;
-using System.Linq;
-using Coypu.Queries;
-using Coypu.Robustness;
+﻿package Coypu.Finders;
 
-namespace Coypu.Finders
+import Coypu.Options;
+import Coypu.Robustness.RobustWrapper;
+import Coypu.State;
+
+public class StateFinder
 {
-    internal class StateFinder
+    private RobustWrapper robustWrapper;
+
+    public StateFinder(RobustWrapper robustWrapper)
     {
-        private readonly RobustWrapper robustWrapper;
+        this.robustWrapper = robustWrapper;
+    }
 
-        public StateFinder(RobustWrapper robustWrapper)
+    public State FindState(Options options, State[] states)
+    {
+        // TODO: Anonymous type rather than lambda
+        var query = new LambdaPredicateQuery(() =>
         {
-            this.robustWrapper = robustWrapper;
-        }
-
-        internal State FindState(Options options, params State[] states)
-        {
-            var query = new LambdaPredicateQuery(() =>
+            var was = robustWrapper.ZeroTimeout;
+            robustWrapper.ZeroTimeout = true;
+            try
             {
-                var was = robustWrapper.ZeroTimeout;
-                robustWrapper.ZeroTimeout = true;
-                try
-                {
-                    return ((Func<bool>)(() => states.Any(s => s.CheckCondition())))();
-                }
-                finally
-                {
-                    robustWrapper.ZeroTimeout = was;
-                }
-            }, options);
+                return ((Func<bool>)(() => states.Any(s => s.CheckCondition())))();
+            }
+            finally
+            {
+                robustWrapper.ZeroTimeout = was;
+            }
+        }, options);
 
-            var foundState = robustWrapper.Robustly(query);
+        boolean foundState = robustWrapper.Robustly(query);
 
-            if (!foundState)
-                throw new MissingHtmlException("None of the given states was reached within the configured timeout.");
+        if (!foundState)
+            throw new MissingHtmlException("None of the given states was reached within the configured timeout.");
 
-            return states.First(e => e.ConditionWasMet);
-        }
+        return states.First(e => e.ConditionWasMet);
     }
 }

@@ -2,7 +2,7 @@ using System;
 
 namespace Coypu.Queries
 {
-    internal class HasContentQuery : DriverScopeQuery<bool>
+    internal class HasContentQuery : DriverScopeQuery<Boolean>
     {
         private readonly Driver driver;
         private readonly string text;

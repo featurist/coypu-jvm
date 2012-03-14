@@ -2,7 +2,7 @@ using System;
 
 namespace Coypu.Queries
 {
-    internal class HasCssQuery : DriverScopeQuery<bool>
+    internal class HasCssQuery : DriverScopeQuery<Boolean>
     {
         private readonly Driver driver;
         private readonly string cssSelector;

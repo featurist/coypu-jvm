@@ -43,10 +43,10 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
             var triedUntil = false;
             Action tryThis = () => tried = true;
             Func<bool> until = () => triedUntil = true;
-            var overallTimeout = TimeSpan.FromMilliseconds(1234);
+            var overallTimeout = TimeSpan .FromMilliseconds(1234);
 
             var options = new Options { Timeout = overallTimeout };
-            browserSession.TryUntil(tryThis, until,TimeSpan.Zero,options);
+            browserSession.TryUntil(tryThis, until, TimeSpan .Zero,options);
 
             var tryUntil = spyRobustWrapper.DeferredTryUntils[0];
 

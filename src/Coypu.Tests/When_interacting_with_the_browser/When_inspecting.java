@@ -20,7 +20,7 @@ namespace Coypu.Tests.When_interacting_with_the_browser
             stub(locator, stubResult, browserSession);
             spyRobustWrapper.StubQueryResult(true, !stubResult);
 
-            var individualTimeout = TimeSpan.FromMilliseconds(DateTime.UtcNow.Millisecond);
+            var individualTimeout = TimeSpan .FromMilliseconds(DateTime.UtcNow.Millisecond);
 
             var options = new Configuration {Timeout = individualTimeout};
 

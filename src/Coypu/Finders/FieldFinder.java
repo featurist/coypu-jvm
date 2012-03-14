@@ -1,12 +1,17 @@
-namespace Coypu.Finders
-{
-    internal class FieldFinder : ElementFinder
-    {
-        internal FieldFinder(Driver driver, string locator, DriverScope scope) : base(driver, locator, scope) { }
+package Coypu.Finders;
 
-        internal override ElementFound Find()
-        {
-            return Driver.FindField(Locator, Scope);
-        }
+import Coypu.DriverScope;
+import Coypu.ElementFound;
+import Coypu.Driver;
+
+public class FieldFinder extends ElementFinder
+{
+    public FieldFinder(Driver driver, String locator, DriverScope scope) {
+        super(driver, locator, scope);
+    }
+
+    public ElementFound Find()
+    {
+        return Driver.FindField(Locator(), Scope);
     }
 }

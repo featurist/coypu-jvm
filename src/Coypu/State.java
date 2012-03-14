@@ -1,39 +1,32 @@
-﻿using System;
-using Coypu.Queries;
+﻿package Coypu;
 
-namespace Coypu
+import Coypu.Queries.Query;
+
+///<summary>
+/// A possible state for the current page
+///</summary>
+public class State
 {
+    private Query<Boolean> condition;
+    private boolean conditionWasMet;
+
     ///<summary>
-    /// A possible state for the current page
+    /// Describe a possible state for the page with a condition to identify this state.
     ///</summary>
-    public class State 
+    ///<param name="condition">How to identify this state</param>
+    public State(Query<Boolean> condition)
     {
-        private readonly Query<bool> condition;
+        this.condition = condition;
+    }
 
-        ///<summary>
-        /// Describe a possible state for the page with a condition to identify this state.
-        ///</summary>
-        ///<param name="condition">How to identify this state</param>
-        public State(Query<bool> condition)
-        {
-            this.condition = condition;
-        }
+    public boolean ConditionWasMet()
+    {
+        return conditionWasMet;
+    }
 
-        ///<summary>
-        /// Describe a possible state for the page with a condition to identify this state.
-        ///</summary>
-        ///<param name="condition">How to identify this state</param>
-        public State(Func<bool> condition)
-        {
-            this.condition = new LambdaQuery<bool>(condition,true, new Options{Timeout = TimeSpan.Zero});
-        }
-
-        internal bool ConditionWasMet { get; private set; }
-
-        internal bool CheckCondition()
-        {
-            condition.Run();
-            return ConditionWasMet = condition.Result;
-        }
+    public boolean CheckCondition()
+    {
+        condition.Run();
+        return conditionWasMet = condition.Result();
     }
 }

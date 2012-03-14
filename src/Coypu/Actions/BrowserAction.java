@@ -4,15 +4,15 @@ import Coypu.Queries.Query;
 
 public abstract class BrowserAction implements Query<Object>
 {
-    private double timeout;
-    private double retryInterval;
+    private TimeSpan timeout;
+    private TimeSpan retryInterval;
 
-    public double Timeout()
+    public TimeSpan Timeout()
     {
         return timeout;
     }
 
-    public double RetryInterval()
+    public TimeSpan RetryInterval()
     {
         return retryInterval;
     }

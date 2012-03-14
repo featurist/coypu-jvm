@@ -1,12 +1,18 @@
-namespace Coypu.Finders
-{
-    internal class WindowFinder : ElementFinder
-    {
-        internal WindowFinder(Driver driver, string locator, DriverScope scope) : base(driver, locator, scope) { }
+package Coypu.Finders;
 
-        internal override ElementFound Find()
-        {
-            return Driver.FindWindow(Locator, Scope);
-        }
+import Coypu.Driver;
+import Coypu.DriverScope;
+import Coypu.ElementFound;
+
+public class WindowFinder extends ElementFinder
+{
+    public WindowFinder(Driver driver, String locator, DriverScope scope)
+    {
+        super(driver, locator, scope);
+    }
+
+    public ElementFound Find()
+    {
+        return Driver.FindWindow(Locator(), Scope);
     }
 }

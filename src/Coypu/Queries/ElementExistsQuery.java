@@ -1,27 +1,30 @@
-namespace Coypu.Queries
+package Coypu.Queries;
+
+import Coypu.DriverScope;
+import Coypu.Options;
+
+public class ElementExistsQuery extends DriverScopeQuery<Boolean>
 {
-    internal class ElementExistsQuery : DriverScopeQuery<bool>
+    public Object ExpectedResult()
     {
-        public override object ExpectedResult
-        {
-            get { return true; }
-        }
+        return true;
+    }
 
-        protected internal ElementExistsQuery(DriverScope driverScope, Options options) : base(driverScope,options)
-        {
-        }
+    public ElementExistsQuery(DriverScope driverScope, Options options)
+    {
+        super(driverScope,options);
+    }
 
-        public override void Run()
+    public void Run()
+    {
+        try
         {
-            try
-            {
-                DriverScope.FindElement();
-                Result = true;
-            }
-            catch (MissingHtmlException)
-            {
-                Result = false;
-            }
+            DriverScope.FindElement();
+            SetResult(true);
+        }
+        catch (MissingHtmlException ex)
+        {
+            SetResult(false);
         }
     }
 }

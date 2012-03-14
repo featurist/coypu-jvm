@@ -1,50 +1,62 @@
-using System;
-using Coypu.Actions;
-using Coypu.Robustness;
+package Coypu.Queries;
 
-namespace Coypu.Queries
+import Coypu.Actions.BrowserAction;
+import Coypu.Robustness.RobustWrapper;
+import Coypu.TimeSpan;
+
+public class ActionSatisfiesPredicateQuery implements Query<Boolean>
 {
-    internal class ActionSatisfiesPredicateQuery : Query<bool>
+    private BrowserAction tryThis;
+    private Query<Boolean> until;
+    private TimeSpan waitBeforeRetry;
+    private RobustWrapper robustWrapper;
+    private TimeSpan retryInterval;
+    private TimeSpan timeout;
+    private Boolean result;
+
+    public TimeSpan RetryInterval()
     {
-        private readonly BrowserAction tryThis;
-        private readonly Query<bool> until;
-        private readonly TimeSpan waitBeforeRetry;
-        private readonly RobustWrapper robustWrapper;
-        public TimeSpan RetryInterval { get; private set; }
+        return retryInterval;
+    }
 
-        public TimeSpan Timeout { get; private set; }
+    public  TimeSpan Timeout()
+    {
+        return timeout;
+    }
 
-        internal ActionSatisfiesPredicateQuery(BrowserAction tryThis, Query<bool> until, TimeSpan overallTimeout, TimeSpan retryInterval, TimeSpan waitBeforeRetry, RobustWrapper robustWrapper)
+    public ActionSatisfiesPredicateQuery(BrowserAction tryThis, Query<Boolean> until,  TimeSpan overallTimeout,  TimeSpan retryInterval,  TimeSpan waitBeforeRetry, RobustWrapper robustWrapper)
+    {
+        this.tryThis = tryThis;
+        this.until = until;
+        this.waitBeforeRetry = waitBeforeRetry;
+        this.robustWrapper = robustWrapper;
+        this.retryInterval = retryInterval;
+        this.timeout = overallTimeout;
+    }
+
+    public void Run()
+    {
+        tryThis.Act();
+
+        try
         {
-            this.tryThis = tryThis;
-            this.until = until;
-            this.waitBeforeRetry = waitBeforeRetry;
-            this.robustWrapper = robustWrapper;
-            RetryInterval = retryInterval;
-            Timeout = overallTimeout;
+            robustWrapper.SetOverrideTimeout(waitBeforeRetry);
+            until.Run();
         }
-
-        public void Run()
+        finally
         {
-            tryThis.Act();
-
-            try
-            {
-                robustWrapper.SetOverrideTimeout(waitBeforeRetry);
-                until.Run();
-            }
-            finally
-            {
-                robustWrapper.ClearOverrideTimeout();
-            }
-            Result = until.Result;
+            robustWrapper.ClearOverrideTimeout();
         }
+        this.result = until.Result();
+    }
 
-        public object ExpectedResult
-        {
-            get { return true; }
-        }
+    public Object ExpectedResult()
+    {
+        return true;
+    }
 
-        public bool Result { get; private set; }
+    public Boolean Result()
+    {
+        return result;
     }
 }

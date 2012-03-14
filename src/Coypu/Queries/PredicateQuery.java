@@ -2,7 +2,7 @@ using System;
 
 namespace Coypu.Queries
 {
-    public abstract class PredicateQuery : Query<bool>
+    public abstract class PredicateQuery : Query<Boolean>
     {
 
         protected PredicateQuery()
@@ -24,8 +24,8 @@ namespace Coypu.Queries
             get { return true; }
         }
 
-        public TimeSpan Timeout { get; private set; }
+        public  TimeSpan Timeout { get; private set; }
 
-        public TimeSpan RetryInterval { get; private set; }
+        public  TimeSpan RetryInterval { get; private set; }
     }
 }

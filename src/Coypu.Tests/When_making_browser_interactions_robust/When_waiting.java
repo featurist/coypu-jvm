@@ -26,7 +26,7 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
         {
             var waiter = new ThreadSleepWaiter();
             var stopWatch = Stopwatch.StartNew();
-            var expectedDuration = TimeSpan.FromMilliseconds(expectedDurationMilliseconds);
+            var expectedDuration = TimeSpan .FromMilliseconds(expectedDurationMilliseconds);
 
             waiter.Wait(expectedDuration);
 

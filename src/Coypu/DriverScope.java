@@ -80,14 +80,14 @@ public class DriverScope implements Coypu.Scope
         return new WaitThenClick(driver, SetOptions(options), waiter, new ButtonFinder(driver, locator, this));
     }
 
-    public DriverScope ClickButton(String locator, PredicateQuery until, TimeSpan waitBeforeRetry, Options options)
+    public DriverScope ClickButton(String locator, PredicateQuery until,  TimeSpan waitBeforeRetry, Options options)
     {
         options = SetOptions(options);
         TryUntil(WaitThenClickButton(locator, options), until, waitBeforeRetry, options);
         return this;
     }
 
-    public DriverScope ClickLink(String locator, PredicateQuery until, TimeSpan waitBeforeRetry, Options options)
+    public DriverScope ClickLink(String locator, PredicateQuery until,  TimeSpan waitBeforeRetry, Options options)
     {
         options = SetOptions(options);
         TryUntil(WaitThenClickLink(locator, options), until, waitBeforeRetry, options);
@@ -242,7 +242,7 @@ public class DriverScope implements Coypu.Scope
         return new IFrameElementScope(new IFrameFinder(driver, locator, this), this, robustWrapper, SetOptions(options));
     }
 
-    public void TryUntil(BrowserAction tryThis, PredicateQuery until, TimeSpan waitBeforeRetry, Options options)
+    public void TryUntil(BrowserAction tryThis, PredicateQuery until,  TimeSpan waitBeforeRetry, Options options)
     {
         robustWrapper.TryUntil(tryThis, until, SetOptions(options).Timeout, waitBeforeRetry);
     }

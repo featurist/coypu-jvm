@@ -23,7 +23,7 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
         [Test]
         public void It_uses_individual_timeout_for_query_leaving() 
         {
-            var individualTimeout = TimeSpan.FromSeconds(321);
+            var individualTimeout = TimeSpan .FromSeconds(321);
 
             var spyRobustWrapper = new SpyRobustWrapper();
             var session = new Session(null, spyRobustWrapper, null, null, null);
@@ -42,7 +42,7 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
 
             var session = new Session(null, spyRobustWrapper, null, null, null);
 
-            var actualElement = session.FindLink("bob").WithTimeout(TimeSpan.FromSeconds(321)).Now();
+            var actualElement = session.FindLink("bob").WithTimeout( TimeSpan .FromSeconds(321)).Now();
 
             Assert.That(actualElement, Is.SameAs(expectedElement));
         }
