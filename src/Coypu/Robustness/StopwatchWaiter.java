@@ -1,17 +1,14 @@
-﻿using System;
-using System.Diagnostics;
+﻿package Coypu.Robustness;
+import Coypu.TimeSpan;
 
-namespace Coypu.Robustness
+public class StopwatchWaiter implements Waiter
 {
-    internal class ThreadSleepWaiter : Waiter
+    public void Wait( TimeSpan duration)
     {
-        public void Wait( TimeSpan duration)
+        Stopwatch stopWatch = Stopwatch.StartNew();
+        while(stopWatch.ElapsedMilliseconds < duration.TotalMilliseconds)
         {
-            var stopWatch = Stopwatch.StartNew();
-            while(stopWatch.ElapsedMilliseconds < duration.TotalMilliseconds)
-            {
-            }
-            stopWatch.Stop();
         }
+        stopWatch.Stop();
     }
 }

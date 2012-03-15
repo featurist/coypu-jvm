@@ -1,25 +1,26 @@
-using System;
+package Coypu.Queries;
 
-namespace Coypu.Queries
+import Coypu.Driver;
+import Coypu.DriverScope;
+import Coypu.Options;
+
+public class HasXPathQuery extends DriverScopeQuery<Boolean>
 {
-    internal class HasXPathQuery : DriverScopeQuery<Boolean>
+    private final Driver driver;
+    private final String xpath;
+    public Object ExpectedResult(){ return true; }
+
+
+    public HasXPathQuery(Driver driver, DriverScope scope, String xpath, Options options)
     {
-        private readonly Driver driver;
-        private readonly string xpath;
-        public override object ExpectedResult { get { return true; } }
+        super(scope, options);
 
+        this.driver = driver;
+        this.xpath = xpath;
+    }
 
-        protected internal HasXPathQuery(Driver driver, DriverScope scope, string xpath, Options options)
-            : base(scope, options)
-        {
-            this.driver = driver;
-            this.driver = driver;
-            this.xpath = xpath;
-        }
-
-        public override void Run()
-        {
-            Result = driver.HasXPath(xpath, DriverScope);
-        }
+    public void Run()
+    {
+        SetResult(driver.HasXPath(xpath, DriverScope()));
     }
 }

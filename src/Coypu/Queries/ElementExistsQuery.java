@@ -1,6 +1,7 @@
 package Coypu.Queries;
 
 import Coypu.DriverScope;
+import Coypu.MissingHtmlException;
 import Coypu.Options;
 
 public class ElementExistsQuery extends DriverScopeQuery<Boolean>
@@ -12,14 +13,14 @@ public class ElementExistsQuery extends DriverScopeQuery<Boolean>
 
     public ElementExistsQuery(DriverScope driverScope, Options options)
     {
-        super(driverScope,options);
+        super(driverScope, options);
     }
 
     public void Run()
     {
         try
         {
-            DriverScope.FindElement();
+            DriverScope().FindElement();
             SetResult(true);
         }
         catch (MissingHtmlException ex)

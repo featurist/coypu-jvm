@@ -1,23 +1,11 @@
-﻿using System;
-using System.Runtime.Serialization;
-
-namespace Coypu
+﻿package Coypu;
+/// <summary>
+/// Thrown whenever some expected HTML cannot be found
+/// </summary>
+public class MissingHtmlException extends Exception
 {
-    /// <summary>
-    /// Thrown whenever some expected HTML cannot be found
-    /// </summary>
-    public class MissingHtmlException : Exception
+    public MissingHtmlException(String message)
     {
-        public MissingHtmlException(string message) : base(message)
-        {
-        }
-
-        public MissingHtmlException(string message, Exception innerException) : base(message, innerException)
-        {                         
-        }
-
-        public MissingHtmlException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
+        super(message);
     }
 }

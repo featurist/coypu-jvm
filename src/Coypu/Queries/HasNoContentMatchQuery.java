@@ -1,24 +1,24 @@
-using System;
-using System.Text.RegularExpressions;
+package Coypu.Queries;
 
-namespace Coypu.Queries
+import Coypu.Driver;
+import Coypu.DriverScope;
+import Coypu.Options;
+
+public class HasNoContentMatchQuery extends DriverScopeQuery<Boolean>
 {
-    internal class HasNoContentMatchQuery : DriverScopeQuery<Boolean>
+    private final Driver driver;
+    private final Regex text;
+    public Object ExpectedResult() { return true; }
+
+    public HasNoContentMatchQuery(Driver driver, DriverScope scope, Regex text, Options options)
     {
-        private readonly Driver driver;
-        private readonly Regex text;
-        public override object ExpectedResult { get { return true; } }
-
-        protected internal HasNoContentMatchQuery(Driver driver, DriverScope scope, Regex text, Options options)
-            : base(scope, options)
-        {
-            this.driver = driver;
-            this.text = text;
-        }
-
-        public override void Run()
-        {
-            Result = !driver.HasContentMatch(text, DriverScope);
-        }    
+        super(scope, options);
+        this.driver = driver;
+        this.text = text;
     }
+
+    public void Run()
+    {
+        SetResult(!driver.HasContentMatch(text, DriverScope()));
+    }    
 }

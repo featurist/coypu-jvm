@@ -1,15 +1,16 @@
 ﻿package Coypu.Robustness;
 
 import Coypu.Actions.BrowserAction;
+import Coypu.MissingHtmlException;
 import Coypu.Queries.Query;
 import Coypu.TimeSpan;
 
 public interface RobustWrapper
 {
-    T Robustly<T>(Query<T> query);
-    void TryUntil(BrowserAction tryThis, Query<Boolean> until, TimeSpan overallTimeout, TimeSpan waitBeforeRetry);
-    boolean GetZeroTimeout();
-    void SetZeroTimeout(boolean value);
-    void SetOverrideTimeout(TimeSpan timeout);
-    void ClearOverrideTimeout();
+    public <T> T Robustly(Query<T> query);
+    public void TryUntil(BrowserAction tryThis, Query<Boolean> until, TimeSpan overallTimeout, TimeSpan waitBeforeRetry) throws MissingHtmlException;
+    public boolean GetZeroTimeout();
+    public void SetZeroTimeout(boolean value);
+    public void SetOverrideTimeout(TimeSpan timeout);
+    public void ClearOverrideTimeout();
 }

@@ -1,19 +1,24 @@
-namespace Coypu.Queries
+package Coypu.Queries;
+
+import Coypu.DriverScope;
+import Coypu.ElementFound;
+import Coypu.MissingHtmlException;
+import Coypu.Options;
+
+public class ElementQuery extends DriverScopeQuery<ElementFound>
 {
-    internal class ElementQuery : DriverScopeQuery<ElementFound>
+    public ElementQuery(DriverScope driverScope, Options options)
     {
-        public ElementQuery(DriverScope driverScope, Options options) : base(driverScope,options)
-        {
-        }
+        super(driverScope, options);
+    }
 
-        public override object ExpectedResult
-        {
-            get { return null; }
-        }
+    public Object ExpectedResult()
+    {
+        return null;
+    }
 
-        public override void Run()
-        {
-            Result = DriverScope.FindElement();
-        }
+    public void Run() throws MissingHtmlException
+    {
+        SetResult(DriverScope().FindElement());
     }
 }

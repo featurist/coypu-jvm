@@ -13,7 +13,7 @@ public interface Driver
     void Select(Element element, String option);
     Object Native();
     boolean HasContent(String text, DriverScope scope);
-    //boolean HasContentMatch(Regex pattern, DriverScope scope);
+    boolean HasContentMatch(Regex pattern, DriverScope scope);
     boolean HasCss(String cssSelector, DriverScope scope);
     boolean HasXPath(String xpath, DriverScope scope);
     boolean HasDialog(String withText, DriverScope scope);

@@ -1,20 +1,24 @@
-namespace Coypu.Queries
+package Coypu.Queries;
+
+import Coypu.Driver;
+import Coypu.DriverScope;
+import Coypu.Options;
+
+public class HasDialogQuery extends DriverScopeQuery<Boolean>
 {
-    internal class HasDialogQuery : DriverScopeQuery<Boolean>
+    private final Driver driver;
+    private final String text;
+    public Object ExpectedResult() { return true; }
+
+    public HasDialogQuery(Driver driver, String text, DriverScope driverScope, Options options)
     {
-        private readonly Driver driver;
-        private readonly string text;
-        public override object ExpectedResult { get { return true; } }
+        super(driverScope,options);
+        this.driver = driver;
+        this.text = text;
+    }
 
-        protected internal HasDialogQuery(Driver driver, string text, DriverScope driverScope, Options options) : base(driverScope,options)
-        {
-            this.driver = driver;
-            this.text = text;
-        }
-
-        public override void Run()
-        {
-            Result = driver.HasDialog(text,DriverScope);
-        }
+    public void Run()
+    {
+        SetResult(driver.HasDialog(text,DriverScope()));
     }
 }

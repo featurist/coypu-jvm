@@ -3,6 +3,7 @@ package Coypu.Finders;
 import Coypu.DriverScope;
 import Coypu.ElementFound;
 import Coypu.Driver;
+import Coypu.MissingHtmlException;
 
 public abstract class ElementFinder
 {
@@ -22,5 +23,5 @@ public abstract class ElementFinder
         return this.locator;
     }
 
-    public abstract ElementFound Find();
+    public abstract ElementFound Find() throws MissingHtmlException;
 }

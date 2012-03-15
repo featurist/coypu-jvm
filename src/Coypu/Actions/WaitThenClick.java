@@ -2,6 +2,7 @@
 
 import Coypu.ElementFound;
 import Coypu.Finders.ElementFinder;
+import Coypu.MissingHtmlException;
 import Coypu.Options;
 import Coypu.Robustness.Waiter;
 import Coypu.Driver;
@@ -12,7 +13,7 @@ public class WaitThenClick extends DriverAction
     private Waiter waiter;
     private ElementFinder elementFinder;
 
-    WaitThenClick(Driver driver, Options options, Waiter waiter, ElementFinder elementFinder)
+    public WaitThenClick(Driver driver, Options options, Waiter waiter, ElementFinder elementFinder)
     {
         super(driver, options);
 
@@ -21,7 +22,7 @@ public class WaitThenClick extends DriverAction
         this.elementFinder = elementFinder;
     }
 
-    public void Act()
+    public void Act() throws MissingHtmlException
     {
         ElementFound element = elementFinder.Find();
         waiter.Wait(options.WaitBeforeClick);

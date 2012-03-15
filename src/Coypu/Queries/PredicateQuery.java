@@ -1,31 +1,40 @@
-using System;
+package Coypu.Queries;
 
-namespace Coypu.Queries
+import Coypu.Options;
+import Coypu.TimeSpan;
+
+public abstract class PredicateQuery implements Query<Boolean>
 {
-    public abstract class PredicateQuery : Query<Boolean>
+
+    private TimeSpan timeout;
+    private TimeSpan retryInterval;
+
+    protected PredicateQuery()
     {
+    }
 
-        protected PredicateQuery()
-        {
-        }
+    protected PredicateQuery(Options options)
+    {
+        this.timeout = options.Timeout;
+        this.retryInterval = options.RetryInterval;
+    }
 
-        protected PredicateQuery(Options options)
-        {
-            Timeout = options.Timeout;
-            RetryInterval = options.RetryInterval;
-        }
+    public abstract Boolean Result();
 
-        public bool Result { get; protected set; }
+    public abstract void Run();
 
-        public abstract void Run();
+    public Object ExpectedResult()
+    {
+        return true;
+    }
 
-        public object ExpectedResult
-        {
-            get { return true; }
-        }
+    public TimeSpan Timeout()
+    {
+        return timeout;
+    }
 
-        public  TimeSpan Timeout { get; private set; }
-
-        public  TimeSpan RetryInterval { get; private set; }
+    public TimeSpan RetryInterval()
+    {
+        return retryInterval;
     }
 }

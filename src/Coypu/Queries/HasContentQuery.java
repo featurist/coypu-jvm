@@ -1,22 +1,24 @@
-using System;
+package Coypu.Queries;
 
-namespace Coypu.Queries
+import Coypu.Driver;
+import Coypu.DriverScope;
+import Coypu.Options;
+
+public class HasContentQuery extends DriverScopeQuery<Boolean>
 {
-    internal class HasContentQuery : DriverScopeQuery<Boolean>
+    private final Driver driver;
+    private final String text;
+    public Object ExpectedResult() { return true; }
+
+    public HasContentQuery(Driver driver, DriverScope scope, String text, Options options)
     {
-        private readonly Driver driver;
-        private readonly string text;
-        public override object ExpectedResult { get { return true; } }
+        super(scope,options);
+        this.driver = driver;
+        this.text = text;
+    }
 
-        internal HasContentQuery(Driver driver, DriverScope scope, string text, Options options) : base(scope,options)
-        {
-            this.driver = driver;
-            this.text = text;
-        }
-
-        public override void Run()
-        {
-            Result = driver.HasContent(text, DriverScope);
-        }
+    public void Run()
+    {
+        SetResult(driver.HasContent(text, DriverScope()));
     }
 }

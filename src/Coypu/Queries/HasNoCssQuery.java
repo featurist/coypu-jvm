@@ -1,24 +1,28 @@
-namespace Coypu.Queries
+package Coypu.Queries;
+
+import Coypu.Driver;
+import Coypu.DriverScope;
+import Coypu.Options;
+
+public class HasNoCssQuery extends DriverScopeQuery<Boolean>
 {
-    internal class HasNoCssQuery : DriverScopeQuery<Boolean>
+    private final Driver driver;
+    private final String cssSelector;
+
+    public HasNoCssQuery(Driver driver, DriverScope scope, String cssSelector, Options options)
     {
-        private readonly Driver driver;
-        private readonly string cssSelector;
+        super(scope,options);
+        this.driver = driver;
+        this.cssSelector = cssSelector;
+    }
 
-        protected internal HasNoCssQuery(Driver driver, DriverScope scope, string cssSelector, Options options) : base(scope,options)
-        {
-            this.driver = driver;
-            this.cssSelector = cssSelector;
-        }
+    public Object ExpectedResult()
+    {
+        return true;
+    }
 
-        public override object ExpectedResult
-        {
-            get { return true; }
-        }
-
-        public override void Run()
-        {
-            Result = !driver.HasCss(cssSelector, DriverScope);
-        }
+    public void Run()
+    {
+        SetResult(!driver.HasCss(cssSelector, DriverScope()));
     }
 }

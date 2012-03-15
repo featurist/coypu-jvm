@@ -1,6 +1,8 @@
 package Coypu.Actions;
+import Coypu.MissingHtmlException;
 import Coypu.Options;
 import Coypu.Queries.Query;
+import Coypu.TimeSpan;
 
 public abstract class BrowserAction implements Query<Object>
 {
@@ -23,9 +25,9 @@ public abstract class BrowserAction implements Query<Object>
         retryInterval = options.RetryInterval;
     }
 
-    public abstract void Act();
+    public abstract void Act() throws MissingHtmlException;
 
-    public void Run()
+    public void Run() throws MissingHtmlException
     {
         Act();
     }

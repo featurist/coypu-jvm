@@ -1,7 +1,9 @@
 package Coypu;
 
 import Coypu.Actions.*;
-import Coypu.Finders.ElementFinder;
+import Coypu.Finders.*;
+import Coypu.Queries.PredicateQuery;
+import Coypu.Robustness.RobustWrapper;
 import Coypu.Robustness.Waiter;
 import com.sun.jndi.toolkit.url.Uri;
 
@@ -262,12 +264,12 @@ public class DriverScope implements Coypu.Scope
     /// </summary>
     /// <returns></returns>
     /// <exception cref="T:Coypu.MissingHtmlException">Thrown if the element cannot be found</exception>
-    public ElementFound Now()
+    public ElementFound Now() throws MissingHtmlException
     {
         return FindElement();
     }
 
-    protected ElementFound FindElement()
+    public ElementFound FindElement() throws MissingHtmlException
     {
         if (element == null || element.Stale())
           element = elementFinder.Find();
