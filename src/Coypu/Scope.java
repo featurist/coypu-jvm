@@ -1,5 +1,9 @@
 package Coypu;
 
+import Coypu.Actions.BrowserAction;
+import Coypu.Queries.PredicateQuery;
+import Coypu.Queries.Query;
+
 /// <summary>
 /// The scope for any browser interaction: a browser window, frame or element.
 /// </summary>
@@ -382,13 +386,13 @@ public interface Scope
     /// Query whether an element appears within the configured timeout
     /// </summary>
     /// <param name="findElement">A function to find an element</param>
-    boolean Has(ElementScope findElement);
+    boolean Has(ElementScope findElement, Options options);
 
     /// <summary>
     /// Query whether an element does not appear. Returns as soon as the element does not appear or after the <see cref="Configuration.Timeout"/>
     /// </summary>
     /// <param name="findElement">A function to find an element</param>
-    boolean HasNo(ElementScope findElement);
+    boolean HasNo(ElementScope findElement, Options options);
 
     /// <summary>
     /// <para>Retry an action on any exception until it succeeds. Once the <see cref="Configuration.Timeout"/> is passed any exception will be rethrown.</para>
@@ -408,7 +412,7 @@ public interface Scope
     /// <para>Waits for the <see cref="Configuration.RetryInterval"/> between retries.</para>
     /// </summary>
     /// <param name="query">A query</param>
-    T Query<T>(Query<T> query);
+    <T> T Query(Query<T> query);
 
     /// <summary>
     /// <para>Execute an action repeatedly until a condition is met.</para>
@@ -424,26 +428,7 @@ public interface Scope
     ///
     /// <code>new Options{Timeout = TimeSpan .FromSeconds(60)}</code></param>
     /// <exception cref="T:Coypu.MissingHtmlException">Thrown if the until condition is never met</exception>
-    void TryUntil(BrowserAction tryThis, PredicateQuery until,  TimeSpan waitBeforeRetry, Options options);
-
-    /// <summary>
-    /// <para>Find the first from a list of possible states that your page may arrive at.</para>
-    /// <para>Returns as soon as any of the possible states is found.</para>
-    /// <para>E.g.:</para>
-    ///
-    /// <code>
-    ///  var signedIn = new State(() => browser.HasContent("Signed in as:"));
-    ///  var signedOut = new State(() => browser.HasContent("Please sign in"));
-    ///
-    ///  if (browser.FindState(signedIn,signedOut) == signedIn)
-    ///  {
-    ///    browser.ClickLink("Sign out");
-    ///  }
-    ///  </code>
-    ///  </summary>
-    /// <param name="states">The possible states you are expecting</param>
-    /// <returns></returns>
-    State FindState(params State[] states);
+    void TryUntil(BrowserAction tryThis, PredicateQuery until,  TimeSpan waitBeforeRetry, Options options) throws MissingHtmlException;
 
     /// <summary>
     /// <para>Find the first from a list of possible states that your page may arrive at.</para>
@@ -485,7 +470,7 @@ public interface Scope
     /// <code>new Options{Timeout = TimeSpan .FromSeconds(60)}</code></param>
     /// <returns>The first matching button</returns>
     /// <exception cref="T:Coypu.MissingHtmlException">Thrown if the element cannot be found</exception>
-    DriverScope ClickButton(String locator, PredicateQuery until,  TimeSpan waitBeforeRetry, Options options);
+    DriverScope ClickButton(String locator, PredicateQuery until,  TimeSpan waitBeforeRetry, Options options) throws MissingHtmlException;
 
     /// <summary>
     /// <para>Click a link and wait for a condition to be satisfied for a specified time otherwise click and wait again.</para>
@@ -501,6 +486,6 @@ public interface Scope
     /// <code>new Options{Timeout = TimeSpan .FromSeconds(60)}</code></param>
     /// <returns>The first matching button</returns>
     /// <exception cref="T:Coypu.MissingHtmlException">Thrown if the element cannot be found</exception>
-    DriverScope ClickLink(String locator, PredicateQuery until,  TimeSpan waitBeforeRetry, Options options);
+    DriverScope ClickLink(String locator, PredicateQuery until,  TimeSpan waitBeforeRetry, Options options) throws MissingHtmlException;
 
 }

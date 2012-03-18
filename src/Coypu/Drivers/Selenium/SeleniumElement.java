@@ -6,7 +6,7 @@ namespace Coypu.Drivers.Selenium
 {
     internal class SeleniumElement : ElementFound
     {
-        private readonly IWebElement native;
+        private final IWebElement native;
 
         protected IWebElement NativeSeleniumElement
         {

@@ -12,7 +12,7 @@ namespace Coypu.Drivers.Selenium
 {
     public class SeleniumWebDriver : Driver
     {
-        private readonly Browser _browser;
+        private final Browser _browser;
         public bool Disposed { get; private set; }
 
         public Uri Location
@@ -32,16 +32,16 @@ namespace Coypu.Drivers.Selenium
         }
 
         private RemoteWebDriver selenium;
-        private readonly ElementFinder elementFinder;
-        private readonly FieldFinder fieldFinder;
-        private readonly IFrameFinder iframeFinder;
-        private readonly ButtonFinder buttonFinder;
-        private readonly SectionFinder sectionFinder;
-        private readonly TextMatcher textMatcher;
-        private readonly Dialogs dialogs;
-        private readonly MouseControl mouseControl;
-        private readonly OptionSelector optionSelector;
-        private readonly XPath xPath;
+        private final ElementFinder elementFinder;
+        private final FieldFinder fieldFinder;
+        private final IFrameFinder iframeFinder;
+        private final ButtonFinder buttonFinder;
+        private final SectionFinder sectionFinder;
+        private final TextMatcher textMatcher;
+        private final Dialogs dialogs;
+        private final MouseControl mouseControl;
+        private final OptionSelector optionSelector;
+        private final XPath xPath;
 
         public SeleniumWebDriver(Browser browser)
             : this(new DriverFactory().NewRemoteWebDriver(browser))

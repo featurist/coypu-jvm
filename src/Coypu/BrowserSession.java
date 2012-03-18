@@ -9,7 +9,7 @@ namespace Coypu
     /// </summary>
     public class BrowserSession : BrowserWindow
     {
-        private readonly RestrictedResourceDownloader restrictedResourceDownloader;
+        private final RestrictedResourceDownloader restrictedResourceDownloader;
 
         /// <summary>
         /// A new browser session. Control the lifecycle of this session with using{} / session.Dispose()

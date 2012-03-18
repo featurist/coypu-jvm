@@ -1,23 +1,19 @@
-using System;
-using Coypu.Finders;
-using Coypu.Robustness;
+package Coypu;
 
-namespace Coypu
+import Coypu.Finders.ElementFinder;
+import Coypu.Robustness.RobustWrapper;
+import com.sun.jndi.toolkit.url.Uri;
+
+public class IFrameElementScope extends RobustElementScope
 {
-    public class IFrameElementScope : RobustElementScope
+    public IFrameElementScope(ElementFinder elementFinder, DriverScope outerScope, RobustWrapper robustWrapper, Options options)
     {
-        internal IFrameElementScope(ElementFinder elementFinder, DriverScope outerScope, RobustWrapper robustWrapper, Options options) 
-            : base(elementFinder, outerScope, robustWrapper,options)
-        {
-        }
+        super(elementFinder, outerScope, robustWrapper,options);
+    }
 
-        public override Uri Location
-        {
-            get
-            {
-                FindXPath("/*").Now();
-                return driver.Location;
-            }
-        }
+    public Uri Location() throws MissingHtmlException
+    {
+        FindXPath("/*",options).Now();
+        return driver.Location();
     }
 }

@@ -1,55 +1,47 @@
 package Coypu;
 
-import Coypu.Actions;
-import Coypu.Finders;
-import Coypu.Queries;
-import Coypu.Robustness;
+import Coypu.Actions.Click;
+import Coypu.Finders.ElementFinder;
+import Coypu.Queries.ElementExistsQuery;
+import Coypu.Queries.ElementMissingQuery;
 
-public class ElementScope
+public class ElementScope extends DriverScope
 {
-    public ElementScope(ElementFinder elementFinder, DriverScope outer, RobustWrapper robustWrapper)
+    public ElementScope(ElementFinder elementFinder, DriverScope outer)
     {
-        super();
+        super(elementFinder,outer);
     }
 
-    public String Id()
-    {
-        return Now().Id;
+    public String Id() throws MissingHtmlException {
+        return Now().Id();
     }
 
-    public String Text()
-    {
-        return Now().Text;
+    public String Text() throws MissingHtmlException {
+        return Now().Text();
     }
 
-    public String Value()
-    {
-        return Now().Value;
+    public String Value() throws MissingHtmlException {
+        return Now().Value();
     }
 
-    public String Name()
-    {
-        return Now().Name;
+    public String Name() throws MissingHtmlException {
+        return Now().Name();
     }
 
-    public String SelectedOption()
-    {
-        return Now().SelectedOption;
+    public String SelectedOption() throws MissingHtmlException {
+        return Now().SelectedOption();
     }
 
-    public bool Selected()
-    {
-        return Now().Selected;
+    public boolean Selected() throws MissingHtmlException {
+        return Now().Selected();
     }
 
-    public object Native()
-    {
-        return Now().Native;
+    public Object Native() throws MissingHtmlException {
+        return Now().Native();
     }
 
-    public String getAttribute(String attributeName)
-    {
-        return Now().getAttribute(attributeName);
+    public String Attribute(String attributeName) throws MissingHtmlException {
+        return Now().Attribute(attributeName);
     }
 
     public ElementScope Click(Options options)

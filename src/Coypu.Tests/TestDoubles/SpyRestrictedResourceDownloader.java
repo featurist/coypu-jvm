@@ -6,7 +6,7 @@ namespace Coypu.Tests.TestDoubles
 {
     public class SpyRestrictedResourceDownloader : RestrictedResourceDownloader
     {
-        private readonly IList<DownloadedFile> downloadedFiles = new List<DownloadedFile>();
+        private final IList<DownloadedFile> downloadedFiles = new List<DownloadedFile>();
 
         public IList<DownloadedFile> DownloadedFiles
         {

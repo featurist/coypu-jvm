@@ -5,10 +5,10 @@ namespace Coypu.Drivers.Selenium
 {
     internal class FieldFinder
     {
-        private static readonly string[] FieldInputTypes = new[] { "text", "password", "radio", "checkbox", "file" };
-        public static readonly string[] InputButtonTypes = new[] { "button", "submit", "image" };
-        private readonly ElementFinder elementFinder;
-        private readonly XPath xPath;
+        private static final string[] FieldInputTypes = new[] { "text", "password", "radio", "checkbox", "file" };
+        public static final string[] InputButtonTypes = new[] { "button", "submit", "image" };
+        private final ElementFinder elementFinder;
+        private final XPath xPath;
 
         public FieldFinder(ElementFinder elementFinder, XPath xPath)
         {

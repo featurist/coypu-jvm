@@ -85,7 +85,7 @@ namespace Coypu.Tests.When_interacting_with_the_browser
 
     public class StubDriverFactory : DriverFactory
     {
-        private readonly Driver driver;
+        private final Driver driver;
 
         public StubDriverFactory(Driver driver)
         {
@@ -100,7 +100,7 @@ namespace Coypu.Tests.When_interacting_with_the_browser
 
     public class StubUrlBuilder : UrlBuilder
     {
-        private readonly Dictionary<string, string> urls = new Dictionary<string, string>();
+        private final Dictionary<string, string> urls = new Dictionary<string, string>();
 
         public string GetFullyQualifiedUrl(string virtualPath, Configuration configuration)
         {

@@ -1,7 +1,5 @@
-namespace Coypu
+package Coypu;
+public interface UrlBuilder
 {
-    public interface UrlBuilder
-    {
-        string GetFullyQualifiedUrl(string virtualPath, Configuration configuration);
-    }
+    String GetFullyQualifiedUrl(String virtualPath, Configuration configuration);
 }

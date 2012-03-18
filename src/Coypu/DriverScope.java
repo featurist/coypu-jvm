@@ -2,7 +2,7 @@ package Coypu;
 
 import Coypu.Actions.*;
 import Coypu.Finders.*;
-import Coypu.Queries.PredicateQuery;
+import Coypu.Queries.*;
 import Coypu.Robustness.RobustWrapper;
 import Coypu.Robustness.Waiter;
 import com.sun.jndi.toolkit.url.Uri;
@@ -42,8 +42,7 @@ public class DriverScope implements Coypu.Scope
         configuration = outer.configuration;
     }
 
-    public Uri Location()
-    {
+    public Uri Location() throws MissingHtmlException {
         return driver.Location();
     }
 
@@ -82,15 +81,13 @@ public class DriverScope implements Coypu.Scope
         return new WaitThenClick(driver, SetOptions(options), waiter, new ButtonFinder(driver, locator, this));
     }
 
-    public DriverScope ClickButton(String locator, PredicateQuery until,  TimeSpan waitBeforeRetry, Options options)
-    {
+    public DriverScope ClickButton(String locator, PredicateQuery until,  TimeSpan waitBeforeRetry, Options options) throws MissingHtmlException {
         options = SetOptions(options);
         TryUntil(WaitThenClickButton(locator, options), until, waitBeforeRetry, options);
         return this;
     }
 
-    public DriverScope ClickLink(String locator, PredicateQuery until,  TimeSpan waitBeforeRetry, Options options)
-    {
+    public DriverScope ClickLink(String locator, PredicateQuery until,  TimeSpan waitBeforeRetry, Options options) throws MissingHtmlException {
         options = SetOptions(options);
         TryUntil(WaitThenClickLink(locator, options), until, waitBeforeRetry, options);
         return this;
@@ -244,17 +241,12 @@ public class DriverScope implements Coypu.Scope
         return new IFrameElementScope(new IFrameFinder(driver, locator, this), this, robustWrapper, SetOptions(options));
     }
 
-    public void TryUntil(BrowserAction tryThis, PredicateQuery until,  TimeSpan waitBeforeRetry, Options options)
+    public void TryUntil(BrowserAction tryThis, PredicateQuery until,  TimeSpan waitBeforeRetry, Options options) throws MissingHtmlException
     {
         robustWrapper.TryUntil(tryThis, until, SetOptions(options).Timeout, waitBeforeRetry);
     }
 
     public State FindState(State[] states, Options options)
-    {
-        return stateFinder.FindState(SetOptions(options), states);
-    }
-
-    public State FindState(params State[] states)
     {
         return stateFinder.FindState(SetOptions(options), states);
     }
@@ -277,7 +269,7 @@ public class DriverScope implements Coypu.Scope
         return element;
     }
 
-    public T Query<T>(Query<T> query)
+    public <T> T Query(Query<T> query)
     {
         return robustWrapper.Robustly(query);
     }

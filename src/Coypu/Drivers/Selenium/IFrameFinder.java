@@ -5,9 +5,9 @@ namespace Coypu.Drivers.Selenium
 {
     internal class IFrameFinder
     {
-        private readonly IWebDriver selenium;
-        private readonly ElementFinder elementFinder;
-        private readonly XPath xPath;
+        private final IWebDriver selenium;
+        private final ElementFinder elementFinder;
+        private final XPath xPath;
 
         public IFrameFinder(IWebDriver selenium, ElementFinder elementFinder, XPath xPath)
         {

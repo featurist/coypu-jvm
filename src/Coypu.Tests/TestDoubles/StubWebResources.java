@@ -5,7 +5,7 @@ namespace Coypu.Tests.TestDoubles
 {
     public class StubWebResources
     {
-        private readonly Dictionary<string, WebResponse> resources = new Dictionary<string, WebResponse>();
+        private final Dictionary<string, WebResponse> resources = new Dictionary<string, WebResponse>();
 
         public void StubResource(string resource, StubWebResponse stubWebResponse)
         {

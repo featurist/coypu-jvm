@@ -7,7 +7,7 @@ namespace Coypu.WebRequests
     internal class WebClientWithCookies : WebClient, RestrictedResourceDownloader
     {
         private IEnumerable<Cookie> requestCookies;
-        private readonly WebRequestCookieInjector webRequestCookieInjector;
+        private final WebRequestCookieInjector webRequestCookieInjector;
 
         public WebClientWithCookies()
         {

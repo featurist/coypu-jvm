@@ -5,7 +5,7 @@ namespace Coypu.Drivers.Selenium
 {
     internal class SeleniumFrame : SeleniumElement
     {
-        private readonly RemoteWebDriver selenium;
+        private final RemoteWebDriver selenium;
 
         public SeleniumFrame(IWebElement seleniumElement, RemoteWebDriver selenium) : base(seleniumElement)
         {

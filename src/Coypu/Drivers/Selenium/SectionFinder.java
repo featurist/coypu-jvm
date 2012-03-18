@@ -6,10 +6,10 @@ namespace Coypu.Drivers.Selenium
 {
     internal class SectionFinder
     {
-        private readonly ElementFinder elementFinder;
-        private readonly TextMatcher textMatcher;
+        private final ElementFinder elementFinder;
+        private final TextMatcher textMatcher;
 
-        readonly string[] headerTags = { "h1", "h2", "h3", "h4", "h5", "h6" };
+        final string[] headerTags = { "h1", "h2", "h3", "h4", "h5", "h6" };
 
         public SectionFinder(ElementFinder elementFinder, TextMatcher textMatcher)
         {

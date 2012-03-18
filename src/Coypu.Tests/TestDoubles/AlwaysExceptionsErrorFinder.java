@@ -17,7 +17,7 @@ namespace Coypu.Tests.TestDoubles
 
     public class AlwaysFindsElementFinder : ElementFinder
     {
-        private readonly ElementFound element;
+        private final ElementFound element;
 
         public AlwaysFindsElementFinder(ElementFound element) : base (null,null,null)
         {

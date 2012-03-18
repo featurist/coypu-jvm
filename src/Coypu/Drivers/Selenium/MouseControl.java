@@ -4,7 +4,7 @@ namespace Coypu.Drivers.Selenium
 {
     internal class MouseControl
     {
-        private readonly IWebDriver selenium;
+        private final IWebDriver selenium;
 
         public MouseControl(IWebDriver selenium)
         {

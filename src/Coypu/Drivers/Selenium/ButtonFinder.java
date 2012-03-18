@@ -5,9 +5,9 @@ namespace Coypu.Drivers.Selenium
 {
     internal class ButtonFinder
     {
-        private readonly ElementFinder elementFinder;
-        private readonly TextMatcher textMatcher;
-        private readonly XPath xPath;
+        private final ElementFinder elementFinder;
+        private final TextMatcher textMatcher;
+        private final XPath xPath;
 
         public ButtonFinder(ElementFinder elementFinder, TextMatcher textMatcher, XPath xPath)
         {

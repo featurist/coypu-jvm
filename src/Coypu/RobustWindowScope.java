@@ -6,9 +6,9 @@ namespace Coypu
 {
     public class RobustWindowScope : BrowserWindow
     {
-        private readonly Options options;
+        private final Options options;
 
-        internal RobustWindowScope(Driver driver, Configuration configuration, RobustWrapper robustWrapper, Waiter waiter, UrlBuilder urlBuilder, Options options, WindowFinder windowFinder) 
+        internal RobustWindowScope(Driver driver, Configuration configuration, RobustWrapper robustWrapper, Waiter waiter, UrlBuilder urlBuilder, Options options, WindowFinder windowFinder)
             : base(configuration,windowFinder,driver, robustWrapper, waiter, urlBuilder)
         {
             this.options = options;

@@ -3,7 +3,7 @@ namespace Coypu.Tests.TestDoubles
 {
     public class StubElement : ElementFound
     {
-        private readonly Dictionary<string,string> attributes = new Dictionary<string,string>();
+        private final Dictionary<string,string> attributes = new Dictionary<string,string>();
 
         public string Id { get; set; }
 

@@ -1,23 +1,21 @@
-using System;
-using Coypu.Finders;
-using Coypu.Queries;
-using Coypu.Robustness;
+package Coypu;
 
-namespace Coypu
+import Coypu.Finders.ElementFinder;
+import Coypu.Queries.ElementQuery;
+import Coypu.Robustness.RobustWrapper;
+
+public class RobustElementScope extends ElementScope
 {
-    public class RobustElementScope : ElementScope
+    protected final Options options;
+
+    public RobustElementScope(ElementFinder elementFinder, DriverScope outerScope, RobustWrapper robustWrapper, Options options)
     {
-        private readonly Options options;
+        super(elementFinder, outerScope, robustWrapper);
+        this.options = options;
+    }
 
-        internal RobustElementScope(ElementFinder elementFinder, DriverScope outerScope, RobustWrapper robustWrapper, Options options)
-            : base(elementFinder, outerScope, robustWrapper)
-        {
-            this.options = options;
-        }
-
-        public override ElementFound Now()
-        {
-            return robustWrapper.Robustly(new ElementQuery(this, options));
-        }
+    public ElementFound Now()
+    {
+        return robustWrapper.Robustly(new ElementQuery(this, options));
     }
 }

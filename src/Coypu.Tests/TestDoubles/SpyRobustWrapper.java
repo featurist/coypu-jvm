@@ -12,9 +12,9 @@ namespace Coypu.Tests.TestDoubles
         internal IList<TryUntilArgs> DeferredTryUntils = new List<TryUntilArgs>();
 
         private object alwaysReturn;
-        private readonly IDictionary<object, object> stubbedQueryResult = new Dictionary<object, object>();
-        private readonly IList<object> queriesRan = new List<object>();
-        public static readonly object NO_EXPECTED_RESULT = new object();
+        private final IDictionary<object, object> stubbedQueryResult = new Dictionary<object, object>();
+        private final IList<object> queriesRan = new List<object>();
+        public static final object NO_EXPECTED_RESULT = new object();
 
         public IEnumerable<Query<T>> QueriesRan<T>()
         {

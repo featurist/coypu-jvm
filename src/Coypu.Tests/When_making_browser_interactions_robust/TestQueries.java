@@ -6,12 +6,12 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
 {
     public class AlwaysSucceedsQuery<T> : Query<T>
     {
-        private readonly Stopwatch stopWatch = new Stopwatch();
+        private final Stopwatch stopWatch = new Stopwatch();
         private T result;
-        private readonly T actualResult;
-        private readonly T expecting;
-        private readonly  TimeSpan _timeout;
-        private readonly  TimeSpan _retryInterval;
+        private final T actualResult;
+        private final T expecting;
+        private final  TimeSpan _timeout;
+        private final  TimeSpan _retryInterval;
 
         public int Tries { get; set; }
         public long LastCall { get; set; }
@@ -61,8 +61,8 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
 
     public class ThrowsSecondTimeQuery<T> : Query<T>
     {
-        private readonly T result;
-        private readonly  TimeSpan _retryInterval;
+        private final T result;
+        private final  TimeSpan _retryInterval;
         public  TimeSpan Timeout { get; set; }
 
         public ThrowsSecondTimeQuery(T result,  TimeSpan timeout,  TimeSpan retryInterval)
@@ -99,8 +99,8 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
 
     public class AlwaysThrowsQuery<TResult,TException> : Query<TResult> where TException : Exception
     {
-        private readonly  TimeSpan _retryInterval;
-        private readonly Stopwatch stopWatch = new Stopwatch();
+        private final  TimeSpan _retryInterval;
+        private final Stopwatch stopWatch = new Stopwatch();
         
         public AlwaysThrowsQuery( TimeSpan timeout,  TimeSpan retryInterval)
         {
@@ -140,13 +140,13 @@ namespace Coypu.Tests.When_making_browser_interactions_robust
 
     public class ThrowsThenSubsequentlySucceedsQuery<T> : Query<T>
     {
-        private readonly Stopwatch stopWatch = new Stopwatch();
+        private final Stopwatch stopWatch = new Stopwatch();
         private T result;
-        private readonly T actualResult;
-        private readonly T expectedResult;
-        private readonly int throwsHowManyTimes;
-        private readonly  TimeSpan _timeout;
-        private readonly  TimeSpan _retryInterval;
+        private final T actualResult;
+        private final T expectedResult;
+        private final int throwsHowManyTimes;
+        private final  TimeSpan _timeout;
+        private final  TimeSpan _retryInterval;
 
         public ThrowsThenSubsequentlySucceedsQuery(T actualResult, T expectedResult, int throwsHowManyTimes,  TimeSpan timeout,  TimeSpan retryInterval)
         {

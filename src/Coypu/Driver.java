@@ -19,8 +19,8 @@ public interface Driver
     boolean HasDialog(String withText, DriverScope scope);
     ElementFound FindCss(String cssSelector, DriverScope scope);
     ElementFound FindXPath(String xpath, DriverScope scope);
-    //IEnumerable<ElementFound> FindAllCss(String cssSelector, DriverScope scope);
-    //IEnumerable<ElementFound> FindAllXPath(String xpath, DriverScope scope);
+    IEnumerable<ElementFound> FindAllCss(String cssSelector, DriverScope scope);
+    IEnumerable<ElementFound> FindAllXPath(String xpath, DriverScope scope);
     void Check(Element field);
     void Uncheck(Element field);
     void Choose(Element field);

@@ -7,7 +7,7 @@ namespace Coypu.Drivers.Selenium
 {
     internal class ElementFinder
     {
-        private readonly XPath xPath;
+        private final XPath xPath;
 
         public ElementFinder(XPath xPath)
         {

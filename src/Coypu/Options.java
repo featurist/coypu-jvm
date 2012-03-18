@@ -4,17 +4,17 @@ package Coypu;
 /// </summary>
 public class Options
 {
-    final TimeSpan DEFAULT_TIMEOUT_SECONDS = 1;
-    final TimeSpan DEFAULT_INTERVAL_SECONDS = 0.1;
+    final double DEFAULT_TIMEOUT_SECONDS = 1;
+    final double DEFAULT_INTERVAL_SECONDS = 0.1;
 
     /// <summary>
     /// New default options
     /// </summary>
     public Options()
     {
-        Timeout = DEFAULT_TIMEOUT_SECONDS;
-        RetryInterval = DEFAULT_INTERVAL_SECONDS;
-        WaitBeforeClick = 0;
+        Timeout = TimeSpan.FromSeconds(DEFAULT_TIMEOUT_SECONDS);
+        RetryInterval = TimeSpan.FromSeconds(DEFAULT_INTERVAL_SECONDS);
+        WaitBeforeClick = TimeSpan.Zero();
     }
 
 
@@ -43,22 +43,3 @@ public class Options
     public boolean ConsiderInvisibleElements;
 }
 
-public class TimeSpan 
-{
-    private final double milliseconds;
-
-    private TimeSpan(double milliseconds) {
-
-        this.milliseconds = milliseconds;
-    }
-
-    public TimeSpan FromSeconds(double seconds)
-    {
-        return new TimeSpan(seconds / 1000);
-    }
-
-    public TimeSpan FromMilliseconds(double milliseconds)
-    {
-        return new TimeSpan(milliseconds);
-    }
-}

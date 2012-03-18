@@ -5,7 +5,7 @@ namespace Coypu.Tests.TestDoubles
 {
     public class StubWebResponse : WebResponse
     {
-        private readonly Stream responseStream = new MemoryStream();
+        private final Stream responseStream = new MemoryStream();
 
         public override Stream GetResponseStream()
         {

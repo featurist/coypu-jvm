@@ -15,12 +15,13 @@ public class RetryUntilTimeoutRobustWrapper implements RobustWrapper
     {
         return zeroTimeout;
     }
+
     public void SetZeroTimeout(boolean value)
     {
         zeroTimeout = value;
     }
 
-    public void SetOverrideTimeout( TimeSpan timeout)
+    public void SetOverrideTimeout(TimeSpan timeout)
     {
         overrideTimeout = timeout;
     }
@@ -56,7 +57,7 @@ public class RetryUntilTimeoutRobustWrapper implements RobustWrapper
                 }
                 return result;
             }
-            catch (NotSupportedException ex) { throw ex; }
+            catch (UnsupportedOperationException ex) { throw ex; }
             catch (Exception ex)
             {
                 if (TimeoutReached(stopWatch, timeout, interval))
@@ -73,11 +74,11 @@ public class RetryUntilTimeoutRobustWrapper implements RobustWrapper
         TimeSpan timeout;
         if (zeroTimeout)
         {
-            timeout = TimeSpan .Zero;
+            timeout = TimeSpan.Zero();
         }
-        else if (overrideTimeout.HasValue)
+        else if (overrideTimeout != null)
         {
-            timeout = overrideTimeout.Value;
+            timeout = overrideTimeout;
         }
         else
         {
