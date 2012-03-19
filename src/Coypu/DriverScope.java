@@ -95,17 +95,17 @@ public class DriverScope implements Coypu.Scope
 
     public ElementScope FindButton(String locator, Options options)
     {
-        return new RobustElementScope(new ButtonFinder(driver, locator, this), this, robustWrapper, SetOptions(options));
+        return new RobustElementScope(new ButtonFinder(driver, locator, this), this, SetOptions(options));
     }
 
     public ElementScope FindLink(String locator, Options options)
     {
-        return new RobustElementScope(new LinkFinder(driver, locator, this), this, robustWrapper, SetOptions(options));
+        return new RobustElementScope(new LinkFinder(driver, locator, this), this, SetOptions(options));
     }
 
     public ElementScope FindField(String locator, Options options)
     {
-        return new RobustElementScope(new FieldFinder(driver, locator, this), this, robustWrapper, SetOptions(options));
+        return new RobustElementScope(new FieldFinder(driver, locator, this), this, SetOptions(options));
     }
 
     public FillInWith FillIn(String locator, Options options)
@@ -160,12 +160,12 @@ public class DriverScope implements Coypu.Scope
 
     public ElementScope FindCss(String cssSelector, Options options)
     {
-        return new RobustElementScope(new CssFinder(driver, cssSelector, this), this, robustWrapper, SetOptions(options));
+        return new RobustElementScope(new CssFinder(driver, cssSelector, this), this , SetOptions(options));
     }
 
     public ElementScope FindXPath(String xpath, Options options)
     {
-        return new RobustElementScope(new XPathFinder(driver, xpath, this), this, robustWrapper, SetOptions(options));
+        return new RobustElementScope(new XPathFinder(driver, xpath, this), this, SetOptions(options));
     }
 
     public IEnumerable<ElementFound> FindAllCss(String cssSelector, Options options)
@@ -182,17 +182,17 @@ public class DriverScope implements Coypu.Scope
 
     public ElementScope FindSection(String locator, Options options)
     {
-        return new RobustElementScope(new SectionFinder(driver, locator, this), this, robustWrapper, SetOptions(options));
+        return new RobustElementScope(new SectionFinder(driver, locator, this), this, SetOptions(options));
     }
 
     public ElementScope FindFieldset(String locator, Options options)
     {
-        return new RobustElementScope(new FieldsetFinder(driver, locator, this), this, robustWrapper, SetOptions(options));
+        return new RobustElementScope(new FieldsetFinder(driver, locator, this), this, SetOptions(options));
     }
 
     public ElementScope FindId(String id, Options options)
     {
-        return new RobustElementScope(new IdFinder(driver, id, this), this, robustWrapper, SetOptions(options));
+        return new RobustElementScope(new IdFinder(driver, id, this), this, SetOptions(options));
     }
 
     public void Check(String locator, Options options)
@@ -238,7 +238,7 @@ public class DriverScope implements Coypu.Scope
 
     public IFrameElementScope FindIFrame(String locator, Options options)
     {
-        return new IFrameElementScope(new IFrameFinder(driver, locator, this), this, robustWrapper, SetOptions(options));
+        return new IFrameElementScope(new IFrameFinder(driver, locator, this), this, SetOptions(options));
     }
 
     public void TryUntil(BrowserAction tryThis, PredicateQuery until,  TimeSpan waitBeforeRetry, Options options) throws MissingHtmlException

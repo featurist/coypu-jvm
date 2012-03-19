@@ -1,27 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
+﻿package Coypu.WebRequests;
+import Coypu.WebRequests.RestrictedResourceDownloader;
 
-namespace Coypu.WebRequests
+public class WebClientWithCookies extends WebClient implements RestrictedResourceDownloader
 {
-    internal class WebClientWithCookies : WebClient, RestrictedResourceDownloader
+    private IEnumerable<Cookie> requestCookies;
+    private final WebRequestCookieInjector webRequestCookieInjector;
+
+    public WebClientWithCookies()
     {
-        private IEnumerable<Cookie> requestCookies;
-        private final WebRequestCookieInjector webRequestCookieInjector;
+        webRequestCookieInjector = new WebRequestCookieInjector();
+    }
 
-        public WebClientWithCookies()
-        {
-            webRequestCookieInjector = new WebRequestCookieInjector();
-        }
+    public void SetCookies(Enumerable<Cookie> cookies)
+    {
+        requestCookies = cookies;
+    }
 
-        public void SetCookies(IEnumerable<Cookie> cookies)
-        {
-            requestCookies = cookies;
-        }
-
-        protected override WebRequest GetWebRequest(Uri address)
-        {
-            return webRequestCookieInjector.InjectCookies(base.GetWebRequest(address), requestCookies);
-        }
+    protected WebRequest GetWebRequest(Uri address)
+    {
+        return webRequestCookieInjector.InjectCookies(base.GetWebRequest(address), requestCookies);
     }
 }

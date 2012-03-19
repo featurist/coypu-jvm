@@ -1,10 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Net;
-
-namespace Coypu.WebRequests
+﻿package Coypu.WebRequests;
+public interface RequestCookieInjector
 {
-    internal interface RequestCookieInjector
-    {
-        WebRequest InjectCookies(WebRequest httpRequest, IEnumerable<Cookie> enumerable);
-    }
+    WebRequest InjectCookies(WebRequest httpRequest, Enumerable<Cookie> enumerable);
 }

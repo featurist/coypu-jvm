@@ -1,11 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Net;
+﻿package Coypu.WebRequests;
 
-namespace Coypu.WebRequests
+public interface RestrictedResourceDownloader
 {
-    internal interface RestrictedResourceDownloader
-    {
-        void SetCookies(IEnumerable<Cookie> getBrowserCookies);
-        void DownloadFile(string resource, string saveAs);
-    }
+    void SetCookies(Enumerable<Cookie> getBrowserCookies);
+    void DownloadFile(String resource, String saveAs);
 }

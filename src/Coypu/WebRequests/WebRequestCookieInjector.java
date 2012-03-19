@@ -1,28 +1,22 @@
-﻿using System.Collections.Generic;
-using System.Net;
-
-namespace Coypu.WebRequests
+﻿package Coypu.WebRequests;
+public class WebRequestCookieInjector
 {
-    internal class WebRequestCookieInjector
+    public WebRequest InjectCookies(WebRequest webRequest, Enumerable<Cookie> cookies)
     {
-        internal WebRequest InjectCookies(WebRequest webRequest, IEnumerable<Cookie> cookies)
-        {
-            WebRequest request = webRequest;
+        WebRequest request = webRequest;
 
-            return request is HttpWebRequest
-                       ? AddCookiesToCookieContainer((HttpWebRequest) request, cookies)
-                       : request;
-        }
+        return request is HttpWebRequest
+                   ? AddCookiesToCookieContainer((HttpWebRequest) request, cookies)
+                   : request;
+    }
 
-        internal static HttpWebRequest AddCookiesToCookieContainer(HttpWebRequest httpRequest,
-                                                                   IEnumerable<Cookie> cookies)
-        {
-            httpRequest.CookieContainer = new CookieContainer();
+    public static HttpWebRequest AddCookiesToCookieContainer(HttpWebRequest httpRequest, Enumerable<Cookie> cookies)
+    {
+        httpRequest.CookieContainer = new CookieContainer();
 
-            foreach (Cookie cookie in cookies)
-                httpRequest.CookieContainer.Add(cookie);
+        foreach (Cookie cookie in cookies)
+            httpRequest.CookieContainer.Add(cookie);
 
-            return httpRequest;
-        }
+        return httpRequest;
     }
 }

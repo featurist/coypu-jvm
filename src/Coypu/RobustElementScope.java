@@ -8,9 +8,9 @@ public class RobustElementScope extends ElementScope
 {
     protected final Options options;
 
-    public RobustElementScope(ElementFinder elementFinder, DriverScope outerScope, RobustWrapper robustWrapper, Options options)
+    public RobustElementScope(ElementFinder elementFinder, DriverScope outerScope, Options options)
     {
-        super(elementFinder, outerScope, robustWrapper);
+        super(elementFinder, outerScope);
         this.options = options;
     }
 

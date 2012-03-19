@@ -24,8 +24,7 @@ public class State
         return conditionWasMet;
     }
 
-    public boolean CheckCondition()
-    {
+    public boolean CheckCondition() throws MissingHtmlException {
         condition.Run();
         return conditionWasMet = condition.Result();
     }

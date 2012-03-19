@@ -1,9 +1,8 @@
-using System;
+package Coypu;
 
-namespace Coypu
+import java.lang.reflect.Type;
+
+public interface DriverFactory
 {
-    public interface DriverFactory
-    {
-        Driver NewWebDriver(Type driverType, Drivers.Browser browser);
-    }
+    Driver NewWebDriver(Type driverType, Coypu.Drivers.Browser browser);
 }

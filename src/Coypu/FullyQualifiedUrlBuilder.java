@@ -1,20 +1,17 @@
-﻿using System;
+﻿package Coypu;
 
-namespace Coypu
+public class FullyQualifiedUrlBuilder implements UrlBuilder
 {
-    internal class FullyQualifiedUrlBuilder : UrlBuilder
+    public String GetFullyQualifiedUrl(String virtualPath, Configuration configuration)
     {
-        public string GetFullyQualifiedUrl(string virtualPath, Configuration configuration)
-        {
-            if (Uri.IsWellFormedUriString(virtualPath, UriKind.Absolute))
-                return virtualPath;
+        if (Uri.IsWellFormedUriString(virtualPath, UriKind.Absolute))
+            return virtualPath;
 
-            virtualPath = virtualPath.TrimStart('/');
-            var scheme = configuration.SSL ? "https" : "http";
+        virtualPath = virtualPath.replaceFirst("/","");
+        String scheme = configuration.SSL ? "https" : "http";
 
-            return configuration.Port == 80
-                       ? String.Format("{0}://{1}/{2}", scheme, configuration.AppHost, virtualPath)
-                       : String.Format("{0}://{1}:{2}/{3}", scheme, configuration.AppHost, configuration.Port, virtualPath);
-        }
+        return configuration.Port == 80
+                   ? String.format("{0}://{1}/{2}", scheme, configuration.GetAppHost(), virtualPath)
+                   : String.format("{0}://{1}:{2}/{3}", scheme, configuration.GetAppHost(), configuration.Port, virtualPath);
     }
 }

@@ -1,15 +1,14 @@
-﻿using System;
+﻿package Coypu.Drivers;
 
-namespace Coypu.Drivers
+import java.lang.reflect.Type;
+
+/// <summary>
+/// Thrown when your chosen browser is not supported by your chosen driver
+/// </summary>
+public class BrowserNotSupportedException extends Exception
 {
-    /// <summary>
-    /// Thrown when your chosen browser is not supported by your chosen driver
-    /// </summary>
-    public class BrowserNotSupportedException : Exception
+    public BrowserNotSupportedException(Browser browser, Type driverType)
     {
-        public BrowserNotSupportedException(Browser browser, Type driverType)
-            : base(string.Format("{0} is not supported by {1}", browser, driverType.Name))
-        {
-        }
+        super(String.format("{0} is not supported by {1}", browser, driverType.Name));
     }
 }

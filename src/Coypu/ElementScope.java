@@ -4,6 +4,7 @@ import Coypu.Actions.Click;
 import Coypu.Finders.ElementFinder;
 import Coypu.Queries.ElementExistsQuery;
 import Coypu.Queries.ElementMissingQuery;
+import Coypu.Robustness.RobustWrapper;
 
 public class ElementScope extends DriverScope
 {

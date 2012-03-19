@@ -4,11 +4,12 @@ import com.sun.jndi.toolkit.url.Uri;
 
 public interface Driver
 {
-    public ElementFound FindButton(String locator, DriverScope scope);
-    public ElementFound FindLink(String linkText, DriverScope scope);
-    public ElementFound FindField(String locator, DriverScope scope);
+    void Dispose();
+    ElementFound FindButton(String locator, DriverScope scope);
+    ElementFound FindLink(String linkText, DriverScope scope);
+    ElementFound FindField(String locator, DriverScope scope);
     public void Click(Element element);
-    public void Visit(String url);
+    void Visit(String url);
     void Set(Element element, String value);
     void Select(Element element, String option);
     Object Native();
@@ -19,8 +20,8 @@ public interface Driver
     boolean HasDialog(String withText, DriverScope scope);
     ElementFound FindCss(String cssSelector, DriverScope scope);
     ElementFound FindXPath(String xpath, DriverScope scope);
-    IEnumerable<ElementFound> FindAllCss(String cssSelector, DriverScope scope);
-    IEnumerable<ElementFound> FindAllXPath(String xpath, DriverScope scope);
+    Enumerable<ElementFound> FindAllCss(String cssSelector, DriverScope scope);
+    Enumerable<ElementFound> FindAllXPath(String xpath, DriverScope scope);
     void Check(Element field);
     void Uncheck(Element field);
     void Choose(Element field);
@@ -35,6 +36,6 @@ public interface Driver
     ElementFound FindId(String id, DriverScope scope);
     ElementFound FindIFrame(String locator, DriverScope scope);
     void Hover(Element element);
-    //IEnumerable<Cookie> GetBrowserCookies();
+    Enumerable<Cookie> GetBrowserCookies();
     ElementFound FindWindow(String locator, DriverScope scope);
 }

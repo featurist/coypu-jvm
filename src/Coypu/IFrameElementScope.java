@@ -6,9 +6,9 @@ import com.sun.jndi.toolkit.url.Uri;
 
 public class IFrameElementScope extends RobustElementScope
 {
-    public IFrameElementScope(ElementFinder elementFinder, DriverScope outerScope, RobustWrapper robustWrapper, Options options)
+    public IFrameElementScope(ElementFinder elementFinder, DriverScope outerScope, Options options)
     {
-        super(elementFinder, outerScope, robustWrapper,options);
+        super(elementFinder, outerScope, options);
     }
 
     public Uri Location() throws MissingHtmlException

@@ -8,7 +8,7 @@ public class AcceptModalDialog extends DriverAction
 {
     private DriverScope driverScope;
 
-    AcceptModalDialog(DriverScope driverScope, Driver driver, Options options)
+    public AcceptModalDialog(DriverScope driverScope, Driver driver, Options options)
     {
         super(driver, options);
         this.driverScope = driverScope;

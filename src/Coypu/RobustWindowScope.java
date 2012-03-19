@@ -1,22 +1,22 @@
-using Coypu.Finders;
-using Coypu.Queries;
-using Coypu.Robustness;
+package Coypu;
 
-namespace Coypu
+import Coypu.Finders.WindowFinder;
+import Coypu.Queries.ElementQuery;
+import Coypu.Robustness.RobustWrapper;
+import Coypu.Robustness.Waiter;
+
+public class RobustWindowScope extends BrowserWindow
 {
-    public class RobustWindowScope : BrowserWindow
+    private final Options options;
+
+    public RobustWindowScope(Driver driver, Configuration configuration, RobustWrapper robustWrapper, Waiter waiter, UrlBuilder urlBuilder, Options options, WindowFinder windowFinder)
     {
-        private final Options options;
+        super(configuration, windowFinder, driver, robustWrapper, waiter, urlBuilder);
+        this.options = options;
+    }
 
-        internal RobustWindowScope(Driver driver, Configuration configuration, RobustWrapper robustWrapper, Waiter waiter, UrlBuilder urlBuilder, Options options, WindowFinder windowFinder)
-            : base(configuration,windowFinder,driver, robustWrapper, waiter, urlBuilder)
-        {
-            this.options = options;
-        }
-
-        public override ElementFound Now()
-        {
-            return robustWrapper.Robustly(new ElementQuery(this, options));
-        }
+    public ElementFound Now()
+    {
+        return robustWrapper.Robustly(new ElementQuery(this, options));
     }
 }
