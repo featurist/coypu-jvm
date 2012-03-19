@@ -1,40 +1,34 @@
-﻿using System;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Remote;
-
-namespace Coypu.Drivers.Selenium
+﻿package Coypu.Drivers.Selenium;
+class Dialogs
 {
-    internal class Dialogs
+    private final RemoteWebDriver selenium;
+
+    public Dialogs(RemoteWebDriver selenium)
     {
-        private final RemoteWebDriver selenium;
+        this.selenium = selenium;
+    }
 
-        public Dialogs(RemoteWebDriver selenium)
+    public boolean HasDialog(String withText)
+    {
+        try
         {
-            this.selenium = selenium;
+            return selenium.SwitchTo() != null &&
+                   selenium.SwitchTo().Alert() != null &&
+                   selenium.SwitchTo().Alert().Text == withText;
         }
+        catch (NoAlertPresentException ex)
+        {
+            return false;
+        }
+    }
 
-        public bool HasDialog(string withText)
-        {
-            try
-            {
-                return selenium.SwitchTo() != null &&
-                       selenium.SwitchTo().Alert() != null &&
-                       selenium.SwitchTo().Alert().Text == withText;
-            }
-            catch (NoAlertPresentException)
-            {
-                return false;
-            }
-        }
+    public void AcceptModalDialog()
+    {
+        selenium.SwitchTo().Alert().Accept();
+    }
 
-        public void AcceptModalDialog()
-        {
-            selenium.SwitchTo().Alert().Accept();
-        }
-
-        public void CancelModalDialog()
-        {
-            selenium.SwitchTo().Alert().Dismiss();
-        }
+    public void CancelModalDialog()
+    {
+        selenium.SwitchTo().Alert().Dismiss();
     }
 }

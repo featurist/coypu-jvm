@@ -1,72 +1,78 @@
-﻿using System.Linq;
+﻿package Coypu.Drivers;
 
-namespace Coypu.Drivers
+import Coypu.StringJoiner;
+
+/// <summary>
+/// Helper for formatting XPath queries
+/// </summary>
+public class XPath
 {
     /// <summary>
-    /// Helper for formatting XPath queries
+    /// <para>Format an XPath query that uses String values for comparison that may contain single or TimeSpan quotes</para>
+    /// <para>Wraps the String in the appropriate quotes or uses concat() to separate them if both are present.</para>
+    /// <para>Usage:</para>
+    /// <code>  new XPath().Format(".//element[@attribute1 = {0} and @attribute2 = {1}]",inputOne,inputTwo) </code>
     /// </summary>
-    public class XPath
+    /// <param name="value"></param>
+    /// <param name="args"></param>
+    /// <returns></returns>
+    public String Format(String value, Object... args)
     {
-        /// <summary>
-        /// <para>Format an XPath query that uses string values for comparison that may contain single or TimeSpan quotes</para>
-        /// <para>Wraps the string in the appropriate quotes or uses concat() to separate them if both are present.</para>
-        /// <para>Usage:</para>
-        /// <code>  new XPath().Format(".//element[@attribute1 = {0} and @attribute2 = {1}]",inputOne,inputTwo) </code>
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        public string Format(string value, params object[] args)
-        {
-            return string.Format(value, args.Select(a => Literal(a.ToString())).ToArray());
+        String[] literals = new String[args.length];
+        for(int i = 0; i < args.length; i++) {
+            literals[i] = Literal(args[i].toString());
+        }
+        return String.format(value, literals);
+    }
+
+    public String Literal(String value)
+    {
+        if (HasNoDoubleQuotes(value))
+            return WrapInDoubleQuotes(value);
+
+        if (HasNoSingleQuotes(value))
+            return WrapInSingleQuote(value);
+
+        return BuildConcatSeparatingSingleAndDoubleQuotes(value);
+    }
+
+    private String BuildConcatSeparatingSingleAndDoubleQuotes(String value)
+    {
+        String[] splitOnDouble = value.split("\"");
+        String[] doubleQuotedParts = new String[splitOnDouble.length];
+        
+        for(int i = 0; i < splitOnDouble.length; i++) {
+            doubleQuotedParts[i] = WrapInDoubleQuotes(splitOnDouble[i]);
         }
 
-        internal string Literal(string value)
-        {
-            if (HasNoDoubleQuotes(value))
-                return WrapInDoubleQuotes(value);
+        String reJoinedWithDoubleQuoteParts = StringJoiner.join(", '\"', ", doubleQuotedParts);
 
-            if (HasNoSingleQuotes(value))
-                return WrapInSingleQuote(value);
+        return String.format("concat({0})", TrimEmptyParts(reJoinedWithDoubleQuoteParts));
+    }
 
-            return BuildConcatSeparatingSingleAndDoubleQuotes(value);
-        }
+    private String WrapInSingleQuote(String value)
+    {
+        return String.format("'{0}'", value);
+    }
 
-        private string BuildConcatSeparatingSingleAndDoubleQuotes(string value)
-        {
-            var doubleQuotedParts = value.Split('\"')
-                                         .Select(e => WrapInDoubleQuotes(e))
-                                         .ToArray();
+    private String WrapInDoubleQuotes(String value)
+    {
+        return String.format("\"{0}\"",value);
+    }
 
-            var reJoinedWithDoubleQuoteParts = string.Join(", '\"', ", doubleQuotedParts);
+    private String TrimEmptyParts(String concatArguments)
+    {
+        return concatArguments.replace(", \"\"", "")
+                              .replace("\"\", ", "");
+    }
 
-            return string.Format("concat({0})", TrimEmptyParts(reJoinedWithDoubleQuoteParts));
-        }
+    private boolean HasNoSingleQuotes(String value)
+    {
+        return !value.contains("'");
+    }
 
-        private string WrapInSingleQuote(string value)
-        {
-            return string.Format("'{0}'", value);
-        }
-
-        private string WrapInDoubleQuotes(string value)
-        {
-            return string.Format("\"{0}\"",value);
-        }
-
-        private string TrimEmptyParts(string concatArguments)
-        {
-            return concatArguments.Replace(", \"\"", "")
-                                           .Replace("\"\", ", "");
-        }
-
-        private bool HasNoSingleQuotes(string value)
-        {
-            return !value.Contains("'");
-        }
-
-        private bool HasNoDoubleQuotes(string value)
-        {
-            return !value.Contains("\"");
-        }
+    private boolean HasNoDoubleQuotes(String value)
+    {
+        return !value.contains("\"");
     }
 }

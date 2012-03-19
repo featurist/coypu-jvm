@@ -4,7 +4,9 @@ import Coypu.Actions.BrowserAction;
 import Coypu.MissingHtmlException;
 import Coypu.Queries.ActionSatisfiesPredicateQuery;
 import Coypu.Queries.Query;
+import Coypu.Stopwatch;
 import Coypu.TimeSpan;
+import Coypu.TimeoutException;
 
 public class RetryUntilTimeoutRobustWrapper implements RobustWrapper
 {
@@ -32,15 +34,13 @@ public class RetryUntilTimeoutRobustWrapper implements RobustWrapper
     }
 
     public void TryUntil(BrowserAction tryThis, Query<Boolean> until,  TimeSpan overallTimeout,  TimeSpan waitBeforeRetry)
-      throws MissingHtmlException
-    {
+            throws MissingHtmlException, TimeoutException, InterruptedException {
         boolean outcome = Robustly(new ActionSatisfiesPredicateQuery(tryThis, until, overallTimeout, until.RetryInterval(), waitBeforeRetry, this));
         if (!outcome)
             throw new MissingHtmlException("Timeout from TryUntil: the page never reached the required state.");
     }
 
-    public <TResult> TResult Robustly(Query<TResult> query)
-    {
+    public <TResult> TResult Robustly(Query<TResult> query) throws TimeoutException, InterruptedException {
         TimeSpan interval = query.RetryInterval();
         TimeSpan timeout = Timeout(query);
         Stopwatch stopWatch = Stopwatch.StartNew();
@@ -62,7 +62,7 @@ public class RetryUntilTimeoutRobustWrapper implements RobustWrapper
             {
                 if (TimeoutReached(stopWatch, timeout, interval))
                 {
-                    throw;
+                    throw new TimeoutException(ex);
                 }
                 WaitForInterval(interval);
             }
@@ -87,9 +87,8 @@ public class RetryUntilTimeoutRobustWrapper implements RobustWrapper
         return timeout;
     }
 
-    private void WaitForInterval( TimeSpan interval)
-    {
-        Thread.Sleep(interval);
+    private void WaitForInterval( TimeSpan interval) throws InterruptedException {
+        Thread.sleep(interval.getMilliseconds());
     }
 
     private <TResult> boolean ExpectedResultNotFoundWithinTimeout(Object expectedResult, TResult result, Stopwatch stopWatch,  TimeSpan timeout,  TimeSpan interval)
@@ -99,8 +98,8 @@ public class RetryUntilTimeoutRobustWrapper implements RobustWrapper
 
     private boolean TimeoutReached(Stopwatch stopWatch,  TimeSpan timeout,  TimeSpan interval)
     {
-        TimeSpan elapsedTimeToNextCall = TimeSpan .FromMilliseconds(stopWatch.ElapsedMilliseconds) + interval;
-        boolean timeoutReached = elapsedTimeToNextCall >= timeout;
+        long elapsedTimeToNextCall = stopWatch.getElapsedMilliseconds() + interval.getMilliseconds();
+        boolean timeoutReached = elapsedTimeToNextCall >= timeout.getMilliseconds();
 
         return timeoutReached;
     }

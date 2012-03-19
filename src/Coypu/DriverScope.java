@@ -168,13 +168,13 @@ public class DriverScope implements Coypu.Scope
         return new RobustElementScope(new XPathFinder(driver, xpath, this), this, SetOptions(options));
     }
 
-    public IEnumerable<ElementFound> FindAllCss(String cssSelector, Options options)
+    public Enumerable<ElementFound> FindAllCss(String cssSelector, Options options)
     {
         SetOptions(options);
         return driver.FindAllCss(cssSelector, this);
     }
 
-    public IEnumerable<ElementFound> FindAllXPath(String xpath, Options options)
+    public Enumerable<ElementFound> FindAllXPath(String xpath, Options options)
     {
         SetOptions(options);
         return driver.FindAllXPath(xpath, this);

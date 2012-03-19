@@ -1,41 +1,38 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using OpenQA.Selenium;
+package Coypu.Drivers.Selenium;
 
-namespace Coypu.Drivers.Selenium
+import Coypu.DriverScope;
+import Coypu.Drivers.XPath;
+import Coypu.MissingHtmlException;
+
+class ElementFinder
 {
-    internal class ElementFinder
+    private final XPath xPath;
+
+    public ElementFinder(XPath xPath)
     {
-        private final XPath xPath;
+        this.xPath = xPath;
+    }
 
-        public ElementFinder(XPath xPath)
-        {
-            this.xPath = xPath;
-        }
+    public Enumerable<IWebElement> FindByPartialId(String id, DriverScope scope)
+    {
+        String xpath = String.format(".//*[substring(@id, String-length(@id) - {0} + 1, String-length(@id)) = {1}]",
+                id.length(), xPath.Literal(id));
+        return Find(By.XPath(xpath),scope);
+    }
 
-        public IEnumerable<IWebElement> FindByPartialId(string id, DriverScope scope)
-        {
-            var xpath = String.Format(".//*[substring(@id, string-length(@id) - {0} + 1, string-length(@id)) = {1}]",
-                                      id.Length, xPath.Literal(id));
-            return Find(By.XPath(xpath),scope);
-        }
+    public Enumerable<IWebElement> Find(By by, DriverScope scope)
+    {
+        ISearchContext context = SeleniumScope(scope);
+        return context.FindElements(by).Where(e => IsDisplayed(e, scope));
+    }
 
-        public IEnumerable<IWebElement> Find(By by, DriverScope scope)
-        {
-            var context = SeleniumScope(scope);
-            Console.WriteLine("Find by: " + @by);
-            return context.FindElements(by).Where(e => IsDisplayed(e, scope));
-        }
+    public ISearchContext SeleniumScope(DriverScope scope) throws MissingHtmlException
+    {
+        return (ISearchContext) scope.Now().Native;
+    }
 
-        public ISearchContext SeleniumScope(DriverScope scope)
-        {
-            return (ISearchContext) scope.Now().Native;
-        }
-
-        public bool IsDisplayed(IWebElement e, DriverScope scope)
-        {
-            return scope.ConsiderInvisibleElements || e.IsDisplayed();
-        }
+    public boolean IsDisplayed(IWebElement e, DriverScope scope)
+    {
+        return scope.ConsiderInvisibleElements || e.IsDisplayed();
     }
 }

@@ -1,50 +1,48 @@
-using System;
-using System.Linq;
-using OpenQA.Selenium;
+package Coypu.Drivers.Selenium;
 
-namespace Coypu.Drivers.Selenium
+import Coypu.DriverScope;
+import Coypu.StringJoiner;
+
+class SectionFinder
 {
-    internal class SectionFinder
+    private final ElementFinder elementFinder;
+    private final TextMatcher textMatcher;
+
+    final String[] headerTags = { "h1", "h2", "h3", "h4", "h5", "h6" };
+
+    public SectionFinder(ElementFinder elementFinder, TextMatcher textMatcher)
     {
-        private final ElementFinder elementFinder;
-        private final TextMatcher textMatcher;
+        this.elementFinder = elementFinder;
+        this.textMatcher = textMatcher;
+    }
 
-        final string[] headerTags = { "h1", "h2", "h3", "h4", "h5", "h6" };
+    public IWebElement FindSection(String locator, DriverScope scope)
+    {
+        return FindSectionByHeaderText(locator,scope) ??
+               elementFinder.Find(By.Id(locator),scope).FirstDisplayedOrDefault(IsSection);
+    }
 
-        public SectionFinder(ElementFinder elementFinder, TextMatcher textMatcher)
-        {
-            this.elementFinder = elementFinder;
-            this.textMatcher = textMatcher;
-        }
+    private IWebElement FindSectionByHeaderText(String locator, DriverScope scope)
+    {
+        return FindSectionByHeaderText(locator, "section",scope) ??
+               FindSectionByHeaderText(locator, "div",scope);
+    }
 
-        public IWebElement FindSection(string locator, DriverScope scope)
-        {
-            return FindSectionByHeaderText(locator,scope) ??
-                   elementFinder.Find(By.Id(locator),scope).FirstDisplayedOrDefault(IsSection);
-        }
+    private IWebElement FindSectionByHeaderText(String locator, String sectionTag, DriverScope scope)
+    {
+        String headersXPath = StringJoiner.join(" or ", headerTags);
+        Enumerable<IWebElement> withAHeader = elementFinder.Find(By.XPath(String.Format(".//{0}[{1}]", sectionTag, headersXPath)),scope);
 
-        private IWebElement FindSectionByHeaderText(string locator, DriverScope scope) 
-        {
-            return FindSectionByHeaderText(locator, "section",scope) ??
-                   FindSectionByHeaderText(locator, "div",scope);
-        }
+        return withAHeader.FirstDisplayedOrDefault(e => WhereAHeaderMatches(e, locator));
+    }
 
-        private IWebElement FindSectionByHeaderText(string locator, string sectionTag, DriverScope scope) 
-        {
-            var headersXPath = String.Join(" or ", headerTags);
-            var withAHeader = elementFinder.Find(By.XPath(String.Format(".//{0}[{1}]", sectionTag, headersXPath)),scope);
+    private boolean WhereAHeaderMatches(ISearchContext e, String locator)
+    {
+        return e.FindElements(By.XPath("./*")).Any(h => headerTags.Contains(h.TagName) && textMatcher.TextMatches(h, locator));
+    }
 
-            return withAHeader.FirstDisplayedOrDefault(e => WhereAHeaderMatches(e, locator));
-        }
-
-        private bool WhereAHeaderMatches(ISearchContext e, string locator)
-        {
-            return e.FindElements(By.XPath("./*")).Any(h => headerTags.Contains(h.TagName) && textMatcher.TextMatches(h, locator));
-        }
-
-        private static bool IsSection(IWebElement e) 
-        {
-            return e.TagName == "section" || e.TagName == "div";
-        }
+    private static boolean IsSection(IWebElement e)
+    {
+        return e.TagName == "section" || e.TagName == "div";
     }
 }

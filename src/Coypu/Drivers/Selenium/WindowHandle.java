@@ -6,20 +6,20 @@ namespace Coypu.Drivers.Selenium
     internal class WindowHandle : ElementFound
     {
         private final RemoteWebDriver selenium;
-        private final string windowHandle;
+        private final String windowHandle;
 
-        public WindowHandle(RemoteWebDriver selenium, string windowHandle)
+        public WindowHandle(RemoteWebDriver selenium, String windowHandle)
         {
             this.selenium = selenium;
             this.windowHandle = windowHandle;
         }
 
-        public string Id
+        public String Id
         {
             get { throw new System.NotSupportedException(); }
         }
 
-        public string Text
+        public String Text
         {
             get
             {
@@ -35,22 +35,22 @@ namespace Coypu.Drivers.Selenium
             }
         }
 
-        public string Value
+        public String Value
         {
             get { throw new System.NotSupportedException(); }
         }
 
-        public string Name
+        public String Name
         {
             get { throw new System.NotSupportedException(); }
         }
 
-        public string SelectedOption
+        public String SelectedOption
         {
             get { throw new System.NotSupportedException(); }
         }
 
-        public bool Selected
+        public boolean Selected
         {
             get { throw new System.NotSupportedException(); }
         }
@@ -64,7 +64,7 @@ namespace Coypu.Drivers.Selenium
             }
         }
 
-        public bool Stale
+        public boolean Stale
         {
             get
             {
@@ -72,7 +72,7 @@ namespace Coypu.Drivers.Selenium
             }
         }
 
-        public string this[string attributeName]
+        public String this[String attributeName]
         {
             get { throw new System.NotImplementedException(); }
         }

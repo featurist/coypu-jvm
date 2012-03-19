@@ -34,7 +34,7 @@ public interface Driver
     ElementFound FindFieldset(String locator, DriverScope scope);
     ElementFound FindSection(String locator, DriverScope scope);
     ElementFound FindId(String id, DriverScope scope);
-    ElementFound FindIFrame(String locator, DriverScope scope);
+    ElementFound FindIFrame(String locator, DriverScope scope) throws MissingHtmlException;
     void Hover(Element element);
     Enumerable<Cookie> GetBrowserCookies();
     ElementFound FindWindow(String locator, DriverScope scope);

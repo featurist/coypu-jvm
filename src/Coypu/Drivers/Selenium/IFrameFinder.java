@@ -16,7 +16,7 @@ namespace Coypu.Drivers.Selenium
             this.xPath = xPath;
         }
 
-        public IWebElement FindIFrame(string locator, DriverScope scope)
+        public IWebElement FindIFrame(String locator, DriverScope scope)
         {
             var frame = elementFinder.Find(By.TagName("iframe"), scope).FirstOrDefault(e => e.GetAttribute("id") == locator ||
                                                                                             e.GetAttribute("title") == locator ||
@@ -24,7 +24,7 @@ namespace Coypu.Drivers.Selenium
             return frame;
         }
 
-        private bool FrameContentsMatch(IWebElement e, string locator)
+        private boolean FrameContentsMatch(IWebElement e, String locator)
         {
             var currentHandle = selenium.CurrentWindowHandle;
             try

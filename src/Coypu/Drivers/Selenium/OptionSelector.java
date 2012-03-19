@@ -1,21 +1,19 @@
-﻿using System.Linq;
-using OpenQA.Selenium;
+﻿package Coypu.Drivers.Selenium;
 
-namespace Coypu.Drivers.Selenium
+import Coypu.Element;
+import Coypu.MissingHtmlException;
+
+class OptionSelector
 {
-    internal class OptionSelector
-    {
-        public void Select(Element element, string option)
-        {
-            var select = (IWebElement)element.Native;
+    public void Select(Element element, String option) throws MissingHtmlException {
+        IWebElement select = (IWebElement)element.Native();
 
-            var optionToSelect =
-                select.FindElements(By.TagName("option")).FirstOrDefault(e => e.Text == option || e.GetAttribute("value") == option);
+        IWebElement optionToSelect =
+            select.FindElements(By.TagName("option")).FirstOrDefault(e => e.Text == option || e.GetAttribute("value") == option);
 
-            if (optionToSelect == null)
-                throw new MissingHtmlException("No such option: " + option);
+        if (optionToSelect == null)
+            throw new MissingHtmlException("No such option: " + option);
 
-            optionToSelect.Click();
-        }
+        optionToSelect.Click();
     }
 }

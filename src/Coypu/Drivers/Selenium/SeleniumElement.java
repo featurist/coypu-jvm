@@ -1,87 +1,78 @@
-﻿using System;
-using System.Linq;
-using OpenQA.Selenium;
+﻿package Coypu.Drivers.Selenium;
 
-namespace Coypu.Drivers.Selenium
+import Coypu.ElementFound;
+
+class SeleniumElement extends ElementFound
 {
-    internal class SeleniumElement : ElementFound
+    private final IWebElement nativeElement;
+
+    protected IWebElement NativeSeleniumElement()
     {
-        private final IWebElement native;
+        return nativeElement;
+    }
 
-        protected IWebElement NativeSeleniumElement
-        {
-            get { return native; }
-        }
+    public SeleniumElement(IWebElement seleniumElement)
+    {
+        nativeElement = seleniumElement;
+    }
 
-        public SeleniumElement(IWebElement seleniumElement)
-        {
-            native = seleniumElement;
-        }
+    public String Id()
+    {
+        return NativeSeleniumElement.GetAttribute("id");
+    }
 
-        public string Id
-        {
-            get { return NativeSeleniumElement.GetAttribute("id"); }
-        }
+    public String Text()
+    {
+        return NativeSeleniumElement.Text;
+    }
 
-        public string Text
-        {
-            get { return NativeSeleniumElement.Text; }
-        }
+    public String Value()
+    {
+        return NativeSeleniumElement.GetAttribute("value");
+    }
 
-        public string Value
-        {
-            get { return NativeSeleniumElement.GetAttribute("value"); }
-        }
+    public String Name()
+    {
+        return NativeSeleniumElement.GetAttribute("name");
+    }
 
-        public string Name
-        {
-            get { return NativeSeleniumElement.GetAttribute("name"); }
-        }
+    public String SelectedOption()
+    {
+        return NativeSeleniumElement.FindElements(By.TagName("option"))
+            .Where(e => e.Selected)
+            .Select(e => e.Text)
+            .FirstOrDefault();
+    }
 
-        public string SelectedOption
-        {
-            get
-            {
-                return NativeSeleniumElement.FindElements(By.TagName("option"))
-                    .Where(e => e.Selected)
-                    .Select(e => e.Text)
-                    .FirstOrDefault();
-            }
-        }
+    public boolean Selected()
+    {
+        return NativeSeleniumElement.Selected;
+    }
 
-        public bool Selected
-        {
-            get { return NativeSeleniumElement.Selected; }
-        }
+    public Object Native()
+    {
+        return nativeElement;
+    }
 
-        public virtual object Native
+    public boolean Stale()
+    {
+        try
         {
-            get { return native; }
+            NativeSeleniumElement.FindElement(By.XPath("."));
+            return !NativeSeleniumElement.Displayed;
         }
+        catch(InvalidOperationException)
+        {
+            return true;
+        }
+        catch (StaleElementReferenceException)
+        {
+            return true;
+        }
+    }
 
-        public bool Stale
-        {
-            get
-            {
-                try
-                {
-                    NativeSeleniumElement.FindElement(By.XPath("."));
-                    return !NativeSeleniumElement.Displayed;
-                }
-                catch(InvalidOperationException)
-                {
-                    return true;
-                }
-                catch (StaleElementReferenceException)
-                {
-                    return true;
-                }
-            }
-        }
-
-        public string this[string attributeName]
-        {
-            get { return NativeSeleniumElement.GetAttribute(attributeName); }
-        }
+    public String Attribute(String attributeName)
+    {
+        return NativeSeleniumElement.GetAttribute(attributeName);
     }
 }

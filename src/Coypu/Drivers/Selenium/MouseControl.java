@@ -1,22 +1,21 @@
-﻿using OpenQA.Selenium;
+﻿package Coypu.Drivers.Selenium;
 
-namespace Coypu.Drivers.Selenium
+import Coypu.Element;
+
+class MouseControl
 {
-    internal class MouseControl
+    private final IWebDriver selenium;
+
+    public MouseControl(IWebDriver selenium)
     {
-        private final IWebDriver selenium;
+        this.selenium = selenium;
+    }
 
-        public MouseControl(IWebDriver selenium)
-        {
-            this.selenium = selenium;
-        }
-
-        public void Hover(Element element)
-        {
-            var sequenceBuilder = new OpenQA.Selenium.Interactions.Actions(selenium);
-            var actionSequenceBuilder = sequenceBuilder.MoveToElement((IWebElement) element.Native);
-            var action = actionSequenceBuilder.Build();
-            action.Perform();
-        }
+    public void Hover(Element element)
+    {
+        SequenceBuilder sequenceBuilder = new OpenQA.Selenium.Interactions.Actions(selenium);
+        ActionSequenceBuilder actionSequenceBuilder = sequenceBuilder.MoveToElement((IWebElement) element.Native());
+        Action action = actionSequenceBuilder.Build();
+        action.Perform();
     }
 }
