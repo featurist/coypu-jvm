@@ -1,12 +1,8 @@
-using OpenQA.Selenium;
-
-namespace Coypu.Drivers.Selenium
+package  Coypu.Drivers.Selenium;
+class TextMatcher
 {
-    internal class TextMatcher
+    public boolean TextMatches(WebElement e, String locator)
     {
-        public boolean TextMatches(IWebElement e, String locator)
-        {
-            return e.Text.Trim() == locator.Trim();
-        }
+        return e.Text.Trim() == locator.Trim();
     }
 }

@@ -16,22 +16,22 @@ class SectionFinder
         this.textMatcher = textMatcher;
     }
 
-    public IWebElement FindSection(String locator, DriverScope scope)
+    public WebElement FindSection(String locator, DriverScope scope)
     {
         return FindSectionByHeaderText(locator,scope) ??
                elementFinder.Find(By.Id(locator),scope).FirstDisplayedOrDefault(IsSection);
     }
 
-    private IWebElement FindSectionByHeaderText(String locator, DriverScope scope)
+    private WebElement FindSectionByHeaderText(String locator, DriverScope scope)
     {
         return FindSectionByHeaderText(locator, "section",scope) ??
                FindSectionByHeaderText(locator, "div",scope);
     }
 
-    private IWebElement FindSectionByHeaderText(String locator, String sectionTag, DriverScope scope)
+    private WebElement FindSectionByHeaderText(String locator, String sectionTag, DriverScope scope)
     {
         String headersXPath = StringJoiner.join(" or ", headerTags);
-        Enumerable<IWebElement> withAHeader = elementFinder.Find(By.XPath(String.Format(".//{0}[{1}]", sectionTag, headersXPath)),scope);
+        Enumerable<WebElement> withAHeader = elementFinder.Find(By.XPath(String.Format(".//{0}[{1}]", sectionTag, headersXPath)),scope);
 
         return withAHeader.FirstDisplayedOrDefault(e => WhereAHeaderMatches(e, locator));
     }
@@ -41,7 +41,7 @@ class SectionFinder
         return e.FindElements(By.XPath("./*")).Any(h => headerTags.Contains(h.TagName) && textMatcher.TextMatches(h, locator));
     }
 
-    private static boolean IsSection(IWebElement e)
+    private static boolean IsSection(WebElement e)
     {
         return e.TagName == "section" || e.TagName == "div";
     }

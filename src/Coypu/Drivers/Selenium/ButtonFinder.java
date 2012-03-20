@@ -2,6 +2,8 @@ package Coypu.Drivers.Selenium;
 
 import Coypu.DriverScope;
 import Coypu.Drivers.XPath;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 class ButtonFinder
 {
@@ -16,20 +18,20 @@ class ButtonFinder
         this.xPath = xPath;
     }
 
-    public IWebElement FindButton(String locator, DriverScope scope)
+    public WebElement FindButton(String locator, DriverScope scope)
     {
         return FindButtonByText(locator, scope) ??
                FindButtonByIdNameOrValue(locator, scope) ??
                elementFinder.FindByPartialId(locator, scope).FirstOrDefault(IsButton);
     }
 
-    private IWebElement FindButtonByIdNameOrValue(String locator, DriverScope scope)
+    private WebElement FindButtonByIdNameOrValue(String locator, DriverScope scope)
     {
         String xpathToFind = xPath.Format(".//*[@id = {0} or @name = {0} or @value = {0} or @alt = {0}]", locator);
         return elementFinder.Find(By.XPath(xpathToFind),scope).FirstOrDefault(IsButton);
     }
 
-    private IWebElement FindButtonByText(String locator, DriverScope scope)
+    private WebElement FindButtonByText(String locator, DriverScope scope)
     {
         return
             elementFinder.Find(By.TagName("button"), scope).FirstOrDefault(e => textMatcher.TextMatches(e, locator)) ??
@@ -37,12 +39,12 @@ class ButtonFinder
             elementFinder.Find(By.XPath(".//*[@role = 'button']"), scope).FirstOrDefault(e => textMatcher.TextMatches(e, locator));
     }
 
-    private boolean IsButton(IWebElement e)
+    private boolean IsButton(WebElement e)
     {
         return e.TagName == "button" || IsInputButton(e) || e.getAttribute("role") == "button";
     }
 
-    private boolean IsInputButton(IWebElement e)
+    private boolean IsInputButton(WebElement e)
     {
         return e.TagName == "input" && FieldFinder.InputButtonTypes.Contains(e.getAttribute("type"));
     }

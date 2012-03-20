@@ -7,7 +7,7 @@ namespace Coypu.Drivers.Selenium
     {
         private final RemoteWebDriver selenium;
 
-        public SeleniumFrame(IWebElement seleniumElement, RemoteWebDriver selenium) : base(seleniumElement)
+        public SeleniumFrame(WebElement seleniumElement, RemoteWebDriver selenium) : base(seleniumElement)
         {
             this.selenium = selenium;
         }

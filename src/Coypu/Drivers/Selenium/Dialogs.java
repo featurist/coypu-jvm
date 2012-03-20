@@ -1,4 +1,8 @@
 ﻿package Coypu.Drivers.Selenium;
+
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
 class Dialogs
 {
     private final RemoteWebDriver selenium;
@@ -12,9 +16,9 @@ class Dialogs
     {
         try
         {
-            return selenium.SwitchTo() != null &&
-                   selenium.SwitchTo().Alert() != null &&
-                   selenium.SwitchTo().Alert().Text == withText;
+            return selenium.switchTo() != null &&
+                   selenium.switchTo().alert() != null &&
+                   selenium.switchTo().alert().getText() == withText;
         }
         catch (NoAlertPresentException ex)
         {
@@ -24,11 +28,11 @@ class Dialogs
 
     public void AcceptModalDialog()
     {
-        selenium.SwitchTo().Alert().Accept();
+        selenium.switchTo().alert().accept();
     }
 
     public void CancelModalDialog()
     {
-        selenium.SwitchTo().Alert().Dismiss();
+        selenium.switchTo().alert().dismiss();
     }
 }

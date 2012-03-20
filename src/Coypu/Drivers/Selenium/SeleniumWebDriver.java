@@ -2,8 +2,13 @@
 
 import Coypu.*;
 import Coypu.Drivers.Browser;
+import Coypu.Drivers.BrowserNotSupportedException;
 import Coypu.Drivers.XPath;
 import com.sun.jndi.toolkit.url.Uri;
+import org.openqa.selenium.By;
+import org.openqa.selenium.SearchContext;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class SeleniumWebDriver implements Driver
 {
@@ -21,7 +26,7 @@ public class SeleniumWebDriver implements Driver
 
     public ElementFound Window()
     {
-        return new WindowHandle(selenium, selenium.CurrentWindowHandle);
+        return new WindowHandle(selenium, selenium.getWindowHandle());
     }
 
     private final RemoteWebDriver selenium;
@@ -36,8 +41,7 @@ public class SeleniumWebDriver implements Driver
     private final OptionSelector optionSelector;
     private final XPath xPath;
 
-    public SeleniumWebDriver(Browser browser)
-    {
+    public SeleniumWebDriver(Browser browser) throws BrowserNotSupportedException {
         this(new DriverFactory().NewRemoteWebDriver(browser));
         this.browser = browser;
     }
@@ -73,7 +77,7 @@ public class SeleniumWebDriver implements Driver
     }
 
     public ElementFound FindIFrame(String locator, DriverScope scope) throws MissingHtmlException {
-        IWebElement element = iframeFinder.FindIFrame(locator, scope);
+        WebElement element = iframeFinder.FindIFrame(locator, scope);
 
         if (element == null)
             throw new MissingHtmlException("Failed to find frame: " + locator);
@@ -83,19 +87,19 @@ public class SeleniumWebDriver implements Driver
 
     public ElementFound FindLink(String linkText, DriverScope scope)
     {
-        return BuildElement(Find(By.LinkText(linkText), scope).FirstOrDefault(), "No such link: " + linkText);
+        return BuildElement(Find(By.linkText(linkText), scope).FirstOrDefault(), "No such link: " + linkText);
     }
 
     public ElementFound FindId(String id,DriverScope scope ) 
     {
-        return BuildElement(Find(By.Id(id), scope).FirstDisplayedOrDefault(), "Failed to find id: " + id);
+        return BuildElement(Find(By.id(id), scope).FirstDisplayedOrDefault(), "Failed to find id: " + id);
     }
 
     public ElementFound FindFieldset(String locator, DriverScope scope)
     {
-        IWebElement fieldset =
-            Find(By.XPath(xPath.Format(".//fieldset[legend[text() = {0}]]", locator)),scope).FirstOrDefault() ??
-            Find(By.Id(locator),scope).FirstOrDefault(e => e.TagName == "fieldset");
+        WebElement fieldset =
+            Find(By.xpath(xPath.Format(".//fieldset[legend[text() = {0}]]", locator)),scope).FirstOrDefault() ??
+            Find(By.id(locator),scope).FirstOrDefault(e => e.TagName == "fieldset");
 
         return BuildElement(fieldset, "Failed to find fieldset: " + locator);
     }
@@ -107,30 +111,30 @@ public class SeleniumWebDriver implements Driver
 
     public ElementFound FindCss(String cssSelector,DriverScope scope)
     {
-        return BuildElement(Find(By.CssSelector(cssSelector),scope).FirstOrDefault(),"No element found by css: " + cssSelector);
+        return BuildElement(Find(By.cssSelector(cssSelector),scope).FirstOrDefault(),"No element found by css: " + cssSelector);
     }
 
     public ElementFound FindXPath(String xpath, DriverScope scope)
     {
-        return BuildElement(Find(By.XPath(xpath),scope).FirstOrDefault(),"No element found by xpath: " + xpath);
+        return BuildElement(Find(By.xpath(xpath),scope).FirstOrDefault(),"No element found by xpath: " + xpath);
     }
 
     public Enumerable<ElementFound> FindAllCss(String cssSelector, DriverScope scope)
     {
-        return Find(By.CssSelector(cssSelector),scope).Select(e => BuildElement(e)).Cast<ElementFound>();
+        return Find(By.cssSelector(cssSelector),scope).Select(e => BuildElement(e)).Cast<ElementFound>();
     }
 
     public Enumerable<ElementFound> FindAllXPath(String xpath, DriverScope scope)
     {
-        return Find(By.XPath(xpath), scope).Select(e => BuildElement(e)).Cast<ElementFound>();
+        return Find(By.xpath(xpath), scope).Select(e => BuildElement(e)).Cast<ElementFound>();
     }
 
-    private Enumerable<IWebElement> Find(By by, DriverScope scope)
+    private Enumerable<WebElement> Find(By by, DriverScope scope)
     {
         return elementFinder.Find(by, scope);
     }
 
-    private ElementFound BuildElement(IWebElement element, String failureMessage)
+    private ElementFound BuildElement(WebElement element, String failureMessage)
     {
         if (element == null)
             throw new MissingHtmlException(failureMessage);
@@ -138,14 +142,14 @@ public class SeleniumWebDriver implements Driver
         return BuildElement(element);
     }
 
-    private SeleniumElement BuildElement(IWebElement element)
+    private SeleniumElement BuildElement(WebElement element)
     {
         return new SeleniumElement(element);
     }
 
     public boolean HasContent(String text, DriverScope scope)
     {
-        return GetContent(scope).Contains(text);
+        return GetContent(scope).contains(text);
     }
 
     public boolean HasContentMatch(Regex pattern, DriverScope scope)
@@ -155,26 +159,26 @@ public class SeleniumWebDriver implements Driver
 
     private String GetContent(DriverScope scope)
     {
-        var seleniumScope = elementFinder.SeleniumScope(scope);
+        SearchContext seleniumScope = elementFinder.SeleniumScope(scope);
         return seleniumScope is RemoteWebDriver
-                   ? GetText(By.CssSelector("body"), seleniumScope)
-                   : GetText(By.XPath("."), seleniumScope);
+                   ? GetText(By.cssSelector("body"), seleniumScope)
+                   : GetText(By.xpath("."), seleniumScope);
     }
 
-    private String GetText(By xpath, ISearchContext seleniumScope)
+    private String GetText(By xpath, SearchContext seleniumScope)
     {   
-        var pageText = seleniumScope.FindElement(xpath).Text;
+        String pageText = seleniumScope.FindElement(xpath).Text;
         return NormalizeCRLFBetweenBrowserImplementations(pageText);
     }
 
     public boolean HasCss(String cssSelector, DriverScope scope)
     {
-        return Find(By.CssSelector(cssSelector), scope).Any();
+        return Find(By.cssSelector(cssSelector), scope).Any();
     }
 
     public boolean HasXPath(String xpath, DriverScope scope)
     {
-        return Find(By.XPath(xpath), scope).Any();
+        return Find(By.xpath(xpath), scope).Any();
     }
 
     public boolean HasDialog(String withText, DriverScope scope)
@@ -185,7 +189,7 @@ public class SeleniumWebDriver implements Driver
 
     public void Visit(String url) 
     {
-        selenium.Navigate().GoToUrl(url);
+        selenium.navigate().to(url);
     }
 
     public void Click(Element element) 
@@ -325,9 +329,9 @@ public class SeleniumWebDriver implements Driver
         return Regex.Replace(pageText, @"\s*\r\n\s*", "\r\n");
     }
 
-    private IWebElement SeleniumElement(Element element)
+    private WebElement SeleniumElement(Element element)
     {
-        return ((IWebElement) element.Native);
+        return ((WebElement) element.Native);
     }
 
     public void Dispose()

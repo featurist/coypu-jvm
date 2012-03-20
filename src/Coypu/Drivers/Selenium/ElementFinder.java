@@ -13,14 +13,14 @@ class ElementFinder
         this.xPath = xPath;
     }
 
-    public Enumerable<IWebElement> FindByPartialId(String id, DriverScope scope)
+    public Enumerable<WebElement> FindByPartialId(String id, DriverScope scope)
     {
         String xpath = String.format(".//*[substring(@id, String-length(@id) - {0} + 1, String-length(@id)) = {1}]",
                 id.length(), xPath.Literal(id));
         return Find(By.XPath(xpath),scope);
     }
 
-    public Enumerable<IWebElement> Find(By by, DriverScope scope)
+    public Enumerable<WebElement> Find(By by, DriverScope scope)
     {
         ISearchContext context = SeleniumScope(scope);
         return context.FindElements(by).Where(e => IsDisplayed(e, scope));
@@ -31,7 +31,7 @@ class ElementFinder
         return (ISearchContext) scope.Now().Native;
     }
 
-    public boolean IsDisplayed(IWebElement e, DriverScope scope)
+    public boolean IsDisplayed(WebElement e, DriverScope scope)
     {
         return scope.ConsiderInvisibleElements || e.IsDisplayed();
     }

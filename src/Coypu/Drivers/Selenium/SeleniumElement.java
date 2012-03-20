@@ -4,14 +4,14 @@ import Coypu.ElementFound;
 
 class SeleniumElement extends ElementFound
 {
-    private final IWebElement nativeElement;
+    private final WebElement nativeElement;
 
-    protected IWebElement NativeSeleniumElement()
+    protected WebElement NativeSeleniumElement()
     {
         return nativeElement;
     }
 
-    public SeleniumElement(IWebElement seleniumElement)
+    public SeleniumElement(WebElement seleniumElement)
     {
         nativeElement = seleniumElement;
     }

@@ -7,27 +7,27 @@ namespace Coypu.Drivers.Selenium
 {
     internal static class SeleniumExtensions
     {
-        internal static boolean IsDisplayed(this IWebElement webElement)
+        internal static boolean IsDisplayed(this WebElement webElement)
         {
             return webElement.Displayed;
         }
 
-        internal static IWebElement FirstDisplayedOrDefault(this IEnumerable<IWebElement> elements)
+        internal static WebElement FirstDisplayedOrDefault(this IEnumerable<WebElement> elements)
         {
             return elements.FirstOrDefault(IsDisplayed);
         }
 
-        internal static boolean AnyDisplayed(this IEnumerable<IWebElement> elements)
+        internal static boolean AnyDisplayed(this IEnumerable<WebElement> elements)
         {
             return elements.Any(IsDisplayed);
         }
 
-        internal static boolean AnyDisplayed(this IEnumerable<IWebElement> elements, Func<IWebElement, boolean> predicate)
+        internal static boolean AnyDisplayed(this IEnumerable<WebElement> elements, Func<WebElement, boolean> predicate)
         {
             return elements.Any(e => predicate(e) && IsDisplayed(e));
         }
 
-        internal static IWebElement FirstDisplayedOrDefault(this IEnumerable<IWebElement> elements, Func<IWebElement, boolean> predicate)
+        internal static WebElement FirstDisplayedOrDefault(this IEnumerable<WebElement> elements, Func<WebElement, boolean> predicate)
         {
             return elements.FirstOrDefault(e => predicate(e) && IsDisplayed(e));
         }
