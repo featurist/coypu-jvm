@@ -3,6 +3,9 @@ package Coypu.Drivers.Selenium;
 import Coypu.DriverScope;
 import Coypu.Drivers.XPath;
 import Coypu.MissingHtmlException;
+import org.openqa.selenium.By;
+import org.openqa.selenium.SearchContext;
+import org.openqa.selenium.WebElement;
 
 class ElementFinder
 {
@@ -13,26 +16,24 @@ class ElementFinder
         this.xPath = xPath;
     }
 
-    public Enumerable<WebElement> FindByPartialId(String id, DriverScope scope)
-    {
+    public Iterable<WebElement> FindByPartialId(String id, DriverScope scope) throws MissingHtmlException {
         String xpath = String.format(".//*[substring(@id, String-length(@id) - {0} + 1, String-length(@id)) = {1}]",
                 id.length(), xPath.Literal(id));
-        return Find(By.XPath(xpath),scope);
+        return Find(By.xpath(xpath),scope);
     }
 
-    public Enumerable<WebElement> Find(By by, DriverScope scope)
-    {
-        ISearchContext context = SeleniumScope(scope);
-        return context.FindElements(by).Where(e => IsDisplayed(e, scope));
+    public Iterable<WebElement> Find(By by, DriverScope scope) throws MissingHtmlException {
+        SearchContext context = SeleniumScope(scope);
+        return context.findElements(by).Where(e => IsDisplayed(e, scope));
     }
 
-    public ISearchContext SeleniumScope(DriverScope scope) throws MissingHtmlException
+    public SearchContext SeleniumScope(DriverScope scope) throws MissingHtmlException
     {
-        return (ISearchContext) scope.Now().Native;
+        return (SearchContext) scope.Now().Native();
     }
 
     public boolean IsDisplayed(WebElement e, DriverScope scope)
     {
-        return scope.ConsiderInvisibleElements || e.IsDisplayed();
+        return scope.ConsiderInvisibleElements() || e.isDisplayed();
     }
 }

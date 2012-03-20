@@ -46,7 +46,7 @@ public class DriverScope implements Coypu.Scope
         return driver.Location();
     }
 
-    public boolean SetConsiderInvisibleElements()
+    public boolean ConsiderInvisibleElements()
     {
         return Default(options).ConsiderInvisibleElements;
     }
@@ -168,13 +168,13 @@ public class DriverScope implements Coypu.Scope
         return new RobustElementScope(new XPathFinder(driver, xpath, this), this, SetOptions(options));
     }
 
-    public Enumerable<ElementFound> FindAllCss(String cssSelector, Options options)
+    public Iterable<ElementFound> FindAllCss(String cssSelector, Options options)
     {
         SetOptions(options);
         return driver.FindAllCss(cssSelector, this);
     }
 
-    public Enumerable<ElementFound> FindAllXPath(String xpath, Options options)
+    public Iterable<ElementFound> FindAllXPath(String xpath, Options options)
     {
         SetOptions(options);
         return driver.FindAllXPath(xpath, this);

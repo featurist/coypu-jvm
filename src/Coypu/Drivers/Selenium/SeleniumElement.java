@@ -58,7 +58,7 @@ class SeleniumElement extends ElementFound
     {
         try
         {
-            NativeSeleniumElement.FindElement(By.XPath("."));
+            NativeSeleniumElement.FindElement(By.xpath("."));
             return !NativeSeleniumElement.Displayed;
         }
         catch(InvalidOperationException)

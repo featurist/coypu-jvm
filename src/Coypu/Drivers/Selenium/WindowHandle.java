@@ -26,7 +26,7 @@ class WindowHandle implements ElementFound
             var currentWindowHandle = selenium.CurrentWindowHandle;
             try
             {
-                return ((ISearchContext)Native).FindElement(By.CssSelector("body")).Text;
+                return ((SearchContext)Native).FindElement(By.CssSelector("body")).Text;
             }
             finally
             {

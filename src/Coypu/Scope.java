@@ -225,7 +225,7 @@ public interface Scope
     ///
     /// <code>new Options{Timeout = TimeSpan .FromSeconds(60)}</code></param>
     /// <returns>All matching elements</returns>
-    Enumerable<ElementFound> FindAllCss(String cssSelector, Options options);
+    Iterable<ElementFound> FindAllCss(String cssSelector, Options options);
 
     /// <summary>
     /// Find all elements matching an XPath query at the current moment. Does not wait until the <see cref="Configuration.Timeout"/> but returns as soon as the driver does.
@@ -237,7 +237,7 @@ public interface Scope
     ///
     /// <code>new Options{Timeout = TimeSpan .FromSeconds(60)}</code></param>
     /// <returns>All matching elements</returns>
-    Enumerable<ElementFound> FindAllXPath(String xpath, Options options);
+    Iterable<ElementFound> FindAllXPath(String xpath, Options options);
 
     /// <summary>
     /// <para>Find the first matching section to appear within the configured timeout.</para>

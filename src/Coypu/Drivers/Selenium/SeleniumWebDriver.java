@@ -119,17 +119,17 @@ public class SeleniumWebDriver implements Driver
         return BuildElement(Find(By.xpath(xpath),scope).FirstOrDefault(),"No element found by xpath: " + xpath);
     }
 
-    public Enumerable<ElementFound> FindAllCss(String cssSelector, DriverScope scope)
+    public Iterable<ElementFound> FindAllCss(String cssSelector, DriverScope scope)
     {
         return Find(By.cssSelector(cssSelector),scope).Select(e => BuildElement(e)).Cast<ElementFound>();
     }
 
-    public Enumerable<ElementFound> FindAllXPath(String xpath, DriverScope scope)
+    public Iterable<ElementFound> FindAllXPath(String xpath, DriverScope scope)
     {
         return Find(By.xpath(xpath), scope).Select(e => BuildElement(e)).Cast<ElementFound>();
     }
 
-    private Enumerable<WebElement> Find(By by, DriverScope scope)
+    private Iterable<WebElement> Find(By by, DriverScope scope)
     {
         return elementFinder.Find(by, scope);
     }
@@ -202,7 +202,7 @@ public class SeleniumWebDriver implements Driver
         mouseControl.Hover(element);
     }
 
-    public Enumerable<Cookie> GetBrowserCookies()
+    public Iterable<Cookie> GetBrowserCookies()
     {
         return selenium.Manage().Cookies.AllCookies.Select(c => new Cookie(c.Name, c.Value, c.Path, c.Domain));
     }

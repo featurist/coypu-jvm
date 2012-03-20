@@ -11,7 +11,7 @@ public class WebClientWithCookies extends WebClient implements RestrictedResourc
         webRequestCookieInjector = new WebRequestCookieInjector();
     }
 
-    public void SetCookies(Enumerable<Cookie> cookies)
+    public void SetCookies(Iterable<Cookie> cookies)
     {
         requestCookies = cookies;
     }

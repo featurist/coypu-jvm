@@ -20,8 +20,8 @@ public interface Driver
     boolean HasDialog(String withText, DriverScope scope);
     ElementFound FindCss(String cssSelector, DriverScope scope);
     ElementFound FindXPath(String xpath, DriverScope scope);
-    Enumerable<ElementFound> FindAllCss(String cssSelector, DriverScope scope);
-    Enumerable<ElementFound> FindAllXPath(String xpath, DriverScope scope);
+    Iterable<ElementFound> FindAllCss(String cssSelector, DriverScope scope);
+    Iterable<ElementFound> FindAllXPath(String xpath, DriverScope scope);
     void Check(Element field);
     void Uncheck(Element field);
     void Choose(Element field);
@@ -36,6 +36,6 @@ public interface Driver
     ElementFound FindId(String id, DriverScope scope);
     ElementFound FindIFrame(String locator, DriverScope scope) throws MissingHtmlException;
     void Hover(Element element);
-    Enumerable<Cookie> GetBrowserCookies();
+    Iterable<Cookie> GetBrowserCookies();
     ElementFound FindWindow(String locator, DriverScope scope);
 }

@@ -2,6 +2,9 @@ package Coypu.Drivers.Selenium;
 
 import Coypu.DriverScope;
 import Coypu.StringJoiner;
+import org.openqa.selenium.By;
+import org.openqa.selenium.SearchContext;
+import org.openqa.selenium.WebElement;
 
 class SectionFinder
 {
@@ -19,7 +22,7 @@ class SectionFinder
     public WebElement FindSection(String locator, DriverScope scope)
     {
         return FindSectionByHeaderText(locator,scope) ??
-               elementFinder.Find(By.Id(locator),scope).FirstDisplayedOrDefault(IsSection);
+               elementFinder.Find(By.id(locator),scope).FirstDisplayedOrDefault(IsSection);
     }
 
     private WebElement FindSectionByHeaderText(String locator, DriverScope scope)
@@ -31,18 +34,18 @@ class SectionFinder
     private WebElement FindSectionByHeaderText(String locator, String sectionTag, DriverScope scope)
     {
         String headersXPath = StringJoiner.join(" or ", headerTags);
-        Enumerable<WebElement> withAHeader = elementFinder.Find(By.XPath(String.Format(".//{0}[{1}]", sectionTag, headersXPath)),scope);
+        Iterable<WebElement> withAHeader = elementFinder.Find(By.xpath(String.format(".//{0}[{1}]", sectionTag, headersXPath)),scope);
 
         return withAHeader.FirstDisplayedOrDefault(e => WhereAHeaderMatches(e, locator));
     }
 
-    private boolean WhereAHeaderMatches(ISearchContext e, String locator)
+    private boolean WhereAHeaderMatches(SearchContext e, String locator)
     {
-        return e.FindElements(By.XPath("./*")).Any(h => headerTags.Contains(h.TagName) && textMatcher.TextMatches(h, locator));
+        return e.findElements(By.xpath("./*")).Any(h => headerTags.Contains(h.TagName) && textMatcher.TextMatches(h, locator));
     }
 
     private static boolean IsSection(WebElement e)
     {
-        return e.TagName == "section" || e.TagName == "div";
+        return e.getTagName() == "section" || e.getTagName() == "div";
     }
 }

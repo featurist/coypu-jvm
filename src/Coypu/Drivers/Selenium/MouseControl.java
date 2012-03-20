@@ -1,11 +1,15 @@
 ﻿package Coypu.Drivers.Selenium;
 
 import Coypu.Element;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 class MouseControl
 {
-    private final IWebDriver selenium;
+    private final WebDriver selenium;
 
     public MouseControl(RemoteWebDriver selenium)
     {
@@ -14,9 +18,9 @@ class MouseControl
 
     public void Hover(Element element)
     {
-        SequenceBuilder sequenceBuilder = new OpenQA.Selenium.Interactions.Actions(selenium);
-        ActionSequenceBuilder actionSequenceBuilder = sequenceBuilder.MoveToElement((WebElement) element.Native());
-        Action action = actionSequenceBuilder.Build();
-        action.Perform();
+        Actions sequenceBuilder = new Actions(selenium);
+        Actions actionSequenceBuilder = sequenceBuilder.moveToElement((WebElement) element.Native());
+        Action action = actionSequenceBuilder.build();
+        action.perform();
     }
 }

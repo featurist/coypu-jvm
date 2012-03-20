@@ -28,15 +28,15 @@ class ButtonFinder
     private WebElement FindButtonByIdNameOrValue(String locator, DriverScope scope)
     {
         String xpathToFind = xPath.Format(".//*[@id = {0} or @name = {0} or @value = {0} or @alt = {0}]", locator);
-        return elementFinder.Find(By.XPath(xpathToFind),scope).FirstOrDefault(IsButton);
+        return elementFinder.Find(By.xpath(xpathToFind),scope).FirstOrDefault(IsButton);
     }
 
     private WebElement FindButtonByText(String locator, DriverScope scope)
     {
         return
-            elementFinder.Find(By.TagName("button"), scope).FirstOrDefault(e => textMatcher.TextMatches(e, locator)) ??
-            elementFinder.Find(By.ClassName("button"), scope).FirstOrDefault(e => textMatcher.TextMatches(e, locator)) ??
-            elementFinder.Find(By.XPath(".//*[@role = 'button']"), scope).FirstOrDefault(e => textMatcher.TextMatches(e, locator));
+            elementFinder.Find(By.tagName("button"), scope).FirstOrDefault(e => textMatcher.TextMatches(e, locator)) ??
+            elementFinder.Find(By.className("button"), scope).FirstOrDefault(e => textMatcher.TextMatches(e, locator)) ??
+            elementFinder.Find(By.xpath(".//*[@role = 'button']"), scope).FirstOrDefault(e => textMatcher.TextMatches(e, locator));
     }
 
     private boolean IsButton(WebElement e)

@@ -2,6 +2,6 @@
 
 public interface RestrictedResourceDownloader
 {
-    void SetCookies(Enumerable<Cookie> getBrowserCookies);
+    void SetCookies(Iterable<Cookie> getBrowserCookies);
     void DownloadFile(String resource, String saveAs);
 }

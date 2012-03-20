@@ -2,6 +2,12 @@ package Coypu.Drivers.Selenium;
 
 import Coypu.DriverScope;
 import Coypu.Drivers.XPath;
+import Coypu.MissingHtmlException;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 class FieldFinder
 {
@@ -25,13 +31,11 @@ class FieldFinder
                elementFinder.FindByPartialId(locator, scope).FirstOrDefault(e => IsField(e, scope));
     }
 
-    private WebElement FindRadioButtonFromValue(String locator,DriverScope scope)
-    {
-        return elementFinder.Find(By.XPath(".//input[@type = 'radio']"), scope).FirstOrDefault(e => e.GetAttribute("value") == locator);
+    private WebElement FindRadioButtonFromValue(String locator,DriverScope scope) throws MissingHtmlException {
+        return elementFinder.Find(By.xpath(".//input[@type = 'radio']"), scope).FirstOrDefault(e => e.GetAttribute("value") == locator);
     }
 
-    private WebElement FindFieldFromLabel(String locator,DriverScope scope)
-    {
+    private WebElement FindFieldFromLabel(String locator,DriverScope scope) throws MissingHtmlException {
         WebElement label = FindLabelByText(locator, scope);
         if (label == null)
             return null;
@@ -40,42 +44,40 @@ class FieldFinder
 
         WebElement field = id != null
                         ? FindFieldById(id, scope)
-                        : label.FindElements(By.XPath("*")).FirstDisplayedOrDefault(e => IsField(e, scope));
+                        : label.findElements(By.xpath("*")).FirstDisplayedOrDefault(e => IsField(e, scope));
 
         return field;
     }
 
-    private WebElement FindLabelByText(String locator, DriverScope scope)
-    {
+    private WebElement FindLabelByText(String locator, DriverScope scope) throws MissingHtmlException {
         return
-            elementFinder.Find(By.XPath(xPath.Format(".//label[text() = {0}]", locator)), scope).FirstOrDefault() ??
-            elementFinder.Find(By.XPath(xPath.Format(".//label[contains(text(),{0})]", locator)), scope).FirstOrDefault();
+            elementFinder.Find(By.xpath(xPath.Format(".//label[text() = {0}]", locator)), scope).FirstOrDefault() ??
+            elementFinder.Find(By.xpath(xPath.Format(".//label[contains(text(),{0})]", locator)), scope).FirstOrDefault();
     }
 
-    private WebElement FindFieldByPlaceholder(String placeholder,DriverScope scope)
-    {
-        return elementFinder.Find(By.XPath(xPath.Format(".//input[@placeholder = {0}]", placeholder)), scope).FirstOrDefault(e => IsField(e, scope));
+    private WebElement FindFieldByPlaceholder(String placeholder,DriverScope scope) throws MissingHtmlException {
+        return elementFinder.Find(By.xpath(xPath.Format(".//input[@placeholder = {0}]", placeholder)), scope).FirstOrDefault(e => IsField(e, scope));
     }
 
-    private WebElement FindFieldByIdOrName(String locator, DriverScope scope)
-    {
+    private WebElement FindFieldByIdOrName(String locator, DriverScope scope) throws MissingHtmlException {
         String xpathToFind = xPath.Format(".//*[@id = {0} or @name = {0}]", locator);
-        return elementFinder.Find(By.XPath(xpathToFind), scope).FirstOrDefault(e => IsField(e,scope));
+        return elementFinder.Find(By.xpath(xpathToFind), scope).FirstOrDefault(e => IsField(e,scope));
     }
 
-    private WebElement FindFieldById(String id, DriverScope scope)
-    {
-        return elementFinder.Find(By.Id(id), scope).FirstOrDefault(e => IsField(e,scope));
+    private WebElement FindFieldById(String id, DriverScope scope) throws MissingHtmlException {
+        return elementFinder.Find(By.id(id), scope).FirstOrDefault(e => IsField(e,scope));
     }
 
     private boolean IsField(WebElement e, DriverScope scope)
     {
-        return IsInputField(e, scope) || e.TagName == "select" || e.TagName == "textarea";
+        return IsInputField(e, scope) || e.getTagName() == "select" || e.getTagName() == "textarea";
     }
 
     private boolean IsInputField(WebElement e, DriverScope scope)
     {
-        return e.TagName == "input" && (inputTypes.Contains(e.getAttribute("type")) ||
-                scope.ConsiderInvisibleElements && e.getAttribute("type") == "hidden");
+        new ArrayList<String>();
+
+        return e.getTagName() == "input" && (Arrays.asList(FieldInputTypes).contains(e.getAttribute("type")) ||
+                scope.ConsiderInvisibleElements() && e.getAttribute("type") == "hidden");
     }
 }

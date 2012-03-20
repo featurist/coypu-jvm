@@ -2,6 +2,8 @@
 
 import Coypu.Element;
 import Coypu.MissingHtmlException;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 class OptionSelector
 {
@@ -9,11 +11,11 @@ class OptionSelector
         WebElement select = (WebElement)element.Native();
 
         WebElement optionToSelect =
-            select.FindElements(By.TagName("option")).FirstOrDefault(e => e.Text == option || e.GetAttribute("value") == option);
+            select.findElements(By.tagName("option")).FirstOrDefault(e => e.Text == option || e.GetAttribute("value") == option);
 
         if (optionToSelect == null)
             throw new MissingHtmlException("No such option: " + option);
 
-        optionToSelect.Click();
+        optionToSelect.click();
     }
 }

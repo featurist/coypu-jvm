@@ -2,11 +2,15 @@ package Coypu.Drivers.Selenium;
 
 import Coypu.DriverScope;
 import Coypu.Drivers.XPath;
+import Coypu.MissingHtmlException;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 class IFrameFinder
 {
-    private final IWebDriver selenium;
+    private final WebDriver selenium;
     private final ElementFinder elementFinder;
     private final XPath xPath;
 
@@ -17,27 +21,25 @@ class IFrameFinder
         this.xPath = xPath;
     }
 
-    public WebElement FindIFrame(String locator, DriverScope scope)
-    {
-        var frame = elementFinder.Find(By.TagName("iframe"), scope).FirstOrDefault(e => e.GetAttribute("id") == locator ||
+    public WebElement FindIFrame(String locator, DriverScope scope) throws MissingHtmlException {
+        return elementFinder.Find(By.tagName("iframe"), scope).FirstOrDefault(e => e.GetAttribute("id") == locator ||
                                                                                         e.GetAttribute("title") == locator ||
                                                                                         FrameContentsMatch(e, locator));
-        return frame;
     }
 
     private boolean FrameContentsMatch(WebElement e, String locator)
     {
-        var currentHandle = selenium.CurrentWindowHandle;
+        String currentHandle = selenium.getWindowHandle();
         try
         {
-            var frame = selenium.SwitchTo().Frame(e);
+            WebDriver frame = selenium.switchTo().frame(e);
             return
-                frame.Title == locator ||
-                frame.FindElements(By.XPath(xPath.Format(".//h1[text() = {0}]", locator))).Any();
+                frame.getTitle() == locator ||
+                frame.findElements(By.xpath(xPath.Format(".//h1[text() = {0}]", locator))).size() > 0;
         }
         finally
         {
-            selenium.SwitchTo().Window(currentHandle);
+            selenium.switchTo().window(currentHandle);
         }
     }
 }

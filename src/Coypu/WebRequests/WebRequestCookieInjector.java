@@ -1,7 +1,7 @@
 ﻿package Coypu.WebRequests;
 public class WebRequestCookieInjector
 {
-    public WebRequest InjectCookies(WebRequest webRequest, Enumerable<Cookie> cookies)
+    public WebRequest InjectCookies(WebRequest webRequest, Iterable<Cookie> cookies)
     {
         WebRequest request = webRequest;
 
@@ -10,7 +10,7 @@ public class WebRequestCookieInjector
                    : request;
     }
 
-    public static HttpWebRequest AddCookiesToCookieContainer(HttpWebRequest httpRequest, Enumerable<Cookie> cookies)
+    public static HttpWebRequest AddCookiesToCookieContainer(HttpWebRequest httpRequest, Iterable<Cookie> cookies)
     {
         httpRequest.CookieContainer = new CookieContainer();
 
