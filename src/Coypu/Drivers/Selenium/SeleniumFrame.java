@@ -1,24 +1,21 @@
-using OpenQA.Selenium;
-using OpenQA.Selenium.Remote;
+package Coypu.Drivers.Selenium;
 
-namespace Coypu.Drivers.Selenium
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+class SeleniumFrame extends SeleniumElement
 {
-    internal class SeleniumFrame : SeleniumElement
+    private final RemoteWebDriver selenium;
+
+    public SeleniumFrame(WebElement seleniumElement, RemoteWebDriver selenium)
     {
-        private final RemoteWebDriver selenium;
+        super(seleniumElement);
+        this.selenium = selenium;
+    }
 
-        public SeleniumFrame(WebElement seleniumElement, RemoteWebDriver selenium) : base(seleniumElement)
-        {
-            this.selenium = selenium;
-        }
-
-        public override object Native
-        {
-            get
-            {
-                selenium.SwitchTo().Frame(NativeSeleniumElement);
-                return selenium;
-            }
-        }
+    public Object Native()
+    {
+        selenium.switchTo().frame(NativeSeleniumElement());
+        return selenium;
     }
 }

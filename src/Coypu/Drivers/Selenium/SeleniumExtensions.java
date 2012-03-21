@@ -1,35 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using OpenQA.Selenium;
+﻿package Coypu.Drivers.Selenium;
 
-namespace Coypu.Drivers.Selenium
+import org.openqa.selenium.WebElement;
+
+class SeleniumExtensions
 {
-    internal static class SeleniumExtensions
+    static boolean IsDisplayed(this WebElement webElement)
     {
-        internal static boolean IsDisplayed(this WebElement webElement)
-        {
-            return webElement.Displayed;
-        }
+        return webElement.Displayed;
+    }
 
-        internal static WebElement FirstDisplayedOrDefault(this IEnumerable<WebElement> elements)
-        {
-            return elements.FirstOrDefault(IsDisplayed);
-        }
+    static WebElement FirstDisplayedOrDefault(this IEnumerable<WebElement> elements)
+    {
+        return elements.FirstOrDefault(IsDisplayed);
+    }
 
-        internal static boolean AnyDisplayed(this IEnumerable<WebElement> elements)
-        {
-            return elements.Any(IsDisplayed);
-        }
+    static boolean AnyDisplayed(this IEnumerable<WebElement> elements)
+    {
+        return elements.Any(IsDisplayed);
+    }
 
-        internal static boolean AnyDisplayed(this IEnumerable<WebElement> elements, Func<WebElement, boolean> predicate)
-        {
-            return elements.Any(e => predicate(e) && IsDisplayed(e));
-        }
+    static boolean AnyDisplayed(this IEnumerable<WebElement> elements, Func<WebElement, boolean> predicate)
+    {
+        return elements.Any(e => predicate(e) && IsDisplayed(e));
+    }
 
-        internal static WebElement FirstDisplayedOrDefault(this IEnumerable<WebElement> elements, Func<WebElement, boolean> predicate)
-        {
-            return elements.FirstOrDefault(e => predicate(e) && IsDisplayed(e));
-        }
+    static WebElement FirstDisplayedOrDefault(this IEnumerable<WebElement> elements, Func<WebElement, boolean> predicate)
+    {
+        return elements.FirstOrDefault(e => predicate(e) && IsDisplayed(e));
     }
 }

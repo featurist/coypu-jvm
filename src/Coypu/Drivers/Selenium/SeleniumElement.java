@@ -1,8 +1,11 @@
 ﻿package Coypu.Drivers.Selenium;
 
 import Coypu.ElementFound;
+import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebElement;
 
-class SeleniumElement extends ElementFound
+class SeleniumElement implements ElementFound
 {
     private final WebElement nativeElement;
 
@@ -18,27 +21,27 @@ class SeleniumElement extends ElementFound
 
     public String Id()
     {
-        return NativeSeleniumElement.GetAttribute("id");
+        return NativeSeleniumElement().getAttribute("id");
     }
 
     public String Text()
     {
-        return NativeSeleniumElement.Text;
+        return NativeSeleniumElement().getText();
     }
 
     public String Value()
     {
-        return NativeSeleniumElement.GetAttribute("value");
+        return NativeSeleniumElement().getAttribute("value");
     }
 
     public String Name()
     {
-        return NativeSeleniumElement.GetAttribute("name");
+        return NativeSeleniumElement().getAttribute("name");
     }
 
     public String SelectedOption()
     {
-        return NativeSeleniumElement.FindElements(By.TagName("option"))
+        return NativeSeleniumElement().findElements(By.tagName("option"))
             .Where(e => e.Selected)
             .Select(e => e.Text)
             .FirstOrDefault();
@@ -46,7 +49,7 @@ class SeleniumElement extends ElementFound
 
     public boolean Selected()
     {
-        return NativeSeleniumElement.Selected;
+        return NativeSeleniumElement().isSelected();
     }
 
     public Object Native()
@@ -58,14 +61,10 @@ class SeleniumElement extends ElementFound
     {
         try
         {
-            NativeSeleniumElement.FindElement(By.xpath("."));
-            return !NativeSeleniumElement.Displayed;
+            NativeSeleniumElement().findElement(By.xpath("."));
+            return !NativeSeleniumElement().isDisplayed();
         }
-        catch(InvalidOperationException)
-        {
-            return true;
-        }
-        catch (StaleElementReferenceException)
+        catch (StaleElementReferenceException ex)
         {
             return true;
         }
@@ -73,6 +72,6 @@ class SeleniumElement extends ElementFound
 
     public String Attribute(String attributeName)
     {
-        return NativeSeleniumElement.GetAttribute(attributeName);
+        return NativeSeleniumElement().getAttribute(attributeName);
     }
 }

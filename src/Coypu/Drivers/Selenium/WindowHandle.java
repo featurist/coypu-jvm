@@ -1,6 +1,9 @@
 package Coypu.Drivers.Selenium;
 
 import Coypu.ElementFound;
+import org.apache.commons.lang.NotImplementedException;
+import org.openqa.selenium.By;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 class WindowHandle implements ElementFound
@@ -14,66 +17,57 @@ class WindowHandle implements ElementFound
         this.windowHandle = windowHandle;
     }
 
-    public String Id
+    public String Id()
     {
-        get { throw new System.NotSupportedException(); }
+        throw new NotSupportedException();
     }
 
-    public String Text
+    public String Text()
     {
-        get
-        {
-            var currentWindowHandle = selenium.CurrentWindowHandle;
+            String currentWindowHandle = selenium.getWindowHandle();
             try
             {
-                return ((SearchContext)Native).FindElement(By.CssSelector("body")).Text;
+                return ((SearchContext)Native()).findElement(By.cssSelector("body")).Text;
             }
             finally
             {
-                selenium.SwitchTo().Window(currentWindowHandle);
+                selenium.switchTo().window(currentWindowHandle);
             }
-        }
     }
 
-    public String Value
+    public String Value()
     {
-        get { throw new System.NotSupportedException(); }
+        throw new System.NotSupportedException();
     }
 
-    public String Name
+    public String Name()
     {
-        get { throw new System.NotSupportedException(); }
+        throw new System.NotSupportedException();
     }
 
-    public String SelectedOption
+    public String SelectedOption()
     {
-        get { throw new System.NotSupportedException(); }
+        throw new System.NotSupportedException();
     }
 
-    public boolean Selected
+    public boolean Selected()
     {
-        get { throw new System.NotSupportedException(); }
+        throw new NotSupportedException();
     }
 
-    public object Native
+    public Object Native()
     {
-        get
-        {
-            selenium.SwitchTo().Window(windowHandle);
-            return selenium;
-        }
+        selenium.switchTo().window(windowHandle);
+        return selenium;
     }
 
-    public boolean Stale
+    public boolean Stale()
     {
-        get
-        {
-            return !selenium.WindowHandles.Contains(windowHandle);
-        }
+        return !selenium.getWindowHandles().contains(windowHandle);
     }
 
-    public String this[String attributeName]
+    public String Attribute(String attributeName)
     {
-        get { throw new System.NotImplementedException(); }
+        throw new NotSupportedException();
     }
 }
