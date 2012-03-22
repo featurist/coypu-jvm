@@ -1,7 +1,5 @@
 package Coypu.Finders;
-import Coypu.Driver;
-import Coypu.DriverScope;
-import Coypu.ElementFound;
+import Coypu.*;
 
 public class IdFinder extends ElementFinder
 {
@@ -10,8 +8,7 @@ public class IdFinder extends ElementFinder
         super(driver, locator, scope);
     }
 
-    public ElementFound Find()
-    {
+    public ElementFound Find() throws MissingHtmlException, TimeoutException, InterruptedException {
         return Driver.FindId(Locator(), Scope);
     }
 }

@@ -1,5 +1,4 @@
 ﻿package Coypu.WebRequests;
-import Coypu.WebRequests.RestrictedResourceDownloader;
 
 public class WebClientWithCookies extends WebClient implements RestrictedResourceDownloader
 {

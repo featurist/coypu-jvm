@@ -3,6 +3,7 @@ package Coypu.Drivers.Selenium;
 import Coypu.DriverScope;
 import Coypu.Drivers.XPath;
 import Coypu.MissingHtmlException;
+import Coypu.TimeoutException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -22,8 +23,7 @@ class FieldFinder
         this.xPath = xPath;
     }
 
-    public WebElement FindField(String locator, DriverScope scope)
-    {
+    public WebElement FindField(String locator, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
         return FindFieldFromLabel(locator, scope) ??
                FindFieldByIdOrName(locator, scope) ??
                FindFieldByPlaceholder(locator, scope) ??
@@ -31,7 +31,7 @@ class FieldFinder
                elementFinder.FindByPartialId(locator, scope).FirstOrDefault(e => IsField(e, scope));
     }
 
-    private WebElement FindRadioButtonFromValue(String locator,DriverScope scope) throws MissingHtmlException {
+    private WebElement FindRadioButtonFromValue(String locator,DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
         return elementFinder.Find(By.xpath(".//input[@type = 'radio']"), scope).FirstOrDefault(e => e.GetAttribute("value") == locator);
     }
 
@@ -49,22 +49,22 @@ class FieldFinder
         return field;
     }
 
-    private WebElement FindLabelByText(String locator, DriverScope scope) throws MissingHtmlException {
+    private WebElement FindLabelByText(String locator, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
         return
             elementFinder.Find(By.xpath(xPath.Format(".//label[text() = {0}]", locator)), scope).FirstOrDefault() ??
             elementFinder.Find(By.xpath(xPath.Format(".//label[contains(text(),{0})]", locator)), scope).FirstOrDefault();
     }
 
-    private WebElement FindFieldByPlaceholder(String placeholder,DriverScope scope) throws MissingHtmlException {
+    private WebElement FindFieldByPlaceholder(String placeholder,DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
         return elementFinder.Find(By.xpath(xPath.Format(".//input[@placeholder = {0}]", placeholder)), scope).FirstOrDefault(e => IsField(e, scope));
     }
 
-    private WebElement FindFieldByIdOrName(String locator, DriverScope scope) throws MissingHtmlException {
+    private WebElement FindFieldByIdOrName(String locator, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
         String xpathToFind = xPath.Format(".//*[@id = {0} or @name = {0}]", locator);
         return elementFinder.Find(By.xpath(xpathToFind), scope).FirstOrDefault(e => IsField(e,scope));
     }
 
-    private WebElement FindFieldById(String id, DriverScope scope) throws MissingHtmlException {
+    private WebElement FindFieldById(String id, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
         return elementFinder.Find(By.id(id), scope).FirstOrDefault(e => IsField(e,scope));
     }
 

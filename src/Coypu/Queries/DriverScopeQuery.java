@@ -1,9 +1,6 @@
 package Coypu.Queries;
 
-import Coypu.DriverScope;
-import Coypu.MissingHtmlException;
-import Coypu.Options;
-import Coypu.TimeSpan;
+import Coypu.*;
 
 public abstract class DriverScopeQuery<T> implements Query<T>
 {
@@ -32,7 +29,7 @@ public abstract class DriverScopeQuery<T> implements Query<T>
         this.retryInterval = options.RetryInterval;
     }
 
-    public abstract void Run() throws MissingHtmlException;
+    public abstract void Run() throws MissingHtmlException, TimeoutException, InterruptedException;
     public abstract Object ExpectedResult();
     public T Result ()
     {

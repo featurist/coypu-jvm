@@ -3,6 +3,7 @@ package Coypu.Finders;
 import Coypu.Driver;
 import Coypu.DriverScope;
 import Coypu.ElementFound;
+import Coypu.MissingHtmlException;
 
 public class WindowFinder extends ElementFinder
 {
@@ -11,8 +12,7 @@ public class WindowFinder extends ElementFinder
         super(driver, locator, scope);
     }
 
-    public ElementFound Find()
-    {
+    public ElementFound Find() throws MissingHtmlException {
         return Driver.FindWindow(Locator(), Scope);
     }
 }

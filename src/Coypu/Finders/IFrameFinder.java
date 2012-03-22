@@ -1,7 +1,5 @@
 package Coypu.Finders;
-import Coypu.Driver;
-import Coypu.DriverScope;
-import Coypu.ElementFound;
+import Coypu.*;
 
 public class IFrameFinder extends ElementFinder
 {
@@ -9,8 +7,7 @@ public class IFrameFinder extends ElementFinder
         super(driver, locator, scope)       ;
     }
 
-    public ElementFound Find()
-    {
+    public ElementFound Find() throws MissingHtmlException, TimeoutException, InterruptedException {
         return Driver.FindIFrame(Locator(), Scope);
     }
 }

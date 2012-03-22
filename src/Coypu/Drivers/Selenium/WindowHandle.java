@@ -27,7 +27,7 @@ class WindowHandle implements ElementFound
             String currentWindowHandle = selenium.getWindowHandle();
             try
             {
-                return ((SearchContext)Native()).findElement(By.cssSelector("body")).Text;
+                return ((SearchContext)Native()).findElement(By.cssSelector("body")).getText();
             }
             finally
             {
@@ -37,17 +37,17 @@ class WindowHandle implements ElementFound
 
     public String Value()
     {
-        throw new System.NotSupportedException();
+        throw new NotSupportedException();
     }
 
     public String Name()
     {
-        throw new System.NotSupportedException();
+        throw new NotSupportedException();
     }
 
     public String SelectedOption()
     {
-        throw new System.NotSupportedException();
+        throw new NotSupportedException();
     }
 
     public boolean Selected()

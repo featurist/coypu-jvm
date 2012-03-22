@@ -3,6 +3,7 @@ package Coypu.Drivers.Selenium;
 import Coypu.DriverScope;
 import Coypu.Drivers.XPath;
 import Coypu.MissingHtmlException;
+import Coypu.TimeoutException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,7 +22,7 @@ class IFrameFinder
         this.xPath = xPath;
     }
 
-    public WebElement FindIFrame(String locator, DriverScope scope) throws MissingHtmlException {
+    public WebElement FindIFrame(String locator, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
         return elementFinder.Find(By.tagName("iframe"), scope).FirstOrDefault(e => e.GetAttribute("id") == locator ||
                                                                                         e.GetAttribute("title") == locator ||
                                                                                         FrameContentsMatch(e, locator));

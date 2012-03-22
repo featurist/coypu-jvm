@@ -15,8 +15,7 @@ public class RobustWindowScope extends BrowserWindow
         this.options = options;
     }
 
-    public ElementFound Now()
-    {
+    public ElementFound Now() throws TimeoutException, InterruptedException {
         return robustWrapper.Robustly(new ElementQuery(this, options));
     }
 }

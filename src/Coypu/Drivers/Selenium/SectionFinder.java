@@ -1,7 +1,9 @@
 package Coypu.Drivers.Selenium;
 
 import Coypu.DriverScope;
+import Coypu.MissingHtmlException;
 import Coypu.StringJoiner;
+import Coypu.TimeoutException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
@@ -19,8 +21,7 @@ class SectionFinder
         this.textMatcher = textMatcher;
     }
 
-    public WebElement FindSection(String locator, DriverScope scope)
-    {
+    public WebElement FindSection(String locator, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
         return FindSectionByHeaderText(locator,scope) ??
                elementFinder.Find(By.id(locator),scope).FirstDisplayedOrDefault(IsSection);
     }
@@ -31,8 +32,7 @@ class SectionFinder
                FindSectionByHeaderText(locator, "div",scope);
     }
 
-    private WebElement FindSectionByHeaderText(String locator, String sectionTag, DriverScope scope)
-    {
+    private WebElement FindSectionByHeaderText(String locator, String sectionTag, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
         String headersXPath = StringJoiner.join(" or ", headerTags);
         Iterable<WebElement> withAHeader = elementFinder.Find(By.xpath(String.format(".//{0}[{1}]", sectionTag, headersXPath)),scope);
 

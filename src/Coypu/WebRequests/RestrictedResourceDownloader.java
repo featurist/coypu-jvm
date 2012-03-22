@@ -1,5 +1,7 @@
 ﻿package Coypu.WebRequests;
 
+import org.openqa.selenium.Cookie;
+
 public interface RestrictedResourceDownloader
 {
     void SetCookies(Iterable<Cookie> getBrowserCookies);

@@ -13,15 +13,10 @@ import Coypu.Robustness.Waiter;
     /// </summary>
 public class BrowserWindow extends DriverScope
 {
-    private boolean wasDisposed;
 
     public BrowserWindow(Configuration configuration, ElementFinder elementFinder, Driver driver, RobustWrapper robustWrapper, Waiter waiter, UrlBuilder urlBuilder)
     {
         super(configuration, elementFinder, driver, robustWrapper, waiter, urlBuilder);
-    }
-
-    public boolean WasDisposed() {
-        return wasDisposed;
     }
 
     /// <summary>
@@ -33,26 +28,11 @@ public class BrowserWindow extends DriverScope
     }
 
     /// <summary>
-    /// Disposes the current session, closing any open browser.
-    /// </summary>
-    public void Dispose()
-    {
-        if (wasDisposed)
-            return;
-
-        driver.Dispose();
-        ActivatorDriverFactory.OpenDrivers--;
-
-        wasDisposed = true;
-    }
-
-    /// <summary>
     /// Check that a dialog with the specified text appears within the <see cref="Configuration.Timeout"/>
     /// </summary>
     /// <param name="withText">Dialog text</param>
     /// <returns>Whether an element appears</returns>
-    public boolean HasDialog(String withText, Options options)
-    {
+    public boolean HasDialog(String withText, Options options) throws TimeoutException, InterruptedException {
         return Query(new HasDialogQuery(driver, withText, this, SetOptions(options)));
     }
 
@@ -61,8 +41,7 @@ public class BrowserWindow extends DriverScope
     /// </summary>
     /// <param name="withText">Dialog text</param>
     /// <returns>Whether an element does not appears</returns>
-    public boolean HasNoDialog(String withText, Options options)
-    {
+    public boolean HasNoDialog(String withText, Options options) throws TimeoutException, InterruptedException {
         return Query(new HasNoDialogQuery(driver, withText, this, SetOptions(options)));
     }
 
@@ -70,8 +49,7 @@ public class BrowserWindow extends DriverScope
     /// Accept the first modal dialog to appear within the <see cref="Configuration.Timeout"/>
     /// </summary>
     /// <exception cref="T:Coypu.MissingHtmlException">Thrown if the dialog cannot be found</exception>
-    public void AcceptModalDialog(Options options)
-    {
+    public void AcceptModalDialog(Options options) throws TimeoutException, InterruptedException {
         RetryUntilTimeout(new AcceptModalDialog(this, driver, SetOptions(options)));
     }
 
@@ -79,8 +57,7 @@ public class BrowserWindow extends DriverScope
     /// Cancel the first modal dialog to appear within the <see cref="Configuration.Timeout"/>
     /// </summary>
     /// <exception cref="T:Coypu.MissingHtmlException">Thrown if the dialog cannot be found</exception>
-    public void CancelModalDialog(Options options)
-    {
+    public void CancelModalDialog(Options options) throws TimeoutException, InterruptedException {
         RetryUntilTimeout(new CancelModalDialog(this, driver, SetOptions(options)));
     }
 

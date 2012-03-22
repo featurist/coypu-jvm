@@ -13,6 +13,8 @@ import Coypu.WebRequests.WebClientWithCookies;
 /// </summary>
 public class BrowserSession extends BrowserWindow
 {
+
+    private boolean wasDisposed;
     private final RestrictedResourceDownloader restrictedResourceDownloader;
 
     /// <summary>
@@ -48,6 +50,25 @@ public class BrowserSession extends BrowserWindow
     public Driver Driver()
     {
         return driver;
+    }
+
+
+    public boolean WasDisposed() {
+        return wasDisposed;
+    }
+
+    /// <summary>
+    /// Disposes the current session, closing any open browser.
+    /// </summary>
+    public void Dispose()
+    {
+        if (wasDisposed)
+            return;
+
+        driver.Dispose();
+        ActivatorDriverFactory.OpenDrivers--;
+
+        wasDisposed = true;
     }
 
     /// <summary>
