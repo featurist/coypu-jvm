@@ -2,22 +2,37 @@ package Coypu;
 
 public class Stopwatch {
 
+    private long startTime = 0;
+    private long stopTime = 0;
+    private boolean running = false;
 
-    public Stopwatch() {
-      // TODO: Start stopwatch
+
+    public void start() {
+        this.startTime = System.currentTimeMillis();
+        this.running = true;
     }
 
-    public static Stopwatch StartNew() {
-        return new Stopwatch();
+
+    public void stop() {
+        this.stopTime = System.currentTimeMillis();
+        this.running = false;
     }
 
     public long getElapsedMilliseconds() {
-        // TODO read stopwatch
-        return 0;
+        long elapsed;
+        if (running) {
+            elapsed = (System.currentTimeMillis() - startTime);
+        }
+        else {
+            elapsed = (stopTime - startTime);
+        }
+        return elapsed;
     }
 
-    public void stop() {
 
+    public static Stopwatch startNew() {
+        Stopwatch stopwatch = new Stopwatch();
+        stopwatch.start();
+        return stopwatch;
     }
 }
-

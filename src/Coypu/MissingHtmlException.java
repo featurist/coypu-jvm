@@ -8,5 +8,6 @@ public class MissingHtmlException extends Exception
     {
         super(message);
     }
+
 }
 

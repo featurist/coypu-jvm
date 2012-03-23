@@ -9,6 +9,6 @@ public class BrowserNotSupportedException extends Exception
 {
     public BrowserNotSupportedException(Browser browser, Type driverType)
     {
-        super(String.format("{0} is not supported by {1}", browser.toString(), driverType.toString()));
+        super(String.format("%1$s is not supported by %2$s", browser.toString(), driverType.toString()));
     }
 }

@@ -9,7 +9,7 @@ public class CssFinder extends ElementFinder
         super(driver, locator, scope);
     }
 
-    public ElementFound Find() throws MissingHtmlException, TimeoutException {
+    public ElementFound Find() throws MissingHtmlException {
         return Driver.FindCss(Locator(), Scope);
     }
 }

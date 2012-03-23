@@ -37,13 +37,13 @@ public class RetryUntilTimeoutRobustWrapper implements RobustWrapper
             throws MissingHtmlException, TimeoutException {
         boolean outcome = Robustly(new ActionSatisfiesPredicateQuery(tryThis, until, overallTimeout, until.RetryInterval(), waitBeforeRetry, this));
         if (!outcome)
-            throw new MissingHtmlException("Timeout from TryUntil: the page never reached the required state.");
+            throw new TimeoutException("Timeout from TryUntil: the page never reached the required state.");
     }
 
-    public <TResult> TResult Robustly(Query<TResult> query) throws TimeoutException {
+    public <TResult> TResult Robustly(Query<TResult> query) throws MissingHtmlException {
         TimeSpan interval = query.RetryInterval();
         TimeSpan timeout = Timeout(query);
-        Stopwatch stopWatch = Stopwatch.StartNew();
+        Stopwatch stopWatch = Stopwatch.startNew();
         while (true)
         {
             try
@@ -62,7 +62,10 @@ public class RetryUntilTimeoutRobustWrapper implements RobustWrapper
             {
                 if (TimeoutReached(stopWatch, timeout, interval))
                 {
-                    throw new TimeoutException(ex);
+                    if (ex instanceof MissingHtmlException)
+                        throw (MissingHtmlException) ex;
+                    else
+                        throw new RuntimeException(ex);
                 }
                 WaitForInterval(interval);
             }
@@ -103,6 +106,7 @@ public class RetryUntilTimeoutRobustWrapper implements RobustWrapper
     private boolean TimeoutReached(Stopwatch stopWatch,  TimeSpan timeout,  TimeSpan interval)
     {
         long elapsedTimeToNextCall = stopWatch.getElapsedMilliseconds() + interval.getMilliseconds();
+
         boolean timeoutReached = elapsedTimeToNextCall >= timeout.getMilliseconds();
 
         return timeoutReached;

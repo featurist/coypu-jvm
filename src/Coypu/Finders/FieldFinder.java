@@ -8,7 +8,7 @@ public class FieldFinder extends ElementFinder
         super(driver, locator, scope);
     }
 
-    public ElementFound Find() throws MissingHtmlException, TimeoutException {
+    public ElementFound Find() throws MissingHtmlException {
         return Driver.FindField(Locator(), Scope);
     }
 }

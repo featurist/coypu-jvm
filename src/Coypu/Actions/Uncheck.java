@@ -14,7 +14,7 @@ public class Uncheck extends DriverAction
         this.locator = locator;
     }
 
-    public void Act() throws MissingHtmlException, TimeoutException {
+    public void Act() throws MissingHtmlException {
         Driver.Uncheck(Driver.FindField(locator, scope));
     }
 }

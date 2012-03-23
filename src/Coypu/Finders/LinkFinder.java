@@ -8,7 +8,7 @@ public class LinkFinder extends ElementFinder
         super(driver, locator, scope);
     }
 
-    public ElementFound Find() throws MissingHtmlException, TimeoutException {
+    public ElementFound Find() throws MissingHtmlException {
         return Driver.FindLink(Locator(), Scope);
     }
 }

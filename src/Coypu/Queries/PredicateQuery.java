@@ -3,7 +3,6 @@ package Coypu.Queries;
 import Coypu.MissingHtmlException;
 import Coypu.Options;
 import Coypu.TimeSpan;
-import Coypu.TimeoutException;
 
 public abstract class PredicateQuery implements Query<Boolean>
 {
@@ -26,7 +25,7 @@ public abstract class PredicateQuery implements Query<Boolean>
         return result;
     }
 
-    public abstract void Run() throws MissingHtmlException, TimeoutException;
+    public abstract void Run() throws MissingHtmlException;
 
     public Object ExpectedResult()
     {

@@ -3,9 +3,9 @@
   <component name="NewModuleRootManager" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
-    <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/src/Coypu.Tests" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
@@ -45,6 +45,7 @@
     <orderEntry type="library" name="Maven: org.seleniumhq.selenium:selenium-ie-driver:2.20.0" level="project" />
     <orderEntry type="library" name="Maven: org.seleniumhq.selenium:selenium-iphone-driver:2.20.0" level="project" />
     <orderEntry type="library" name="Maven: org.seleniumhq.selenium:selenium-support:2.20.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.8.1" level="project" />
   </component>
 </module>
 

@@ -4,7 +4,6 @@ import Coypu.DriverScope;
 import Coypu.Iterators;
 import Coypu.Drivers.XPath;
 import Coypu.MissingHtmlException;
-import Coypu.TimeoutException;
 import com.google.common.base.Predicate;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -29,7 +28,7 @@ class ButtonFinder
             new Predicate<WebElement>() {
                 @Override
                 public boolean apply(@Nullable WebElement e) {
-                    return e.getTagName() == "button" || IsInputButton(e) || e.getAttribute("role") == "button";
+                    return e.getTagName().equals("button") || IsInputButton(e) || e.getAttribute("role").equals("button");
                 }
             };
 
@@ -42,23 +41,19 @@ class ButtonFinder
         };
     }
 
-    public WebElement FindButton(String locator, DriverScope scope) throws MissingHtmlException, TimeoutException {
+    public WebElement FindButton(String locator, DriverScope scope) throws MissingHtmlException {
         WebElement byText = FindButtonByText(locator, scope);
         if (byText != null) return byText;
         
-        WebElement byIdNameOrValue = FindButtonByIdNameOrValue(locator, scope);
-        if (byIdNameOrValue != null) return byIdNameOrValue;
-
-        return Iterators.FirstOrDefault(elementFinder.FindByPartialId(locator, scope), isButton, scope);
+        return FindButtonByIdNameOrValue(locator, scope);
     }
 
-    
-    private WebElement FindButtonByIdNameOrValue(String locator, DriverScope scope) throws MissingHtmlException, TimeoutException {
-        String xpathToFind = xPath.Format(".//*[@id = {0} or @name = {0} or @value = {0} or @alt = {0}]", locator);
+    private WebElement FindButtonByIdNameOrValue(String locator, DriverScope scope) throws MissingHtmlException {
+        String xpathToFind = xPath.Format(".//*[@id = %1$s or @name = %1$s or @value = %1$s or @alt = %1$s]", locator);
         return Iterators.FirstOrDefault(elementFinder.Find(By.xpath(xpathToFind), scope), isButton, scope);
     }
 
-    private WebElement FindButtonByText(String locator, DriverScope scope) throws MissingHtmlException, TimeoutException {
+    private WebElement FindButtonByText(String locator, DriverScope scope) throws MissingHtmlException {
         WebElement byTagName = Iterators.FirstOrDefault(elementFinder.Find(By.tagName("button"), scope),textMatches(locator), scope);
         if (byTagName != null) return byTagName;
         
@@ -70,7 +65,7 @@ class ButtonFinder
 
     private boolean IsInputButton(WebElement e)
     {
-        return e.getTagName() == "input" && Arrays.asList(FieldFinder.InputButtonTypes).contains(e.getAttribute("type"));
+        return e.getTagName().equals("input") && Arrays.asList(FieldFinder.InputButtonTypes).contains(e.getAttribute("type"));
     }
 
 }

@@ -12,7 +12,7 @@ public class Hover extends DriverAction
         this.driverScope = driverScope;
     }
 
-    public void Act() throws MissingHtmlException, TimeoutException {
+    public void Act() throws MissingHtmlException {
         ElementFound element = driverScope.Now();
         Driver.Hover(element);
     }

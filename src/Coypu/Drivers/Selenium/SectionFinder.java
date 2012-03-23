@@ -26,23 +26,23 @@ class SectionFinder
         this.textMatcher = textMatcher;
     }
 
-    public WebElement FindSection(String locator, DriverScope scope) throws MissingHtmlException, TimeoutException {
+    public WebElement FindSection(String locator, DriverScope scope) throws MissingHtmlException {
         WebElement byHeaderText = FindSectionByHeaderText(locator,scope);
         if (byHeaderText != null) return byHeaderText;
         
         return Iterators.FirstOrDefault(elementFinder.Find(By.id(locator), scope), IsSection(),scope);
     }
 
-    private WebElement FindSectionByHeaderText(String locator, DriverScope scope) throws MissingHtmlException, TimeoutException {
+    private WebElement FindSectionByHeaderText(String locator, DriverScope scope) throws MissingHtmlException {
         WebElement byHeaderText = FindSectionByHeaderText(locator, "section",scope);
         if (byHeaderText != null) return byHeaderText;
         
         return FindSectionByHeaderText(locator, "div",scope);
     }
 
-    private WebElement FindSectionByHeaderText(String locator, String sectionTag, DriverScope scope) throws MissingHtmlException, TimeoutException {
+    private WebElement FindSectionByHeaderText(String locator, String sectionTag, DriverScope scope) throws MissingHtmlException {
         String headersXPath = StringJoiner.join(" or ", headerTags);
-        Iterable<WebElement> withAHeader = elementFinder.Find(By.xpath(String.format(".//{0}[{1}]", sectionTag, headersXPath)),scope);
+        Iterable<WebElement> withAHeader = elementFinder.Find(By.xpath(String.format(".//%1$s[%2$s]", sectionTag, headersXPath)),scope);
 
         return Iterators.FirstOrDefault(withAHeader,WhereAHeaderMatches(locator,scope),scope);
     }
@@ -67,7 +67,7 @@ class SectionFinder
         return new Predicate<WebElement>() {
             @Override
             public boolean apply(@Nullable WebElement e) {
-                return e.getTagName() == "section" || e.getTagName() == "div";
+                return e.getTagName().equals("section") || e.getTagName().equals("div");
             }
         };
     }

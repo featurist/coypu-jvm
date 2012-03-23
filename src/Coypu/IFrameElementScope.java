@@ -13,7 +13,7 @@ public class IFrameElementScope extends RobustElementScope
         super(elementFinder, outerScope, options);
     }
 
-    public String Location() throws MissingHtmlException, TimeoutException {
+    public String Location() throws MissingHtmlException {
         FindXPath("/*",options).Now();
         return driver.Location();
     }

@@ -12,8 +12,8 @@ public class Options
     /// </summary>
     public Options()
     {
-        Timeout = TimeSpan.FromSeconds(DEFAULT_TIMEOUT_MILLISECONDS);
-        RetryInterval = TimeSpan.FromSeconds(DEFAULT_INTERVAL_MILLISECONDS);
+        Timeout = TimeSpan.FromMilliseconds(DEFAULT_TIMEOUT_MILLISECONDS);
+        RetryInterval = TimeSpan.FromMilliseconds(DEFAULT_INTERVAL_MILLISECONDS);
         WaitBeforeClick = TimeSpan.Zero();
     }
 

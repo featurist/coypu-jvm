@@ -19,7 +19,7 @@ public class WaitThenClick extends DriverAction
         this.elementFinder = elementFinder;
     }
 
-    public void Act() throws MissingHtmlException, TimeoutException
+    public void Act() throws MissingHtmlException
     {
         ElementFound element = elementFinder.Find();
         waiter.Wait(options.WaitBeforeClick);

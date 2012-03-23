@@ -2,9 +2,9 @@ package Coypu;
 
 public class TimeoutException extends Exception
 {
-    public TimeoutException(Exception inner)
+    public TimeoutException(String message)
     {
-        super();
-        super.initCause(inner);
+        super(message);
     }
+
 }

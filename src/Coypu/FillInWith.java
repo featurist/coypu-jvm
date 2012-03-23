@@ -37,7 +37,7 @@ public class FillInWith
     /// </summary>
     /// <param name="value">The value to fill in</param>
     /// <exception cref="T:Coypu.MissingHtmlException">Thrown if the element cannot be found</exception>
-    public void With(String value) throws TimeoutException {
+    public void With(String value) throws MissingHtmlException {
         robustWrapper.Robustly(new FillIn(driver, scope, locator, element, value,options));
     }
 }

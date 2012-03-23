@@ -13,7 +13,7 @@ public class Choose extends DriverAction
         this.locator = locator;
     }
 
-    public void Act() throws MissingHtmlException, TimeoutException {
+    public void Act() throws MissingHtmlException {
         Driver.Choose(Driver.FindField(locator, scope));
     }
 }

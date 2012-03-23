@@ -15,7 +15,7 @@ public class HasCssQuery extends DriverScopeQuery<Boolean>
         this.cssSelector = cssSelector;
     }
 
-    public void Run() throws MissingHtmlException, TimeoutException {
+    public void Run() throws MissingHtmlException {
         SetResult(driver.HasCss(cssSelector, DriverScope()));
     }
 }

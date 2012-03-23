@@ -18,7 +18,7 @@ class OptionSelector
             Iterators.FirstOrDefault(select.findElements(By.tagName("option")),new Predicate<WebElement>() {
                 @Override
                 public boolean apply(@Nullable WebElement e) {
-                    return e.getText() == option || e.getAttribute("value") == option;
+                    return e.getText().equals(option) || e.getAttribute("value").equals(option);
                 }
             });
 

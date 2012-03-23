@@ -4,13 +4,12 @@ import Coypu.Actions.BrowserAction;
 import Coypu.MissingHtmlException;
 import Coypu.Queries.Query;
 import Coypu.TimeSpan;
-
-import java.util.concurrent.TimeoutException;
+import Coypu.TimeoutException;
 
 public interface RobustWrapper
 {
-    public <T> T Robustly(Query<T> query) throws Coypu.TimeoutException;
-    public void TryUntil(BrowserAction tryThis, Query<Boolean> until, TimeSpan overallTimeout, TimeSpan waitBeforeRetry) throws MissingHtmlException, TimeoutException, Coypu.TimeoutException;
+    public <T> T Robustly(Query<T> query) throws MissingHtmlException;
+    public void TryUntil(BrowserAction tryThis, Query<Boolean> until, TimeSpan overallTimeout, TimeSpan waitBeforeRetry) throws MissingHtmlException, TimeoutException;
     public boolean GetZeroTimeout();
     public void SetZeroTimeout(boolean value);
     public void SetOverrideTimeout(TimeSpan timeout);

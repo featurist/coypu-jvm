@@ -3,7 +3,6 @@ package Coypu.Finders;
 import Coypu.MissingHtmlException;
 import Coypu.Options;
 import Coypu.Queries.PredicateQuery;
-import Coypu.Queries.Query;
 import Coypu.Robustness.RobustWrapper;
 import Coypu.State;
 import Coypu.TimeoutException;
@@ -17,10 +16,10 @@ public class StateFinder
         this.robustWrapper = robustWrapper;
     }
 
-    public State FindState(Options options, final State[] states) throws MissingHtmlException, TimeoutException {
+    public State FindState(Options options, final State[] states) throws TimeoutException, MissingHtmlException {
         PredicateQuery query = new PredicateQuery(options) {
             @Override
-            public void Run() throws MissingHtmlException, TimeoutException {
+            public void Run() throws MissingHtmlException {
                 boolean was = robustWrapper.GetZeroTimeout();
                 robustWrapper.SetZeroTimeout(true);
                 try
@@ -46,7 +45,7 @@ public class StateFinder
                return state;
         }
 
-        throw new MissingHtmlException("None of the given states was reached within the configured timeout.");
+        throw new TimeoutException("None of the given states was reached within the configured timeout.");
 
     }
 }

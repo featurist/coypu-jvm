@@ -17,7 +17,7 @@ public class HasXPathQuery extends DriverScopeQuery<Boolean>
         this.xpath = xpath;
     }
 
-    public void Run() throws MissingHtmlException, TimeoutException {
+    public void Run() throws MissingHtmlException {
         SetResult(driver.HasXPath(xpath, DriverScope()));
     }
 }

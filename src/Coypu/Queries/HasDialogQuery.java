@@ -15,7 +15,7 @@ public class HasDialogQuery extends DriverScopeQuery<Boolean>
         this.text = text;
     }
 
-    public void Run() throws MissingHtmlException, TimeoutException {
+    public void Run() throws MissingHtmlException {
         SetResult(driver.HasDialog(text,DriverScope()));
     }
 }

@@ -16,8 +16,8 @@ public class FullyQualifiedUrlBuilder implements UrlBuilder
             String scheme = configuration.SSL ? "https" : "http";
 
             return configuration.Port == 80
-                    ? String.format("{0}://{1}/{2}", scheme, configuration.GetAppHost(), virtualPath)
-                    : String.format("{0}://{1}:{2}/{3}", scheme, configuration.GetAppHost(), configuration.Port, virtualPath);
+                    ? String.format("%1$s://%2$s/%3$s", scheme, configuration.GetAppHost(), virtualPath)
+                    : String.format("%1$s://%2$s:%3$s/%4$s", scheme, configuration.GetAppHost(), configuration.Port, virtualPath);
         }
     }
 }

@@ -15,7 +15,7 @@ public class Select extends DriverAction
         this.option = option;
     }
 
-    public void Act() throws MissingHtmlException, TimeoutException {
+    public void Act() throws MissingHtmlException {
         Driver.Select(Driver.FindField(locator, scope),option);
     }
 }

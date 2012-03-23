@@ -18,7 +18,7 @@ class Dialogs
         {
             return selenium.switchTo() != null &&
                    selenium.switchTo().alert() != null &&
-                   selenium.switchTo().alert().getText() == withText;
+                   selenium.switchTo().alert().getText().equals(withText);
         }
         catch (NoAlertPresentException ex)
         {

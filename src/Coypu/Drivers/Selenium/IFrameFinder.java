@@ -4,7 +4,6 @@ import Coypu.DriverScope;
 import Coypu.Drivers.XPath;
 import Coypu.Iterators;
 import Coypu.MissingHtmlException;
-import Coypu.TimeoutException;
 import com.google.common.base.Predicate;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -26,12 +25,12 @@ class IFrameFinder
         this.xPath = xPath;
     }
 
-    public WebElement FindIFrame(final String locator, DriverScope scope) throws MissingHtmlException, TimeoutException {
+    public WebElement FindIFrame(final String locator, DriverScope scope) throws MissingHtmlException {
         return Iterators.FirstOrDefault(elementFinder.Find(By.tagName("iframe"), scope),new Predicate<WebElement>() {
             @Override
             public boolean apply(@Nullable WebElement e) {
-                return e.getAttribute("id") == locator ||
-                       e.getAttribute("title") == locator ||
+                return e.getAttribute("id").equals(locator) ||
+                        e.getAttribute("title").equals(locator) ||
                        FrameContentsMatch(e, locator);
             }
         },scope);
@@ -44,8 +43,8 @@ class IFrameFinder
         {
             WebDriver frame = selenium.switchTo().frame(e);
             return
-                frame.getTitle() == locator ||
-                frame.findElements(By.xpath(xPath.Format(".//h1[text() = {0}]", locator))).size() > 0;
+                    frame.getTitle().equals(locator) ||
+                frame.findElements(By.xpath(xPath.Format(".//h1[text() = %1$s]", locator))).size() > 0;
         }
         finally
         {

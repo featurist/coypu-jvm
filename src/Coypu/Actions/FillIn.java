@@ -18,24 +18,24 @@ public class FillIn extends DriverAction
         this.value = value;
     }
 
-    public Element Field() throws MissingHtmlException, TimeoutException {
+    public Element Field() throws MissingHtmlException {
         return element == null ?  Driver.FindField(locator, scope) : element;
     }
 
-    private void BringIntoFocus() throws MissingHtmlException, TimeoutException {
+    private void BringIntoFocus() throws MissingHtmlException {
         Driver.Click(Field());
     }
 
-    public void Set() throws MissingHtmlException, TimeoutException {
+    public void Set() throws MissingHtmlException {
         Driver.Set(Field(), value);
     }
 
-    public void Focus() throws MissingHtmlException, TimeoutException {
+    public void Focus() throws MissingHtmlException {
         if (Field().Attribute("type") != "file")
             BringIntoFocus();
     }
 
-    public void Act() throws MissingHtmlException, TimeoutException {
+    public void Act() throws MissingHtmlException {
         Focus();
         Set();
     }

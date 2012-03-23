@@ -6,7 +6,7 @@ public class StopwatchWaiter implements Waiter
 {
     public void Wait( TimeSpan duration)
     {
-        Stopwatch stopWatch = Stopwatch.StartNew();
+        Stopwatch stopWatch = Stopwatch.startNew();
         while(stopWatch.getElapsedMilliseconds() < duration.getMilliseconds())
         {
         }

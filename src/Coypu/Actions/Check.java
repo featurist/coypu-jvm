@@ -15,7 +15,7 @@ public class Check extends DriverAction
         this.locator = locator;
     }
 
-    public void Act() throws MissingHtmlException, TimeoutException {
+    public void Act() throws MissingHtmlException {
         Driver.Check(Driver.FindField(locator, scope));
     }
 }
