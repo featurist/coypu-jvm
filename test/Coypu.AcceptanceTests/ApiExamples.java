@@ -387,14 +387,13 @@ public class ApiExamples
     }
 
     @Test
-    public void ConsideringOnlyVisibleElements() throws MissingHtmlException {
+    public void ConsideringOnlyVisibleElements() {
         try {
             browser.FindButton("firstInvisibleInputId", tempOptions).Now();
             fail("Expected exception");
         }
-        catch (RuntimeException ex)
+        catch (MissingHtmlException ex)
         {
-
         }
     }
 
