@@ -1,4 +1,4 @@
-﻿package Coypu;
+package Coypu;
 /// <summary>
 /// Thrown whenever some expected HTML cannot be found
 /// </summary>

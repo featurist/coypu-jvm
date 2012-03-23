@@ -1,9 +1,13 @@
-﻿package Coypu.Drivers.Selenium;
+package Coypu.Drivers.Selenium;
 
 import Coypu.ElementFound;
+import Coypu.Iterators;
+import com.google.common.base.Predicate;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
+
+import javax.annotation.Nullable;
 
 class SeleniumElement implements ElementFound
 {
@@ -41,10 +45,13 @@ class SeleniumElement implements ElementFound
 
     public String SelectedOption()
     {
-        return NativeSeleniumElement().findElements(By.tagName("option"))
-            .Where(e => e.Selected)
-            .Select(e => e.Text)
-            .FirstOrDefault();
+        WebElement option = Iterators.FirstOrDefault(NativeSeleniumElement().findElements(By.tagName("option")), new Predicate<WebElement>() {
+            @Override
+            public boolean apply(@Nullable WebElement e) {
+                return e.isSelected();
+            }
+        });
+        return option == null ? null : option.getText();
     }
 
     public boolean Selected()

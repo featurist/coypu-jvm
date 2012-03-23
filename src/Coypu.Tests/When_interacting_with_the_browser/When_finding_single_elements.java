@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Coypu.Tests.TestDoubles;
 using NUnit.Framework;
 

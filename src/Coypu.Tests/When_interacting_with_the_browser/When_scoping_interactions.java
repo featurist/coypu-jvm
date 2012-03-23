@@ -1,4 +1,4 @@
-﻿using Coypu.Tests.TestBuilders;
+using Coypu.Tests.TestBuilders;
 using Coypu.Tests.TestDoubles;
 using NUnit.Framework;
 

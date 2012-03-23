@@ -1,8 +1,6 @@
 package Coypu.Queries;
 
-import Coypu.Driver;
-import Coypu.DriverScope;
-import Coypu.Options;
+import Coypu.*;
 
 public class HasNoDialogQuery extends DriverScopeQuery<Boolean>
 {
@@ -21,8 +19,7 @@ public class HasNoDialogQuery extends DriverScopeQuery<Boolean>
         this.text = text;
     }
 
-    public void Run()
-    {
+    public void Run() throws MissingHtmlException, TimeoutException {
         SetResult(!driver.HasDialog(text, DriverScope()));
     }
 }

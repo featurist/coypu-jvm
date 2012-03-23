@@ -5,8 +5,9 @@ import Coypu.Finders.*;
 import Coypu.Queries.*;
 import Coypu.Robustness.RobustWrapper;
 import Coypu.Robustness.Waiter;
-import com.sun.jndi.toolkit.url.Uri;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.regex.Pattern;
 
 public class DriverScope implements Coypu.Scope
@@ -46,7 +47,7 @@ public class DriverScope implements Coypu.Scope
         configuration = outer.configuration;
     }
 
-    public Uri Location() throws MissingHtmlException {
+    public String Location() throws MissingHtmlException, URISyntaxException, TimeoutException {
         return driver.Location();
     }
 
@@ -65,11 +66,11 @@ public class DriverScope implements Coypu.Scope
         return options == null ?  configuration : options;
     }
 
-    public void ClickButton(String locator, Options options) throws TimeoutException, InterruptedException {
+    public void ClickButton(String locator, Options options) throws TimeoutException {
         RetryUntilTimeout(WaitThenClickButton(locator, SetOptions(options)));
     }
 
-    public void ClickLink(String locator, Options options) throws TimeoutException, InterruptedException {
+    public void ClickLink(String locator, Options options) throws TimeoutException {
         RetryUntilTimeout(WaitThenClickLink(locator, SetOptions(options)));
     }
 
@@ -83,13 +84,13 @@ public class DriverScope implements Coypu.Scope
         return new WaitThenClick(driver, SetOptions(options), waiter, new ButtonFinder(driver, locator, this));
     }
 
-    public DriverScope ClickButton(String locator, PredicateQuery until,  TimeSpan waitBeforeRetry, Options options) throws MissingHtmlException, java.util.concurrent.TimeoutException, TimeoutException, InterruptedException {
+    public DriverScope ClickButton(String locator, PredicateQuery until,  TimeSpan waitBeforeRetry, Options options) throws MissingHtmlException, java.util.concurrent.TimeoutException, TimeoutException {
         options = SetOptions(options);
         TryUntil(WaitThenClickButton(locator, options), until, waitBeforeRetry, options);
         return this;
     }
 
-    public DriverScope ClickLink(String locator, PredicateQuery until,  TimeSpan waitBeforeRetry, Options options) throws MissingHtmlException, java.util.concurrent.TimeoutException, TimeoutException, InterruptedException {
+    public DriverScope ClickLink(String locator, PredicateQuery until,  TimeSpan waitBeforeRetry, Options options) throws MissingHtmlException, java.util.concurrent.TimeoutException, TimeoutException {
         options = SetOptions(options);
         TryUntil(WaitThenClickLink(locator, options), until, waitBeforeRetry, options);
         return this;
@@ -120,35 +121,35 @@ public class DriverScope implements Coypu.Scope
         return new SelectFrom(option, driver, robustWrapper, this, SetOptions(options));
     }
 
-    public boolean HasContent(String text, Options options) throws TimeoutException, InterruptedException {
+    public boolean HasContent(String text, Options options) throws TimeoutException {
         return Query(new HasContentQuery(driver, this, text, SetOptions(options)));
     }
 
-    public boolean HasContentMatch(Pattern pattern, Options options) throws TimeoutException, InterruptedException {
+    public boolean HasContentMatch(Pattern pattern, Options options) throws TimeoutException {
         return Query(new HasContentMatchQuery(driver, this, pattern, SetOptions(options)));
     }
 
-    public boolean HasNoContent(String text, Options options) throws TimeoutException, InterruptedException {
+    public boolean HasNoContent(String text, Options options) throws TimeoutException {
         return Query(new HasNoContentQuery(driver, this, text, SetOptions(options)));
     }
 
-    public boolean HasNoContentMatch(Pattern pattern, Options options) throws TimeoutException, InterruptedException {
+    public boolean HasNoContentMatch(Pattern pattern, Options options) throws TimeoutException {
         return Query(new HasNoContentMatchQuery(driver, this, pattern, SetOptions(options)));
     }
 
-    public boolean HasCss(String cssSelector, Options options) throws TimeoutException, InterruptedException {
+    public boolean HasCss(String cssSelector, Options options) throws TimeoutException {
         return Query(new HasCssQuery(driver, this, cssSelector, SetOptions(options)));
     }
 
-    public boolean HasNoCss(String cssSelector, Options options) throws TimeoutException, InterruptedException {
+    public boolean HasNoCss(String cssSelector, Options options) throws TimeoutException {
         return Query(new HasNoCssQuery(driver, this, cssSelector, SetOptions(options)));
     }
 
-    public boolean HasXPath(String xpath, Options options) throws TimeoutException, InterruptedException {
+    public boolean HasXPath(String xpath, Options options) throws TimeoutException {
         return Query(new HasXPathQuery(driver, this, xpath, SetOptions(options)));
     }
 
-    public boolean HasNoXPath(String xpath, Options options) throws TimeoutException, InterruptedException {
+    public boolean HasNoXPath(String xpath, Options options) throws TimeoutException {
         return Query(new HasNoXPathQuery(driver, this, xpath, SetOptions(options)));
     }
 
@@ -162,12 +163,12 @@ public class DriverScope implements Coypu.Scope
         return new RobustElementScope(new XPathFinder(driver, xpath, this), this, SetOptions(options));
     }
 
-    public Iterable<ElementFound> FindAllCss(String cssSelector, Options options) throws MissingHtmlException, TimeoutException, InterruptedException {
+    public Iterable<ElementFound> FindAllCss(String cssSelector, Options options) throws MissingHtmlException, TimeoutException {
         SetOptions(options);
         return driver.FindAllCss(cssSelector, this);
     }
 
-    public Iterable<ElementFound> FindAllXPath(String xpath, Options options) throws MissingHtmlException, TimeoutException, InterruptedException {
+    public Iterable<ElementFound> FindAllXPath(String xpath, Options options) throws MissingHtmlException, TimeoutException {
         SetOptions(options);
         return driver.FindAllXPath(xpath, this);
     }
@@ -187,38 +188,36 @@ public class DriverScope implements Coypu.Scope
         return new RobustElementScope(new IdFinder(driver, id, this), this, SetOptions(options));
     }
 
-    public void Check(String locator, Options options) throws TimeoutException, InterruptedException {
+    public void Check(String locator, Options options) throws TimeoutException {
         RetryUntilTimeout(new Check(driver, this, locator, SetOptions(options)));
     }
 
-    public void Uncheck(String locator, Options options) throws TimeoutException, InterruptedException {
+    public void Uncheck(String locator, Options options) throws TimeoutException {
         RetryUntilTimeout(new Uncheck(driver, this, locator, SetOptions(options)));
     }
 
-    public void Choose(String locator, Options options) throws TimeoutException, InterruptedException {
+    public void Choose(String locator, Options options) throws TimeoutException {
         RetryUntilTimeout(new Choose(driver, this, locator, SetOptions(options)));
     }
 
-    public String ExecuteScript(String javascript) throws MissingHtmlException, TimeoutException, InterruptedException {
+    public String ExecuteScript(String javascript) throws MissingHtmlException, TimeoutException {
         return driver.ExecuteScript(javascript,this);
     }
 
-    public DriverScope Hover(Options options) throws TimeoutException, InterruptedException {
+    public DriverScope Hover(Options options) throws TimeoutException {
         RetryUntilTimeout(new Hover(this, driver, SetOptions(options)));
         return this;
     }
 
-    public boolean Has(ElementScope findElement, Options options)
-    {
+    public boolean Has(ElementScope findElement, Options options) throws TimeoutException {
         return findElement.Exists(options);
     }
 
-    public boolean HasNo(ElementScope findElement, Options options)
-    {
+    public boolean HasNo(ElementScope findElement, Options options) throws TimeoutException {
         return findElement.Missing(options);
     }
 
-    public void RetryUntilTimeout(BrowserAction action) throws TimeoutException, InterruptedException {
+    public void RetryUntilTimeout(BrowserAction action) throws TimeoutException {
         Query(action);
     }
 
@@ -227,12 +226,11 @@ public class DriverScope implements Coypu.Scope
         return new IFrameElementScope(new IFrameFinder(driver, locator, this), this, SetOptions(options));
     }
 
-    public void TryUntil(BrowserAction tryThis, PredicateQuery until,  TimeSpan waitBeforeRetry, Options options) throws MissingHtmlException, java.util.concurrent.TimeoutException, TimeoutException, InterruptedException {
+    public void TryUntil(BrowserAction tryThis, PredicateQuery until,  TimeSpan waitBeforeRetry, Options options) throws MissingHtmlException, java.util.concurrent.TimeoutException, TimeoutException {
         robustWrapper.TryUntil(tryThis, until, SetOptions(options).Timeout, waitBeforeRetry);
     }
 
-    public State FindState(State[] states, Options options)
-    {
+    public State FindState(State[] states, Options options) throws MissingHtmlException, TimeoutException {
         return stateFinder.FindState(SetOptions(options), states);
     }
 
@@ -241,19 +239,18 @@ public class DriverScope implements Coypu.Scope
     /// </summary>
     /// <returns></returns>
     /// <exception cref="T:Coypu.MissingHtmlException">Thrown if the element cannot be found</exception>
-    public ElementFound Now() throws MissingHtmlException, TimeoutException, InterruptedException {
+    public ElementFound Now() throws MissingHtmlException, TimeoutException {
         return FindElement();
     }
 
-    public ElementFound FindElement() throws MissingHtmlException
-    {
+    public ElementFound FindElement() throws MissingHtmlException, TimeoutException {
         if (element == null || element.Stale())
           element = elementFinder.Find();
 
         return element;
     }
 
-    public <T> T Query(Query<T> query) throws TimeoutException, InterruptedException {
+    public <T> T Query(Query<T> query) throws TimeoutException {
         return robustWrapper.Robustly(query);
     }
 }

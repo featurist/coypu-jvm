@@ -1,12 +1,18 @@
-﻿package Coypu.Drivers.Selenium;
+package Coypu.Drivers.Selenium;
 
 import Coypu.*;
 import Coypu.Drivers.Browser;
 import Coypu.Drivers.BrowserNotSupportedException;
 import Coypu.Drivers.XPath;
 import Coypu.TimeoutException;
+import com.google.common.base.Predicate;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
+
+import javax.annotation.Nullable;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.regex.*;
 
 public class SeleniumWebDriver implements Driver
@@ -18,9 +24,8 @@ public class SeleniumWebDriver implements Driver
         return disposed;
     }
 
-    public Uri Location()
-    {
-        return new Uri(selenium.getCurrentUrl());
+    public String Location() {
+        return selenium.getCurrentUrl();
     }
 
     public ElementFound Window()
@@ -65,15 +70,15 @@ public class SeleniumWebDriver implements Driver
         return Window().Native();
     }
 
-    public ElementFound FindField(String locator, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
+    public ElementFound FindField(String locator, DriverScope scope) throws MissingHtmlException, TimeoutException {
         return BuildElement(fieldFinder.FindField(locator,scope), "No such field: " + locator);
     }
 
-    public ElementFound FindButton(String locator, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
+    public ElementFound FindButton(String locator, DriverScope scope) throws MissingHtmlException, TimeoutException {
         return BuildElement(buttonFinder.FindButton(locator, scope), "No such button: " + locator);
     }
 
-    public ElementFound FindIFrame(String locator, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
+    public ElementFound FindIFrame(String locator, DriverScope scope) throws MissingHtmlException, TimeoutException {
         WebElement element = iframeFinder.FindIFrame(locator, scope);
 
         if (element == null)
@@ -82,43 +87,66 @@ public class SeleniumWebDriver implements Driver
         return new SeleniumFrame(element,selenium);
     }
 
-    public ElementFound FindLink(String linkText, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
-        return BuildElement(Find(By.linkText(linkText), scope).FirstOrDefault(), "No such link: " + linkText);
+    public ElementFound FindLink(String linkText, DriverScope scope) throws MissingHtmlException, TimeoutException {
+        return BuildElement(Iterators.FirstOrDefault(Find(By.linkText(linkText), scope), scope), "No such link: " + linkText);
     }
 
-    public ElementFound FindId(String id,DriverScope scope ) throws MissingHtmlException, TimeoutException, InterruptedException {
-        return BuildElement(Find(By.id(id), scope).FirstDisplayedOrDefault(), "Failed to find id: " + id);
+    public ElementFound FindId(String id,DriverScope scope ) throws MissingHtmlException, TimeoutException {
+        return BuildElement(Iterators.FirstOrDefault(Find(By.id(id), scope), scope), "Failed to find id: " + id);
     }
 
-    public ElementFound FindFieldset(String locator, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
-        WebElement fieldset =
-            Find(By.xpath(xPath.Format(".//fieldset[legend[text() = {0}]]", locator)),scope).FirstOrDefault() ??
-            Find(By.id(locator),scope).FirstOrDefault(e => e.TagName == "fieldset");
+    public ElementFound FindFieldset(String locator, DriverScope scope) throws MissingHtmlException, TimeoutException {
+        
+        WebElement fieldset = Iterators.FirstOrDefault(Find(By.xpath(xPath.Format(".//fieldset[legend[text() = {0}]]", locator)),scope),scope);
+        
+        if (fieldset == null)
+            fieldset = Iterators.FirstOrDefault(Find(By.id(locator),scope),tagNameMatches("fieldset"), scope);
 
         return BuildElement(fieldset, "Failed to find fieldset: " + locator);
     }
+    
+    public Predicate<WebElement> tagNameMatches(final String tagName){
+        return new Predicate<WebElement>() {
+            @Override
+            public boolean apply(@Nullable WebElement e) {
+                return e.getTagName() == tagName;
+            }
+        };
+    }
 
-    public ElementFound FindSection(String locator, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
+    public ElementFound FindSection(String locator, DriverScope scope) throws MissingHtmlException, TimeoutException {
         return BuildElement(sectionFinder.FindSection(locator,scope), "Failed to find section: " + locator);
     }
 
-    public ElementFound FindCss(String cssSelector,DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
-        return BuildElement(Find(By.cssSelector(cssSelector),scope).FirstOrDefault(),"No element found by css: " + cssSelector);
+    public ElementFound FindCss(String cssSelector,DriverScope scope) throws MissingHtmlException, TimeoutException {
+        return BuildElement(Iterators.FirstOrDefault(Find(By.cssSelector(cssSelector), scope), scope), "No element found by css: " + cssSelector);
     }
 
-    public ElementFound FindXPath(String xpath, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
-        return BuildElement(Find(By.xpath(xpath), scope).FirstOrDefault(),"No element found by xpath: " + xpath);
+    public ElementFound FindXPath(String xpath, DriverScope scope) throws MissingHtmlException, TimeoutException {
+        return BuildElement(Iterators.FirstOrDefault(Find(By.xpath(xpath), scope), scope),"No element found by xpath: " + xpath);
     }
 
-    public Iterable<ElementFound> FindAllCss(String cssSelector, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
-        return Find(By.cssSelector(cssSelector),scope).Select(e => BuildElement(e)).Cast<ElementFound>();
+    public Iterable<ElementFound> FindAllCss(String cssSelector, DriverScope scope) throws MissingHtmlException, TimeoutException {
+        ArrayList<WebElement> allVisible = Iterators.AllVisible(Find(By.cssSelector(cssSelector), scope), scope);
+
+        return asElementsFound(allVisible);
     }
 
-    public Iterable<ElementFound> FindAllXPath(String xpath, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
-        return Find(By.xpath(xpath), scope).Select(e => BuildElement(e)).Cast<ElementFound>();
+    public Iterable<ElementFound> FindAllXPath(String xpath, DriverScope scope) throws MissingHtmlException, TimeoutException {
+        ArrayList<WebElement> allVisible = Iterators.AllVisible(Find(By.xpath(xpath), scope), scope);
+
+        return asElementsFound(allVisible);
     }
 
-    private Iterable<WebElement> Find(By by, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
+    private Iterable<ElementFound> asElementsFound(ArrayList<WebElement> allVisible) {
+        ArrayList<ElementFound> elements = new ArrayList<ElementFound>();
+        for (WebElement seleniumElement : allVisible) {
+            elements.add(BuildElement(seleniumElement));
+        }
+        return elements;
+    }
+
+    private Iterable<WebElement> Find(By by, DriverScope scope) throws MissingHtmlException, TimeoutException {
         return elementFinder.Find(by, scope);
     }
 
@@ -134,17 +162,17 @@ public class SeleniumWebDriver implements Driver
         return new SeleniumElement(element);
     }
 
-    public boolean HasContent(String text, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
+    public boolean HasContent(String text, DriverScope scope) throws MissingHtmlException, TimeoutException {
         return GetContent(scope).contains(text);
     }
 
-    public boolean HasContentMatch(Pattern pattern, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
+    public boolean HasContentMatch(Pattern pattern, DriverScope scope) throws MissingHtmlException, TimeoutException {
         return pattern.matcher(GetContent(scope)).matches();
     }
 
-    private String GetContent(DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
+    private String GetContent(DriverScope scope) throws MissingHtmlException, TimeoutException {
         SearchContext seleniumScope = elementFinder.SeleniumScope(scope);
-        return seleniumScope is RemoteWebDriver
+        return seleniumScope instanceof RemoteWebDriver
                    ? GetText(By.cssSelector("body"), seleniumScope)
                    : GetText(By.xpath("."), seleniumScope);
     }
@@ -155,15 +183,15 @@ public class SeleniumWebDriver implements Driver
         return NormalizeCRLFBetweenBrowserImplementations(pageText);
     }
 
-    public boolean HasCss(String cssSelector, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
+    public boolean HasCss(String cssSelector, DriverScope scope) throws MissingHtmlException, TimeoutException {
         return Find(By.cssSelector(cssSelector), scope).iterator().hasNext();
     }
 
-    public boolean HasXPath(String xpath, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
+    public boolean HasXPath(String xpath, DriverScope scope) throws MissingHtmlException, TimeoutException {
         return Find(By.xpath(xpath), scope).iterator().hasNext();
     }
 
-    public boolean HasDialog(String withText, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
+    public boolean HasDialog(String withText, DriverScope scope) throws MissingHtmlException, TimeoutException {
         elementFinder.SeleniumScope(scope);
         return dialogs.HasDialog(withText);
     }
@@ -183,10 +211,13 @@ public class SeleniumWebDriver implements Driver
         mouseControl.Hover(element);
     }
 
-    public Iterable<Cookie> GetBrowserCookies()
-    {
-        return selenium.manage().getCookies().iterator().Select(c => new Cookie(c.Name, c.Value, c.Path, c.Domain));
-    }
+//    public Iterable<Cookie> GetBrowserCookies()
+//    {
+//        ArrayList<Cookie> elements = new ArrayList<Cookie>();
+//        for (Cookie c : selenium.manage().getCookies()) {
+//            elements.add(new Cookie(c.getName(), c.getValue(), c.getPath(), c.getDomain()));
+//        }
+//    }
 
     public ElementFound FindWindow(String titleOrName, DriverScope scope) throws MissingHtmlException {
         return new WindowHandle(selenium, FindWindowHandle(titleOrName));
@@ -203,10 +234,10 @@ public class SeleniumWebDriver implements Driver
         }
         catch (NoSuchWindowException ex)
         {
-            foreach (String windowHandle in selenium.getWindowHandles())
+            for (String windowHandle : selenium.getWindowHandles())
             {
                 selenium.switchTo().window(windowHandle);
-                if (windowHandle == titleOrName || selenium.Title == titleOrName)
+                if (windowHandle == titleOrName || selenium.getTitle() == titleOrName)
                 {
                     matchingWindowHandle = windowHandle;
                     break;
@@ -227,7 +258,8 @@ public class SeleniumWebDriver implements Driver
         {
             return selenium.getWindowHandle();
         }
-        catch (InvalidOperationException)
+        catch (Exception ex) // was InvalidOperationException in c#
+                
         {
             return null;
         }
@@ -244,9 +276,9 @@ public class SeleniumWebDriver implements Driver
         catch (InvalidElementStateException ex) // Non user-editable elements (file inputs) - chrome/IE
         {
         }
-        catch(InvalidOperationException ex)  // Non user-editable elements (file inputs) - firefox
-        {
-        }
+//        catch(InvalidOperationException ex)  // Non user-editable elements (file inputs) - firefox
+//        {
+//        }
         seleniumElement.sendKeys(value);
     }
 
@@ -254,12 +286,12 @@ public class SeleniumWebDriver implements Driver
         optionSelector.Select(element, option);
     }
 
-    public void AcceptModalDialog(DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
+    public void AcceptModalDialog(DriverScope scope) throws MissingHtmlException, TimeoutException {
         elementFinder.SeleniumScope(scope);
         dialogs.AcceptModalDialog();
     }
 
-    public void CancelModalDialog(DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
+    public void CancelModalDialog(DriverScope scope) throws MissingHtmlException, TimeoutException {
         elementFinder.SeleniumScope(scope);
         dialogs.CancelModalDialog();
     }
@@ -285,7 +317,7 @@ public class SeleniumWebDriver implements Driver
         SeleniumElement(field).click();
     }
 
-    public String ExecuteScript(String javascript, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
+    public String ExecuteScript(String javascript, DriverScope scope) throws MissingHtmlException, TimeoutException {
         elementFinder.SeleniumScope(scope);
         Object result = selenium.executeScript(javascript);
         return result == null ? null : result.toString();
@@ -293,7 +325,7 @@ public class SeleniumWebDriver implements Driver
 
     private String NormalizeCRLFBetweenBrowserImplementations(String text)
     {
-        if (selenium is ChromeDriver) // Which adds extra whitespace around CRLF
+        if (selenium instanceof ChromeDriver) // Which adds extra whitespace around CRLF
             text = StripWhitespaceAroundCRLFs(text);
 
         return Pattern.compile("(\r\n)+").matcher(text).replaceAll("\r\n");
@@ -301,7 +333,7 @@ public class SeleniumWebDriver implements Driver
 
     private String StripWhitespaceAroundCRLFs(String pageText)
     {
-        return Pattern.compile("\\s*\r\n\\s*").matcher(pageText).replaceAll("\r\n");§
+        return Pattern.compile("\\s*\r\n\\s*").matcher(pageText).replaceAll("\r\n");
     }
 
     private WebElement SeleniumElement(Element element)
@@ -328,7 +360,7 @@ public class SeleniumWebDriver implements Driver
             selenium.switchTo().alert().accept();
         }
         catch (WebDriverException ex){}
-        catch (KeyNotFoundException){} // Chrome
-        catch (InvalidOperationException){}
+//        catch (KeyNotFoundException){} // Chrome
+//        catch (InvalidOperationException){}
     }
 }

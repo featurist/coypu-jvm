@@ -1,4 +1,4 @@
-﻿using Coypu.Robustness;
+using Coypu.Robustness;
 using Coypu.Tests.When_interacting_with_the_browser;
 using Coypu.WebRequests;
 

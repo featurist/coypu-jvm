@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using NUnit.Framework;
 
 namespace Coypu.Tests.When_interacting_with_the_browser

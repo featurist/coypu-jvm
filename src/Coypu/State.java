@@ -1,4 +1,4 @@
-﻿package Coypu;
+package Coypu;
 
 import Coypu.Queries.Query;
 
@@ -24,7 +24,7 @@ public class State
         return conditionWasMet;
     }
 
-    public boolean CheckCondition() throws MissingHtmlException {
+    public boolean CheckCondition() throws MissingHtmlException, TimeoutException {
         condition.Run();
         return conditionWasMet = condition.Result();
     }

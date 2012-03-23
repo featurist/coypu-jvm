@@ -6,7 +6,7 @@ import Coypu.TimeoutException;
 
 public interface Query<TReturn>
 {
-    void Run() throws MissingHtmlException, TimeoutException, InterruptedException;
+    void Run() throws MissingHtmlException, TimeoutException;
     Object ExpectedResult();
     TReturn Result();
     TimeSpan Timeout ();

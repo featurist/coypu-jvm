@@ -1,4 +1,4 @@
-﻿package Coypu.Drivers.Selenium;
+package Coypu.Drivers.Selenium;
 
 import Coypu.Element;
 import org.openqa.selenium.WebDriver;

@@ -1,17 +1,23 @@
-﻿package Coypu;
+package Coypu;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class FullyQualifiedUrlBuilder implements UrlBuilder
 {
     public String GetFullyQualifiedUrl(String virtualPath, Configuration configuration)
     {
-        if (Uri.IsWellFormedUriString(virtualPath, UriKind.Absolute))
+        try {
+            new URI(virtualPath);
             return virtualPath;
+        }
+        catch (URISyntaxException ex) {
+            virtualPath = virtualPath.replaceFirst("/","");
+            String scheme = configuration.SSL ? "https" : "http";
 
-        virtualPath = virtualPath.replaceFirst("/","");
-        String scheme = configuration.SSL ? "https" : "http";
-
-        return configuration.Port == 80
-                   ? String.format("{0}://{1}/{2}", scheme, configuration.GetAppHost(), virtualPath)
-                   : String.format("{0}://{1}:{2}/{3}", scheme, configuration.GetAppHost(), configuration.Port, virtualPath);
+            return configuration.Port == 80
+                    ? String.format("{0}://{1}/{2}", scheme, configuration.GetAppHost(), virtualPath)
+                    : String.format("{0}://{1}:{2}/{3}", scheme, configuration.GetAppHost(), configuration.Port, virtualPath);
+        }
     }
 }

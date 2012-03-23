@@ -1,4 +1,4 @@
-﻿package Coypu.Robustness;
+package Coypu.Robustness;
 
 import Coypu.TimeSpan;
 

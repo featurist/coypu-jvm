@@ -7,7 +7,7 @@ public class IFrameFinder extends ElementFinder
         super(driver, locator, scope)       ;
     }
 
-    public ElementFound Find() throws MissingHtmlException, TimeoutException, InterruptedException {
+    public ElementFound Find() throws MissingHtmlException, TimeoutException {
         return Driver.FindIFrame(Locator(), Scope);
     }
 }

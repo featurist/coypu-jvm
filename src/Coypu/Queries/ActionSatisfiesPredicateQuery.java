@@ -1,8 +1,10 @@
 package Coypu.Queries;
 
 import Coypu.Actions.BrowserAction;
+import Coypu.MissingHtmlException;
 import Coypu.Robustness.RobustWrapper;
 import Coypu.TimeSpan;
+import Coypu.TimeoutException;
 
 public class ActionSatisfiesPredicateQuery implements Query<Boolean>
 {
@@ -34,8 +36,7 @@ public class ActionSatisfiesPredicateQuery implements Query<Boolean>
         this.timeout = overallTimeout;
     }
 
-    public void Run()
-    {
+    public void Run() throws MissingHtmlException, TimeoutException {
         tryThis.Act();
 
         try

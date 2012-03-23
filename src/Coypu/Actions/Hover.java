@@ -1,9 +1,6 @@
 package Coypu.Actions;
 
-import Coypu.DriverScope;
-import Coypu.ElementFound;
-import Coypu.Options;
-import Coypu.Driver;
+import Coypu.*;
 
 public class Hover extends DriverAction
 {
@@ -15,8 +12,7 @@ public class Hover extends DriverAction
         this.driverScope = driverScope;
     }
 
-    public void Act()
-    {
+    public void Act() throws MissingHtmlException, TimeoutException {
         ElementFound element = driverScope.Now();
         Driver.Hover(element);
     }

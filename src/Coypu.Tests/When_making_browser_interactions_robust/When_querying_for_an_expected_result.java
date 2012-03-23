@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Coypu.Robustness;
 using NUnit.Framework;
 

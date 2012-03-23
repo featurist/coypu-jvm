@@ -1,4 +1,4 @@
-﻿package Coypu;
+package Coypu;
 
 import Coypu.Actions.Select;
 import Coypu.Robustness.RobustWrapper;
@@ -25,8 +25,7 @@ public class SelectFrom
     /// </summary>
     /// <param name="locator">The text of the associated label element, the id or name, the last part of the id (for asp.net forms testing)</param>
     /// <exception cref="T:Coypu.MissingHtmlException">Thrown if the element cannot be found</exception>
-    public void From(String locator)
-    {
+    public void From(String locator) throws TimeoutException {
         robustWrapper.Robustly(new Select(driver, scope, locator, option, options));
     }
 

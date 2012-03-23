@@ -1,8 +1,6 @@
 package Coypu.Queries;
 
-import Coypu.Driver;
-import Coypu.DriverScope;
-import Coypu.Options;
+import Coypu.*;
 
 public class HasCssQuery extends DriverScopeQuery<Boolean>
 {
@@ -17,8 +15,7 @@ public class HasCssQuery extends DriverScopeQuery<Boolean>
         this.cssSelector = cssSelector;
     }
 
-    public void Run()
-    {
+    public void Run() throws MissingHtmlException, TimeoutException {
         SetResult(driver.HasCss(cssSelector, DriverScope()));
     }
 }

@@ -19,7 +19,7 @@ class WindowHandle implements ElementFound
 
     public String Id()
     {
-        throw new NotSupportedException();
+        throw new UnsupportedOperationException();
     }
 
     public String Text()
@@ -37,22 +37,22 @@ class WindowHandle implements ElementFound
 
     public String Value()
     {
-        throw new NotSupportedException();
+        throw new UnsupportedOperationException();
     }
 
     public String Name()
     {
-        throw new NotSupportedException();
+        throw new UnsupportedOperationException();
     }
 
     public String SelectedOption()
     {
-        throw new NotSupportedException();
+        throw new UnsupportedOperationException();
     }
 
     public boolean Selected()
     {
-        throw new NotSupportedException();
+        throw new UnsupportedOperationException();
     }
 
     public Object Native()
@@ -68,6 +68,6 @@ class WindowHandle implements ElementFound
 
     public String Attribute(String attributeName)
     {
-        throw new NotSupportedException();
+        throw new UnsupportedOperationException();
     }
 }

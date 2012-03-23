@@ -1,12 +1,12 @@
-﻿package Coypu;
+package Coypu;
 
 import Coypu.Finders.WindowFinder;
 import Coypu.Robustness.RetryUntilTimeoutRobustWrapper;
 import Coypu.Robustness.RobustWrapper;
 import Coypu.Robustness.StopwatchWaiter;
 import Coypu.Robustness.Waiter;
-import Coypu.WebRequests.RestrictedResourceDownloader;
-import Coypu.WebRequests.WebClientWithCookies;
+//import Coypu.WebRequests.RestrictedResourceDownloader;
+//import Coypu.WebRequests.WebClientWithCookies;
 
 /// <summary>
 /// A browser session
@@ -15,7 +15,7 @@ public class BrowserSession extends BrowserWindow
 {
 
     private boolean wasDisposed;
-    private final RestrictedResourceDownloader restrictedResourceDownloader;
+    //private final RestrictedResourceDownloader restrictedResourceDownloader;
 
     /// <summary>
     /// A new browser session. Control the lifecycle of this session with using{} / session.Dispose()
@@ -37,14 +37,16 @@ public class BrowserSession extends BrowserWindow
                 configuration,
                 new RetryUntilTimeoutRobustWrapper(),
                 new StopwatchWaiter(),
-                new WebClientWithCookies(),
+                //new WebClientWithCookies(),
                 new FullyQualifiedUrlBuilder());
     }
 
-    public BrowserSession(DriverFactory driver, Configuration configuration, RobustWrapper robustWrapper, Waiter waiter, RestrictedResourceDownloader restrictedResourceDownloader, UrlBuilder urlBuilder)
+    public BrowserSession(DriverFactory driver, Configuration configuration, RobustWrapper robustWrapper, Waiter waiter,
+                          //RestrictedResourceDownloader restrictedResourceDownloader,
+                          UrlBuilder urlBuilder)
     {
         super(configuration, null, driver.NewWebDriver(configuration.Driver, configuration.Browser), robustWrapper, waiter, urlBuilder);
-        this.restrictedResourceDownloader = restrictedResourceDownloader;
+        //this.restrictedResourceDownloader = restrictedResourceDownloader;
     }
 
     public Driver Driver()
@@ -79,8 +81,8 @@ public class BrowserSession extends BrowserWindow
     /// <param name="saveAs">Path to save the file to</param>
     public void SaveWebResource(String resource, String saveAs)
     {
-        restrictedResourceDownloader.SetCookies(driver.GetBrowserCookies());
-        restrictedResourceDownloader.DownloadFile(urlBuilder.GetFullyQualifiedUrl(resource, configuration), saveAs);
+        //restrictedResourceDownloader.SetCookies(driver.GetBrowserCookies());
+        //restrictedResourceDownloader.DownloadFile(urlBuilder.GetFullyQualifiedUrl(resource, configuration), saveAs);
     }
 
     public BrowserWindow FindWindow(String titleOrName, Options options)

@@ -1,9 +1,6 @@
 package Coypu.Actions;
 
-import Coypu.DriverScope;
-import Coypu.Driver;
-import Coypu.Element;
-import Coypu.Options;
+import Coypu.*;
 
 public class FillIn extends DriverAction
 {
@@ -21,29 +18,24 @@ public class FillIn extends DriverAction
         this.value = value;
     }
 
-    public Element Field()
-    {
+    public Element Field() throws MissingHtmlException, TimeoutException {
         return element == null ?  Driver.FindField(locator, scope) : element;
     }
 
-    private void BringIntoFocus()
-    {
+    private void BringIntoFocus() throws MissingHtmlException, TimeoutException {
         Driver.Click(Field());
     }
 
-    public void Set()
-    {
+    public void Set() throws MissingHtmlException, TimeoutException {
         Driver.Set(Field(), value);
     }
 
-    public void Focus()
-    {
+    public void Focus() throws MissingHtmlException, TimeoutException {
         if (Field().Attribute("type") != "file")
             BringIntoFocus();
     }
 
-    public void Act()
-    {
+    public void Act() throws MissingHtmlException, TimeoutException {
         Focus();
         Set();
     }

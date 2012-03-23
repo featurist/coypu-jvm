@@ -1,6 +1,7 @@
-﻿package Coypu;
+package Coypu;
 
 import Coypu.Drivers.Browser;
+import Coypu.Drivers.Selenium.SeleniumWebDriver;
 
 import java.lang.reflect.Type;
 
@@ -23,7 +24,7 @@ public class Configuration extends Options
         Port = DEFAULT_PORT;
         SSL = false;
         Browser = Coypu.Drivers.Browser.Firefox;
-        Driver = typeof (SeleniumWebDriver);
+        Driver = SeleniumWebDriver.class;
     }
 
     /// <summary>
@@ -36,7 +37,7 @@ public class Configuration extends Options
     /// <para>Specifies the driver you would like to use to control the browser</para> 
     /// <para>Default: SeleniumWebDriver</para>
     /// </summary>
-    public Type Driver;
+    public Class Driver;
 
 
     /// <summary>
@@ -47,9 +48,10 @@ public class Configuration extends Options
     {
         return appHost;
     }
+
     public void SetAppHost(String value)
     {
-        appHost = value == null ? null : value.TrimEnd('/');
+        appHost = value == null ? null : value.replaceAll("/$", "");
     }
 
 

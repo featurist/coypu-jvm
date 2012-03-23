@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using System.Text.RegularExpressions;
 
 namespace Coypu.Tests.When_interacting_with_the_browser

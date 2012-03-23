@@ -1,4 +1,4 @@
-﻿package Coypu.Drivers;
+package Coypu.Drivers;
 
 import java.lang.reflect.Type;
 

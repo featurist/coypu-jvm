@@ -16,7 +16,7 @@ public class RobustElementScope extends ElementScope
         this.options = options;
     }
 
-    public ElementFound Now() throws TimeoutException, InterruptedException, MissingHtmlException{
+    public ElementFound Now() throws TimeoutException, MissingHtmlException{
         outerScope.Now();
         return robustWrapper.Robustly(new ElementQuery(this, options));
     }

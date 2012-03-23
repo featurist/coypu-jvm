@@ -1,4 +1,4 @@
-﻿package Coypu;
+package Coypu;
 /// <summary>
 /// An element found by a Coypu Driver
 /// </summary>

@@ -17,23 +17,18 @@ class ElementFinder
         this.xPath = xPath;
     }
 
-    public Iterable<WebElement> FindByPartialId(String id, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
+    public Iterable<WebElement> FindByPartialId(String id, DriverScope scope) throws MissingHtmlException, TimeoutException {
         String xpath = String.format(".//*[substring(@id, String-length(@id) - {0} + 1, String-length(@id)) = {1}]",
                 id.length(), xPath.Literal(id));
         return Find(By.xpath(xpath),scope);
     }
 
-    public Iterable<WebElement> Find(By by, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
+    public Iterable<WebElement> Find(By by, DriverScope scope) throws MissingHtmlException, TimeoutException {
         SearchContext context = SeleniumScope(scope);
-        return context.findElements(by).Where(e => IsDisplayed(e, scope));
+        return context.findElements(by);
     }
 
-    public SearchContext SeleniumScope(DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
+    public SearchContext SeleniumScope(DriverScope scope) throws MissingHtmlException, TimeoutException {
         return (SearchContext) scope.Now().Native();
-    }
-
-    public boolean IsDisplayed(WebElement e, DriverScope scope)
-    {
-        return scope.ConsiderInvisibleElements() || e.isDisplayed();
     }
 }

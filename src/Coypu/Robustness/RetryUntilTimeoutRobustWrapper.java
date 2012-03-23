@@ -1,4 +1,4 @@
-﻿package Coypu.Robustness;
+package Coypu.Robustness;
 
 import Coypu.Actions.BrowserAction;
 import Coypu.MissingHtmlException;
@@ -34,13 +34,13 @@ public class RetryUntilTimeoutRobustWrapper implements RobustWrapper
     }
 
     public void TryUntil(BrowserAction tryThis, Query<Boolean> until,  TimeSpan overallTimeout,  TimeSpan waitBeforeRetry)
-            throws MissingHtmlException, TimeoutException, InterruptedException {
+            throws MissingHtmlException, TimeoutException {
         boolean outcome = Robustly(new ActionSatisfiesPredicateQuery(tryThis, until, overallTimeout, until.RetryInterval(), waitBeforeRetry, this));
         if (!outcome)
             throw new MissingHtmlException("Timeout from TryUntil: the page never reached the required state.");
     }
 
-    public <TResult> TResult Robustly(Query<TResult> query) throws TimeoutException, InterruptedException {
+    public <TResult> TResult Robustly(Query<TResult> query) throws TimeoutException {
         TimeSpan interval = query.RetryInterval();
         TimeSpan timeout = Timeout(query);
         Stopwatch stopWatch = Stopwatch.StartNew();
@@ -87,8 +87,12 @@ public class RetryUntilTimeoutRobustWrapper implements RobustWrapper
         return timeout;
     }
 
-    private void WaitForInterval( TimeSpan interval) throws InterruptedException {
-        Thread.sleep(interval.getMilliseconds());
+    private void WaitForInterval( TimeSpan interval) {
+        try {
+            Thread.sleep(interval.getMilliseconds());
+        } catch (InterruptedException e) {
+            // TODO: What is this?
+        }
     }
 
     private <TResult> boolean ExpectedResultNotFoundWithinTimeout(Object expectedResult, TResult result, Stopwatch stopWatch,  TimeSpan timeout,  TimeSpan interval)

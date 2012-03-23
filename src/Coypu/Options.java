@@ -4,16 +4,16 @@ package Coypu;
 /// </summary>
 public class Options
 {
-    final double DEFAULT_TIMEOUT_SECONDS = 1;
-    final double DEFAULT_INTERVAL_SECONDS = 0.1;
+    final long DEFAULT_TIMEOUT_MILLISECONDS = 1000;
+    final long DEFAULT_INTERVAL_MILLISECONDS = 100;
 
     /// <summary>
     /// New default options
     /// </summary>
     public Options()
     {
-        Timeout = TimeSpan.FromSeconds(DEFAULT_TIMEOUT_SECONDS);
-        RetryInterval = TimeSpan.FromSeconds(DEFAULT_INTERVAL_SECONDS);
+        Timeout = TimeSpan.FromSeconds(DEFAULT_TIMEOUT_MILLISECONDS);
+        RetryInterval = TimeSpan.FromSeconds(DEFAULT_INTERVAL_MILLISECONDS);
         WaitBeforeClick = TimeSpan.Zero();
     }
 

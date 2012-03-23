@@ -15,5 +15,9 @@ public class Stopwatch {
         // TODO read stopwatch
         return 0;
     }
+
+    public void stop() {
+
+    }
 }
 

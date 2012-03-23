@@ -1,9 +1,6 @@
 package Coypu.Queries;
 
-import Coypu.DriverScope;
-import Coypu.ElementFound;
-import Coypu.MissingHtmlException;
-import Coypu.Options;
+import Coypu.*;
 
 public class ElementQuery extends DriverScopeQuery<ElementFound>
 {
@@ -17,8 +14,7 @@ public class ElementQuery extends DriverScopeQuery<ElementFound>
         return null;
     }
 
-    public void Run() throws MissingHtmlException
-    {
+    public void Run() throws MissingHtmlException, TimeoutException {
         SetResult(DriverScope().FindElement());
     }
 }

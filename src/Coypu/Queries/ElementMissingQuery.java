@@ -3,6 +3,7 @@ package Coypu.Queries;
 import Coypu.DriverScope;
 import Coypu.MissingHtmlException;
 import Coypu.Options;
+import Coypu.TimeoutException;
 
 public class ElementMissingQuery extends DriverScopeQuery<Boolean>
 {
@@ -16,8 +17,7 @@ public class ElementMissingQuery extends DriverScopeQuery<Boolean>
         super(driverScope, options);
     }
 
-    public void Run()
-    {
+    public void Run() throws TimeoutException {
         try
         {
             DriverScope().FindElement();

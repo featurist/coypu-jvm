@@ -1,11 +1,8 @@
-﻿package Coypu.Actions;
+package Coypu.Actions;
 
-import Coypu.ElementFound;
+import Coypu.*;
 import Coypu.Finders.ElementFinder;
-import Coypu.MissingHtmlException;
-import Coypu.Options;
 import Coypu.Robustness.Waiter;
-import Coypu.Driver;
 
 public class WaitThenClick extends DriverAction
 {
@@ -22,7 +19,7 @@ public class WaitThenClick extends DriverAction
         this.elementFinder = elementFinder;
     }
 
-    public void Act() throws MissingHtmlException
+    public void Act() throws MissingHtmlException, TimeoutException
     {
         ElementFound element = elementFinder.Find();
         waiter.Wait(options.WaitBeforeClick);

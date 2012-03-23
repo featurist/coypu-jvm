@@ -1,8 +1,6 @@
 package Coypu.Actions;
 
-import Coypu.DriverScope;
-import Coypu.Options;
-import Coypu.Driver;
+import Coypu.*;
 
 public class Check extends DriverAction
 {
@@ -17,8 +15,7 @@ public class Check extends DriverAction
         this.locator = locator;
     }
 
-    public void Act()
-    {
+    public void Act() throws MissingHtmlException, TimeoutException {
         Driver.Check(Driver.FindField(locator, scope));
     }
 }

@@ -1,4 +1,4 @@
-﻿using Coypu.Tests.TestDoubles;
+using Coypu.Tests.TestDoubles;
 using NUnit.Framework;
 
 namespace Coypu.Tests.When_interacting_with_the_browser

@@ -1,7 +1,5 @@
 package Coypu.Actions;
-import Coypu.Driver;
-import Coypu.DriverScope;
-import Coypu.Options;
+import Coypu.*;
 
 public class Select extends DriverAction
 {
@@ -17,8 +15,7 @@ public class Select extends DriverAction
         this.option = option;
     }
 
-    public void Act()
-    {
+    public void Act() throws MissingHtmlException, TimeoutException {
         Driver.Select(Driver.FindField(locator, scope),option);
     }
 }

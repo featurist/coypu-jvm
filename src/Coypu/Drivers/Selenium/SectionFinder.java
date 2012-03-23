@@ -1,19 +1,24 @@
 package Coypu.Drivers.Selenium;
 
-import Coypu.DriverScope;
-import Coypu.MissingHtmlException;
-import Coypu.StringJoiner;
-import Coypu.TimeoutException;
+import Coypu.*;
+import com.google.common.base.Predicate;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
+
+import javax.annotation.Nullable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 class SectionFinder
 {
     private final ElementFinder elementFinder;
     private final TextMatcher textMatcher;
 
-    final String[] headerTags = { "h1", "h2", "h3", "h4", "h5", "h6" };
+    final String[] headerTags = new String[] {"h1", "h2", "h3", "h4", "h5", "h6" };
+    final List<String> headerTagsList = Arrays.asList(headerTags);
 
     public SectionFinder(ElementFinder elementFinder, TextMatcher textMatcher)
     {
@@ -21,31 +26,49 @@ class SectionFinder
         this.textMatcher = textMatcher;
     }
 
-    public WebElement FindSection(String locator, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
-        return FindSectionByHeaderText(locator,scope) ??
-               elementFinder.Find(By.id(locator),scope).FirstDisplayedOrDefault(IsSection);
+    public WebElement FindSection(String locator, DriverScope scope) throws MissingHtmlException, TimeoutException {
+        WebElement byHeaderText = FindSectionByHeaderText(locator,scope);
+        if (byHeaderText != null) return byHeaderText;
+        
+        return Iterators.FirstOrDefault(elementFinder.Find(By.id(locator), scope), IsSection(),scope);
     }
 
-    private WebElement FindSectionByHeaderText(String locator, DriverScope scope)
-    {
-        return FindSectionByHeaderText(locator, "section",scope) ??
-               FindSectionByHeaderText(locator, "div",scope);
+    private WebElement FindSectionByHeaderText(String locator, DriverScope scope) throws MissingHtmlException, TimeoutException {
+        WebElement byHeaderText = FindSectionByHeaderText(locator, "section",scope);
+        if (byHeaderText != null) return byHeaderText;
+        
+        return FindSectionByHeaderText(locator, "div",scope);
     }
 
-    private WebElement FindSectionByHeaderText(String locator, String sectionTag, DriverScope scope) throws MissingHtmlException, TimeoutException, InterruptedException {
+    private WebElement FindSectionByHeaderText(String locator, String sectionTag, DriverScope scope) throws MissingHtmlException, TimeoutException {
         String headersXPath = StringJoiner.join(" or ", headerTags);
         Iterable<WebElement> withAHeader = elementFinder.Find(By.xpath(String.format(".//{0}[{1}]", sectionTag, headersXPath)),scope);
 
-        return withAHeader.FirstDisplayedOrDefault(e => WhereAHeaderMatches(e, locator));
+        return Iterators.FirstOrDefault(withAHeader,WhereAHeaderMatches(locator,scope),scope);
     }
 
-    private boolean WhereAHeaderMatches(SearchContext e, String locator)
+    private Predicate<WebElement> WhereAHeaderMatches(final String locator, final DriverScope scope)
     {
-        return e.findElements(By.xpath("./*")).Any(h => headerTags.Contains(h.TagName) && textMatcher.TextMatches(h, locator));
+        return new Predicate<WebElement>() {
+            @Override
+            public boolean apply(@Nullable WebElement container) {
+                return Iterators.FirstOrDefault(container.findElements(By.xpath("./*")), new Predicate<WebElement>() {
+                    @Override
+                    public boolean apply(@Nullable WebElement h) {
+                        return headerTagsList.contains(h.getTagName()) && textMatcher.TextMatches(h, locator);
+                    }
+                },scope) != null;
+            }
+        };
     }
 
-    private static boolean IsSection(WebElement e)
+    private static Predicate<WebElement> IsSection()
     {
-        return e.getTagName() == "section" || e.getTagName() == "div";
+        return new Predicate<WebElement>() {
+            @Override
+            public boolean apply(@Nullable WebElement e) {
+                return e.getTagName() == "section" || e.getTagName() == "div";
+            }
+        };
     }
 }

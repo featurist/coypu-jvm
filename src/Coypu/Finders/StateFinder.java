@@ -1,8 +1,12 @@
-﻿package Coypu.Finders;
+package Coypu.Finders;
 
+import Coypu.MissingHtmlException;
 import Coypu.Options;
+import Coypu.Queries.PredicateQuery;
+import Coypu.Queries.Query;
 import Coypu.Robustness.RobustWrapper;
 import Coypu.State;
+import Coypu.TimeoutException;
 
 public class StateFinder
 {
@@ -13,28 +17,36 @@ public class StateFinder
         this.robustWrapper = robustWrapper;
     }
 
-    public State FindState(Options options, State[] states)
-    {
-        // TODO: Anonymous type rather than lambda
-        var query = new LambdaPredicateQuery(() =>
-        {
-            var was = robustWrapper.ZeroTimeout;
-            robustWrapper.ZeroTimeout = true;
-            try
-            {
-                return ((Func<bool>)(() => states.Any(s => s.CheckCondition())))();
+    public State FindState(Options options, final State[] states) throws MissingHtmlException, TimeoutException {
+        PredicateQuery query = new PredicateQuery(options) {
+            @Override
+            public void Run() throws MissingHtmlException, TimeoutException {
+                boolean was = robustWrapper.GetZeroTimeout();
+                robustWrapper.SetZeroTimeout(true);
+                try
+                {
+                    for (State state : states) {
+                        if (state.CheckCondition())
+                       result = true;
+                       return;
+                    }
+                    result = false;
+                }
+                finally
+                {
+                    robustWrapper.SetZeroTimeout(was);
+                }
             }
-            finally
-            {
-                robustWrapper.ZeroTimeout = was;
-            }
-        }, options);
+        };
+        
+        robustWrapper.Robustly(query);
 
-        boolean foundState = robustWrapper.Robustly(query);
+        for (State state : states) {
+            if (state.ConditionWasMet())
+               return state;
+        }
 
-        if (!foundState)
-            throw new MissingHtmlException("None of the given states was reached within the configured timeout.");
+        throw new MissingHtmlException("None of the given states was reached within the configured timeout.");
 
-        return states.First(e => e.ConditionWasMet);
     }
 }

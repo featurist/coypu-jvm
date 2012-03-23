@@ -1,4 +1,4 @@
-﻿package Coypu.Drivers.Selenium;
+package Coypu.Drivers.Selenium;
 
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.remote.RemoteWebDriver;

@@ -29,7 +29,7 @@ public abstract class DriverScopeQuery<T> implements Query<T>
         this.retryInterval = options.RetryInterval;
     }
 
-    public abstract void Run() throws MissingHtmlException, TimeoutException, InterruptedException;
+    public abstract void Run() throws MissingHtmlException, TimeoutException;
     public abstract Object ExpectedResult();
     public T Result ()
     {

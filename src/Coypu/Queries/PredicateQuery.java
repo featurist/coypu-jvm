@@ -1,13 +1,16 @@
 package Coypu.Queries;
 
+import Coypu.MissingHtmlException;
 import Coypu.Options;
 import Coypu.TimeSpan;
+import Coypu.TimeoutException;
 
 public abstract class PredicateQuery implements Query<Boolean>
 {
 
     private TimeSpan timeout;
     private TimeSpan retryInterval;
+    protected Boolean result;
 
     protected PredicateQuery()
     {
@@ -19,9 +22,11 @@ public abstract class PredicateQuery implements Query<Boolean>
         this.retryInterval = options.RetryInterval;
     }
 
-    public abstract Boolean Result();
+    public Boolean Result() {
+        return result;
+    }
 
-    public abstract void Run();
+    public abstract void Run() throws MissingHtmlException, TimeoutException;
 
     public Object ExpectedResult()
     {

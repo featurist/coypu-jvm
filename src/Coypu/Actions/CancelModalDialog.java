@@ -1,8 +1,6 @@
 package Coypu.Actions;
 
-import Coypu.DriverScope;
-import Coypu.Options;
-import Coypu.Driver;
+import Coypu.*;
 
 public class CancelModalDialog extends DriverAction
 {
@@ -14,8 +12,7 @@ public class CancelModalDialog extends DriverAction
         this.driverScope = driverScope;
     }
 
-    public void Act()
-    {
+    public void Act() throws MissingHtmlException, TimeoutException {
         Driver.CancelModalDialog(driverScope);
     }
 }

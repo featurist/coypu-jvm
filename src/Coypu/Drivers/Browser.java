@@ -1,4 +1,4 @@
-﻿package Coypu.Drivers;
+package Coypu.Drivers;
 /// <summary>
 /// The browser that will be used by your chosen driver
 /// </summary>

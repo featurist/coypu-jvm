@@ -4,6 +4,8 @@ import Coypu.Finders.ElementFinder;
 import Coypu.Robustness.RobustWrapper;
 import com.sun.jndi.toolkit.url.Uri;
 
+import java.net.URI;
+
 public class IFrameElementScope extends RobustElementScope
 {
     public IFrameElementScope(ElementFinder elementFinder, DriverScope outerScope, Options options)
@@ -11,8 +13,7 @@ public class IFrameElementScope extends RobustElementScope
         super(elementFinder, outerScope, options);
     }
 
-    public Uri Location() throws MissingHtmlException
-    {
+    public String Location() throws MissingHtmlException, TimeoutException {
         FindXPath("/*",options).Now();
         return driver.Location();
     }

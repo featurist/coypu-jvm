@@ -1,4 +1,4 @@
-﻿package Coypu.Drivers;
+package Coypu.Drivers;
 
 import Coypu.StringJoiner;
 
@@ -22,7 +22,7 @@ public class XPath
         for(int i = 0; i < args.length; i++) {
             literals[i] = Literal(args[i].toString());
         }
-        return String.format(value, literals);
+        return String.format(value, (Object) literals);
     }
 
     public String Literal(String value)

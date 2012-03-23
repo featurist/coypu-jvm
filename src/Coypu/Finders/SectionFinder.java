@@ -8,7 +8,7 @@ public class SectionFinder extends ElementFinder
         super(driver, locator, scope);
     }
 
-    public ElementFound Find() throws MissingHtmlException, TimeoutException, InterruptedException {
+    public ElementFound Find() throws MissingHtmlException, TimeoutException {
         return Driver.FindSection(Locator(), Scope);
     }
 }

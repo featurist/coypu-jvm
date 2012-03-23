@@ -1,8 +1,6 @@
 package Coypu.Queries;
 
-import Coypu.Driver;
-import Coypu.DriverScope;
-import Coypu.Options;
+import Coypu.*;
 
 public class HasNoXPathQuery extends DriverScopeQuery<Boolean>
 {
@@ -19,8 +17,7 @@ public class HasNoXPathQuery extends DriverScopeQuery<Boolean>
         this.xpath = xpath;
     }
 
-    public void Run()
-    {
+    public void Run() throws MissingHtmlException, TimeoutException {
         SetResult(!driver.HasXPath(xpath, DriverScope()));
     }
 }

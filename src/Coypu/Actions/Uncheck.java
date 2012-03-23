@@ -1,8 +1,6 @@
 package Coypu.Actions;
 
-import Coypu.DriverScope;
-import Coypu.Options;
-import Coypu.Driver;
+import Coypu.*;
 
 public class Uncheck extends DriverAction
 {
@@ -16,8 +14,7 @@ public class Uncheck extends DriverAction
         this.locator = locator;
     }
 
-    public void Act()
-    {
+    public void Act() throws MissingHtmlException, TimeoutException {
         Driver.Uncheck(Driver.FindField(locator, scope));
     }
 }
