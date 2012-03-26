@@ -16,10 +16,10 @@ public class StateFinder
         this.robustWrapper = robustWrapper;
     }
 
-    public State FindState(Options options, final State[] states) throws TimeoutException, MissingHtmlException {
+    public State FindState(Options options, final State[] states) {
         PredicateQuery query = new PredicateQuery(options) {
             @Override
-            public void Run() throws MissingHtmlException {
+            public void Run()  {
                 boolean was = robustWrapper.GetZeroTimeout();
                 robustWrapper.SetZeroTimeout(true);
                 try

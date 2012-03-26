@@ -41,19 +41,19 @@ class ButtonFinder
         };
     }
 
-    public WebElement FindButton(String locator, DriverScope scope) throws MissingHtmlException {
+    public WebElement FindButton(String locator, DriverScope scope)  {
         WebElement byText = FindButtonByText(locator, scope);
         if (byText != null) return byText;
         
         return FindButtonByIdNameOrValue(locator, scope);
     }
 
-    private WebElement FindButtonByIdNameOrValue(String locator, DriverScope scope) throws MissingHtmlException {
+    private WebElement FindButtonByIdNameOrValue(String locator, DriverScope scope)  {
         String xpathToFind = xPath.Format(".//*[@id = %1$s or @name = %1$s or @value = %1$s or @alt = %1$s]", locator);
         return Iterators.FirstOrDefault(elementFinder.Find(By.xpath(xpathToFind), scope), isButton, scope);
     }
 
-    private WebElement FindButtonByText(String locator, DriverScope scope) throws MissingHtmlException {
+    private WebElement FindButtonByText(String locator, DriverScope scope)  {
         WebElement byTagName = Iterators.FirstOrDefault(elementFinder.Find(By.tagName("button"), scope),textMatches(locator), scope);
         if (byTagName != null) return byTagName;
         

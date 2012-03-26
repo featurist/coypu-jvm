@@ -26,21 +26,21 @@ class SectionFinder
         this.textMatcher = textMatcher;
     }
 
-    public WebElement FindSection(String locator, DriverScope scope) throws MissingHtmlException {
+    public WebElement FindSection(String locator, DriverScope scope)  {
         WebElement byHeaderText = FindSectionByHeaderText(locator,scope);
         if (byHeaderText != null) return byHeaderText;
         
         return Iterators.FirstOrDefault(elementFinder.Find(By.id(locator), scope), IsSection(),scope);
     }
 
-    private WebElement FindSectionByHeaderText(String locator, DriverScope scope) throws MissingHtmlException {
+    private WebElement FindSectionByHeaderText(String locator, DriverScope scope)  {
         WebElement byHeaderText = FindSectionByHeaderText(locator, "section",scope);
         if (byHeaderText != null) return byHeaderText;
         
         return FindSectionByHeaderText(locator, "div",scope);
     }
 
-    private WebElement FindSectionByHeaderText(String locator, String sectionTag, DriverScope scope) throws MissingHtmlException {
+    private WebElement FindSectionByHeaderText(String locator, String sectionTag, DriverScope scope)  {
         String headersXPath = StringJoiner.join(" or ", headerTags);
         Iterable<WebElement> withAHeader = elementFinder.Find(By.xpath(String.format(".//%1$s[%2$s]", sectionTag, headersXPath)),scope);
 

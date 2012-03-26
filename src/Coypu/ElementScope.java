@@ -13,48 +13,48 @@ public class ElementScope extends DriverScope
         super(elementFinder,outer);
     }
 
-    public String Id() throws MissingHtmlException {
+    public String Id()  {
         return Now().Id();
     }
 
-    public String Text() throws MissingHtmlException {
+    public String Text()  {
         return Now().Text();
     }
 
-    public String Value() throws MissingHtmlException {
+    public String Value()  {
         return Now().Value();
     }
 
-    public String Name() throws MissingHtmlException {
+    public String Name()  {
         return Now().Name();
     }
 
-    public String SelectedOption() throws MissingHtmlException {
+    public String SelectedOption()  {
         return Now().SelectedOption();
     }
 
-    public boolean Selected() throws MissingHtmlException {
+    public boolean Selected()  {
         return Now().Selected();
     }
 
-    public Object Native() throws MissingHtmlException {
+    public Object Native()  {
         return Now().Native();
     }
 
-    public String Attribute(String attributeName) throws MissingHtmlException {
+    public String Attribute(String attributeName)  {
         return Now().Attribute(attributeName);
     }
 
-    public ElementScope Click(Options options) throws MissingHtmlException {
+    public ElementScope Click(Options options)  {
         RetryUntilTimeout(new Click(this, driver, SetOptions(options)));
         return this;
     }
 
-    public boolean Exists(Options options) throws MissingHtmlException {
+    public boolean Exists(Options options)  {
         return robustWrapper.Robustly(new ElementExistsQuery(this, SetOptions(options)));
     }
 
-    public boolean Missing(Options options) throws MissingHtmlException {
+    public boolean Missing(Options options)  {
         return robustWrapper.Robustly(new ElementMissingQuery(this, SetOptions(options)));
     }
 }

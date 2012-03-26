@@ -5,6 +5,7 @@ import Coypu.Iterators;
 import com.google.common.base.Predicate;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 
 import javax.annotation.Nullable;
@@ -72,6 +73,10 @@ class SeleniumElement implements ElementFound
             return !NativeSeleniumElement().isDisplayed();
         }
         catch (StaleElementReferenceException ex)
+        {
+            return true;
+        }
+        catch (WebDriverException ex)
         {
             return true;
         }

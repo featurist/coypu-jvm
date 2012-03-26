@@ -20,5 +20,5 @@ public abstract class ElementFinder
         return this.locator;
     }
 
-    public abstract ElementFound Find() throws MissingHtmlException;
+    public abstract ElementFound Find() ;
 }

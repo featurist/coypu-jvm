@@ -14,7 +14,7 @@ public class ElementQuery extends DriverScopeQuery<ElementFound>
         return null;
     }
 
-    public void Run() throws MissingHtmlException {
+    public void Run()  {
         SetResult(DriverScope().FindElement());
     }
 }

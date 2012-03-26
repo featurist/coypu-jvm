@@ -16,12 +16,12 @@ class ElementFinder
         this.xPath = xPath;
     }
 
-    public Iterable<WebElement> Find(By by, DriverScope scope) throws MissingHtmlException {
+    public Iterable<WebElement> Find(By by, DriverScope scope)  {
         SearchContext context = SeleniumScope(scope);
         return context.findElements(by);
     }
 
-    public SearchContext SeleniumScope(DriverScope scope) throws MissingHtmlException {
+    public SearchContext SeleniumScope(DriverScope scope)  {
         return (SearchContext) scope.Now().Native();
     }
 }

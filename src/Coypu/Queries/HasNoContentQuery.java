@@ -15,7 +15,7 @@ public class HasNoContentQuery extends DriverScopeQuery<Boolean>
         this.text = text;
     }
 
-    public void Run() throws MissingHtmlException {
+    public void Run()  {
         SetResult(!driver.HasContent(text, DriverScope()));
     }
 }

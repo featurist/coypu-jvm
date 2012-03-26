@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
 
 class OptionSelector
 {
-    public void Select(Element element, final String option) throws MissingHtmlException {
+    public void Select(Element element, final String option)  {
         WebElement select = (WebElement)element.Native();
 
         WebElement optionToSelect =

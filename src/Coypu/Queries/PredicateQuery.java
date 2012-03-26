@@ -25,7 +25,7 @@ public abstract class PredicateQuery implements Query<Boolean>
         return result;
     }
 
-    public abstract void Run() throws MissingHtmlException;
+    public abstract void Run() ;
 
     public Object ExpectedResult()
     {

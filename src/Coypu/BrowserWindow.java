@@ -20,19 +20,11 @@ public class BrowserWindow extends DriverScope
     }
 
     /// <summary>
-    /// The native driver for the Coypu.Driver / browser combination you supplied. E.g. for SeleniumWebDriver + Firefox it will currently be a OpenQA.Selenium.Firefox.FirefoxDriver.
-    /// </summary>
-    public Object Native()
-    {
-        return driver.Native();
-    }
-
-    /// <summary>
     /// Check that a dialog with the specified text appears within the <see cref="Configuration.Timeout"/>
     /// </summary>
     /// <param name="withText">Dialog text</param>
     /// <returns>Whether an element appears</returns>
-    public boolean HasDialog(String withText, Options options) throws MissingHtmlException {
+    public boolean HasDialog(String withText, Options options)  {
         return Query(new HasDialogQuery(driver, withText, this, SetOptions(options)));
     }
 
@@ -41,7 +33,7 @@ public class BrowserWindow extends DriverScope
     /// </summary>
     /// <param name="withText">Dialog text</param>
     /// <returns>Whether an element does not appears</returns>
-    public boolean HasNoDialog(String withText, Options options) throws MissingHtmlException {
+    public boolean HasNoDialog(String withText, Options options)  {
         return Query(new HasNoDialogQuery(driver, withText, this, SetOptions(options)));
     }
 
@@ -49,7 +41,7 @@ public class BrowserWindow extends DriverScope
     /// Accept the first modal dialog to appear within the <see cref="Configuration.Timeout"/>
     /// </summary>
     /// <exception cref="T:Coypu.MissingHtmlException">Thrown if the dialog cannot be found</exception>
-    public void AcceptModalDialog(Options options) throws MissingHtmlException {
+    public void AcceptModalDialog(Options options)  {
         RetryUntilTimeout(new AcceptModalDialog(this, driver, SetOptions(options)));
     }
 
@@ -57,7 +49,7 @@ public class BrowserWindow extends DriverScope
     /// Cancel the first modal dialog to appear within the <see cref="Configuration.Timeout"/>
     /// </summary>
     /// <exception cref="T:Coypu.MissingHtmlException">Thrown if the dialog cannot be found</exception>
-    public void CancelModalDialog(Options options) throws MissingHtmlException {
+    public void CancelModalDialog(Options options)  {
         RetryUntilTimeout(new CancelModalDialog(this, driver, SetOptions(options)));
     }
 
@@ -75,7 +67,7 @@ public class BrowserWindow extends DriverScope
     /// </summary>
     /// <param name="element">The text field</param>
     /// <returns>With</returns>
-    public FillInWith FillIn(Element element, Options options)
+    public FillInWith FillIn(ElementScope element, Options options)
     {
         return new FillInWith(element, driver, robustWrapper, this, SetOptions(options));
     }

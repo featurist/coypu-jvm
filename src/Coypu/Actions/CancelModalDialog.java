@@ -12,7 +12,7 @@ public class CancelModalDialog extends DriverAction
         this.driverScope = driverScope;
     }
 
-    public void Act() throws MissingHtmlException {
+    public void Act()  {
         Driver.CancelModalDialog(driverScope);
     }
 }

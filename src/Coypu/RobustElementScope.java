@@ -16,7 +16,7 @@ public class RobustElementScope extends ElementScope
         this.options = options;
     }
 
-    public ElementFound Now() throws MissingHtmlException {
+    public ElementFound Now()  {
         outerScope.Now();
         return robustWrapper.Robustly(new ElementQuery(this, options));
     }

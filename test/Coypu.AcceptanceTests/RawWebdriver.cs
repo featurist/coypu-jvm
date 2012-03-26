@@ -8,7 +8,7 @@ namespace Coypu.AcceptanceTests
 	[TestFixture,Explicit]
 	public class RawWebDriver
 	{
-	    [Test]
+	    @Test
 		public void Retries_Autotrader()
         {
             var browser = new FirefoxDriver();
@@ -35,7 +35,7 @@ namespace Coypu.AcceptanceTests
 
 
 
-	    [Test]
+	    @Test
 		public void Visibility_NewTwitter()
 		{
             var browser = new FirefoxDriver();
@@ -57,7 +57,7 @@ namespace Coypu.AcceptanceTests
 
 
 
-	    [Test]
+	    @Test
 	    public void FindingStuff_CarBuzz()
         {
             var browser = new FirefoxDriver();
@@ -67,11 +67,11 @@ namespace Coypu.AcceptanceTests
 	        browser.FindElementByName("make_14").Click();
 	        browser.FindElementByName("make_11").Click();
 
-	        Assert.That(browser.PageSource.Contains(" 5 car reviews found"));
+	        assertThat(browser.PageSource.Contains(" 5 car reviews found"));
 
 	        browser.FindElementByXPath("//ul[@class='seats']/li/button[@value='4']").Click();
 
-	        Assert.That(browser.PageSource.Contains(" 1 car reviews found"));
+	        assertThat(browser.PageSource.Contains(" 1 car reviews found"));
 	    }
 	}
 }

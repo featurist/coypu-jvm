@@ -25,7 +25,7 @@ class IFrameFinder
         this.xPath = xPath;
     }
 
-    public WebElement FindIFrame(final String locator, DriverScope scope) throws MissingHtmlException {
+    public WebElement FindIFrame(final String locator, DriverScope scope)  {
         return Iterators.FirstOrDefault(elementFinder.Find(By.tagName("iframe"), scope),new Predicate<WebElement>() {
             @Override
             public boolean apply(@Nullable WebElement e) {

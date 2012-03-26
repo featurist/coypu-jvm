@@ -19,7 +19,7 @@ public class HasNoCssQuery extends DriverScopeQuery<Boolean>
         return true;
     }
 
-    public void Run() throws MissingHtmlException {
+    public void Run()  {
         SetResult(!driver.HasCss(cssSelector, DriverScope()));
     }
 }

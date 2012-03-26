@@ -27,6 +27,14 @@ public class BrowserSession extends BrowserWindow
     }
 
     /// <summary>
+    /// The native driver for the Coypu.Driver / browser combination you supplied. E.g. for SeleniumWebDriver + Firefox it will currently be a OpenQA.Selenium.Firefox.FirefoxDriver.
+    /// </summary>
+    public Object Native()
+    {
+        return driver.Native();
+    }
+
+    /// <summary>
     /// A new browser session. Control the lifecycle of this session with using{} / session.Dispose()
     /// </summary>
     /// <param name="configuration">Your configuration for this session</param>

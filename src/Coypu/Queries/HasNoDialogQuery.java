@@ -19,7 +19,7 @@ public class HasNoDialogQuery extends DriverScopeQuery<Boolean>
         this.text = text;
     }
 
-    public void Run() throws MissingHtmlException {
+    public void Run()  {
         SetResult(!driver.HasDialog(text, DriverScope()));
     }
 }

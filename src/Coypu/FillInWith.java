@@ -10,7 +10,7 @@ public class FillInWith
     private final RobustWrapper robustWrapper;
     private final DriverScope scope;
     private final Options options;
-    private final Element element;
+    private final ElementScope elementScope;
 
     public FillInWith(String locator, Driver driver, RobustWrapper robustWrapper, DriverScope scope, Options options)
     {
@@ -19,12 +19,12 @@ public class FillInWith
         this.robustWrapper = robustWrapper;
         this.scope = scope;
         this.options = options;
-        this.element = null;
+        this.elementScope = null;
     }
 
-    public FillInWith(Element element, Driver driver, RobustWrapper robustWrapper, DriverScope scope, Options options)
+    public FillInWith(ElementScope elementScope, Driver driver, RobustWrapper robustWrapper, DriverScope scope, Options options)
     {
-        this.element = element;
+        this.elementScope = elementScope;
         this.driver = driver;
         this.robustWrapper = robustWrapper;
         this.scope = scope;
@@ -37,7 +37,7 @@ public class FillInWith
     /// </summary>
     /// <param name="value">The value to fill in</param>
     /// <exception cref="T:Coypu.MissingHtmlException">Thrown if the element cannot be found</exception>
-    public void With(String value) throws MissingHtmlException {
-        robustWrapper.Robustly(new FillIn(driver, scope, locator, element, value,options));
+    public void With(String value)  {
+        robustWrapper.Robustly(new FillIn(driver, scope, locator, elementScope, value,options));
     }
 }

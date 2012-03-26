@@ -3,7 +3,6 @@ package Coypu.AcceptanceTests;
 import Coypu.BrowserSession;
 import Coypu.Configuration;
 import Coypu.Drivers.Selenium.SeleniumWebDriver;
-import Coypu.MissingHtmlException;
 import Coypu.TimeSpan;
 import org.junit.After;
 import org.junit.Before;
@@ -33,7 +32,7 @@ public class ExternalExamples
     }
 
     @Test
-    public void Retries_Autotrader() throws MissingHtmlException {
+    public void Retries_Autotrader()  {
         browser.Visit("http://www.autotrader.co.uk/used-cars");
 
         browser.FillIn("postcode",null).With("N1 1AA");
@@ -74,12 +73,12 @@ public class ExternalExamples
 //        browser.Check("BMW");
 //        browser.Check("Mercedes");
 //
-//        Assert.That(browser.HasContentMatch(new Regex(@"\b83 car reviews found")));
+//        assertThat(browser.HasContentMatch(new Regex(@"\b83 car reviews found")));
 //
 //        browser.FindSection("Seats").Click();
 //        browser.ClickButton("4");
 //
-//        Assert.That(browser.HasContentMatch(new Regex(@"\b28 car reviews found")));
+//        assertThat(browser.HasContentMatch(new Regex(@"\b28 car reviews found")));
 //    }
 //
 //    @Test
@@ -98,7 +97,7 @@ public class ExternalExamples
 //        }
 //        catch (WebDriverException e)
 //        {
-//            Assert.That(e.Message, Is.StringContaining("No connection could be made because the target machine actively refused it 127.0.0.1:4444"));
+//            assertThat(e.Message, Is.StringContaining("No connection could be made because the target machine actively refused it 127.0.0.1:4444"));
 //        }
 //    }
 }

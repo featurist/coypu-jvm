@@ -9,7 +9,7 @@ public class XPathFinder extends ElementFinder
         super(driver, locator, scope);
     }
 
-    public ElementFound Find() throws MissingHtmlException {
+    public ElementFound Find()  {
         return Driver.FindXPath(Locator(), Scope);
     }
 }

@@ -25,7 +25,7 @@ class FieldFinder
         this.xPath = xPath;
     }
 
-    public WebElement FindField(String locator, DriverScope scope) throws MissingHtmlException {
+    public WebElement FindField(String locator, DriverScope scope)  {
         WebElement fromLabel = FindFieldFromLabel(locator, scope);
         if (fromLabel != null) return fromLabel;
         
@@ -38,7 +38,7 @@ class FieldFinder
         return FindRadioButtonFromValue(locator, scope);
     }
 
-    private WebElement FindRadioButtonFromValue(String locator,DriverScope scope) throws MissingHtmlException {
+    private WebElement FindRadioButtonFromValue(String locator,DriverScope scope)  {
         return Iterators.FirstOrDefault(elementFinder.Find(By.xpath(".//input[@type = 'radio']"), scope), attributeMatches("value",locator), scope);
     }
 
@@ -51,7 +51,7 @@ class FieldFinder
         } ;
     }
 
-    private WebElement FindFieldFromLabel(String locator,DriverScope scope) throws MissingHtmlException {
+    private WebElement FindFieldFromLabel(String locator,DriverScope scope)  {
         WebElement label = FindLabelByText(locator, scope);
         if (label == null)
             return null;
@@ -65,23 +65,23 @@ class FieldFinder
         return field;
     }
 
-    private WebElement FindLabelByText(String locator, DriverScope scope) throws MissingHtmlException {
+    private WebElement FindLabelByText(String locator, DriverScope scope)  {
         WebElement byExactText = Iterators.FirstOrDefault(elementFinder.Find(By.xpath(xPath.Format(".//label[text() = %1$s]", locator)), scope), scope);
         if (byExactText != null) return byExactText;
 
         return Iterators.FirstOrDefault(elementFinder.Find(By.xpath(xPath.Format(".//label[contains(text(),%1$s)]", locator)), scope), scope);
     }
 
-    private WebElement FindFieldByPlaceholder(String placeholder,DriverScope scope) throws MissingHtmlException {
+    private WebElement FindFieldByPlaceholder(String placeholder,DriverScope scope)  {
         return Iterators.FirstOrDefault(elementFinder.Find(By.xpath(xPath.Format(".//input[@placeholder = %1$s]", placeholder)), scope),IsField(scope), scope);
     }
 
-    private WebElement FindFieldByIdOrName(String locator, DriverScope scope) throws MissingHtmlException {
+    private WebElement FindFieldByIdOrName(String locator, DriverScope scope)  {
         String xpathToFind = xPath.Format(".//*[@id = %1$s or @name = %1$s]", locator);
         return Iterators.FirstOrDefault(elementFinder.Find(By.xpath(xpathToFind), scope),IsField(scope), scope);
     }
 
-    private WebElement FindFieldById(String id, DriverScope scope) throws MissingHtmlException {
+    private WebElement FindFieldById(String id, DriverScope scope)  {
         return Iterators.FirstOrDefault(elementFinder.Find(By.id(id), scope),IsField(scope), scope);
     }
 

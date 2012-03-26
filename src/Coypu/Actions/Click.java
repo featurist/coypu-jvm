@@ -12,7 +12,7 @@ public class Click extends DriverAction
         this.driverScope = driverScope;
     }
 
-    public void Act() throws MissingHtmlException {
+    public void Act()  {
         ElementFound element = driverScope.Now();
         Driver.Click(element);
     }

@@ -7,35 +7,35 @@ public class FillIn extends DriverAction
     private String locator;
     private DriverScope scope;
     private String value;
-    private Element element;
+    private ElementScope elementScope;
 
-    public FillIn(Driver driver, DriverScope scope, String locator, Element element, String value, Options options)
+    public FillIn(Driver driver, DriverScope scope, String locator, ElementScope elementScope, String value, Options options)
     {
         super(driver, options);
         this.locator = locator;
-        this.element = element;
+        this.elementScope = elementScope;
         this.scope = scope;
         this.value = value;
     }
 
-    public Element Field() throws MissingHtmlException {
-        return element == null ?  Driver.FindField(locator, scope) : element;
+    public Element Field()  {
+        return elementScope == null ?  Driver.FindField(locator, scope) : elementScope.Now();
     }
 
-    private void BringIntoFocus() throws MissingHtmlException {
+    private void BringIntoFocus()  {
         Driver.Click(Field());
     }
 
-    public void Set() throws MissingHtmlException {
+    public void Set()  {
         Driver.Set(Field(), value);
     }
 
-    public void Focus() throws MissingHtmlException {
+    public void Focus()  {
         if (Field().Attribute("type") != "file")
             BringIntoFocus();
     }
 
-    public void Act() throws MissingHtmlException {
+    public void Act()  {
         Focus();
         Set();
     }

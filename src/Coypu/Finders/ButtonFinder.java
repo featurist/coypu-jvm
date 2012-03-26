@@ -9,7 +9,7 @@ public class ButtonFinder extends ElementFinder
         super(driver, locator, scope);
     }
 
-    public ElementFound Find() throws MissingHtmlException {
+    public ElementFound Find()  {
         return Driver.FindButton(Locator(), Scope);
     }
 }

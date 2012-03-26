@@ -35,7 +35,7 @@ public class ActionSatisfiesPredicateQuery implements Query<Boolean>
         this.timeout = overallTimeout;
     }
 
-    public void Run() throws MissingHtmlException {
+    public void Run()  {
         tryThis.Act();
 
         try

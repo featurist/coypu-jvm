@@ -15,7 +15,7 @@ public class RobustWindowScope extends BrowserWindow
         this.options = options;
     }
 
-    public ElementFound Now() throws MissingHtmlException {
+    public ElementFound Now()  {
         return robustWrapper.Robustly(new ElementQuery(this, options));
     }
 }

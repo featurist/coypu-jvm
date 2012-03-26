@@ -15,7 +15,7 @@ public class Check extends DriverAction
         this.locator = locator;
     }
 
-    public void Act() throws MissingHtmlException {
+    public void Act()  {
         Driver.Check(Driver.FindField(locator, scope));
     }
 }

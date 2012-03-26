@@ -25,9 +25,9 @@ public abstract class BrowserAction implements Query<Object>
         retryInterval = options.RetryInterval;
     }
 
-    public abstract void Act() throws MissingHtmlException;
+    public abstract void Act() ;
 
-    public void Run() throws MissingHtmlException {
+    public void Run()  {
         Act();
     }
 

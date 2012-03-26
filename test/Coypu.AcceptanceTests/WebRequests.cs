@@ -33,7 +33,7 @@ namespace Coypu.AcceptanceTests
             sinatraSite.Dispose();
         }
 
-        [Test]
+        @Test
         public void It_saves_a_resource_from_the_web()
         {
             var saveAs = TempFileName();
@@ -41,22 +41,22 @@ namespace Coypu.AcceptanceTests
 
             browser.SaveWebResource("/resource/bdd", saveAs);
 
-            Assert.That(File.ReadAllBytes(saveAs), Is.EqualTo(expectedResource));
+            assertThat(File.ReadAllBytes(saveAs), Is.EqualTo(expectedResource));
         }
 
-        [Test]
+        @Test
         public void It_saves_a_restricted_file_from_a_site_you_are_logged_into()
         {
             var saveAs = TempFileName();
             var expectedResource = Encoding.Default.GetBytes("bdd");
             
             browser.SaveWebResource("/restricted_resource/bdd", saveAs);
-            Assert.That(File.ReadAllBytes(saveAs), Is.Not.EqualTo(expectedResource));
+            assertThat(File.ReadAllBytes(saveAs), Is.Not.EqualTo(expectedResource));
 
             browser.Visit("/auto_login");
 
             browser.SaveWebResource("/restricted_resource/bdd", saveAs);
-            Assert.That(File.ReadAllBytes(saveAs), Is.EqualTo(expectedResource));
+            assertThat(File.ReadAllBytes(saveAs), Is.EqualTo(expectedResource));
         }
 
         private string TempFileName()
