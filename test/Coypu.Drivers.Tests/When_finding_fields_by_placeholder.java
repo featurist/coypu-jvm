@@ -1,15 +1,17 @@
+package Coypu.Drivers.Tests;
 
+import org.junit.Test;
 
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
 
-package Coypu.Drivers.Tests
+public class When_finding_fields_by_placeholder extends DriverSpecs
 {
-    class When_finding_fields_by_placeholder extends DriverSpecs
+    @Test
+    public void Finds_text_field_by_placeholder()
     {
-        @Test
-        public void Finds_text_field_by_placeholder()
-        {
-            Driver().FindField("text input field with a placeholder", Root()).Id(), is(equalTo("textInputFieldWithPlaceholder");
-            Driver().FindField("textarea field with a placeholder", Root()).Id(), is(equalTo("textareaFieldWithPlaceholder");
-        }
+        assertThat(Driver().FindField("text input field with a placeholder", Root()).Id(), is(equalTo("textInputFieldWithPlaceholder")));
+        assertThat(Driver().FindField("textarea field with a placeholder", Root()).Id(), is(equalTo("textareaFieldWithPlaceholder")));
     }
 }
