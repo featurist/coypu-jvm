@@ -1,18 +1,18 @@
-﻿using Coypu.Finders;
-using NSpec;
-using NUnit.Framework;
+﻿
 
-namespace Coypu.Drivers.Tests
+
+
+package Coypu.Drivers.Tests
 {
     internal class When_using_iframes_as_scope : DriverSpecs
     {
-        [Test]
+        @Test
         public void Does_not_find_something_in_an_iframe()
         {
             Assert.Throws<MissingHtmlException>(() => Driver.FindButton("iframe1ButtonId", Root));
         }
 
-        [Test]
+        @Test
         public void Finds_elements_among_multiple_scopes()
         {
             var iframeOne = new DriverScope(new Configuration(), new IFrameFinder(Driver, "I am iframe one", Root), Driver,null,null,null);
@@ -22,7 +22,7 @@ namespace Coypu.Drivers.Tests
             Driver.FindButton("scoped button", iframeTwo).Id.should_be("iframe2ButtonId");
         }
 
-        [Test]
+        @Test
         public void Finds_clears_scope_back_to_the_whole_window()
         {
             var iframeOne = new DriverScope(new Configuration(), new IFrameFinder(Driver, "I am iframe one", Root), Driver,null,null,null);
@@ -31,7 +31,7 @@ namespace Coypu.Drivers.Tests
             Driver.FindButton("scoped button", Root).Id.should_be("scope1ButtonId");
         }
 
-        [Test]
+        @Test
         public void Can_fill_in_a_text_input_within_an_iframe()
         {
             var iframeOne = new DriverScope(new Configuration(), new IFrameFinder(Driver, "I am iframe one", Root), Driver, null, null, null);
@@ -40,7 +40,7 @@ namespace Coypu.Drivers.Tests
             Assert.That(Driver.FindField("text input in iframe", iframeOne).Value, Is.EqualTo("filled in"));
         }
 
-        [Test]
+        @Test
         public void Can_scope_around_an_iframe()
         {
             var body = new DriverScope(new Configuration(), new CssFinder(Driver, "body", Root), Driver, null, null, null);
@@ -51,7 +51,7 @@ namespace Coypu.Drivers.Tests
             Driver.FindButton("scoped button", body).Id.should_be("scope1ButtonId");
         }
 
-        [Test]
+        @Test
         public void Can_scope_inside_an_iframe()
         {
             var iframeOne = new DriverScope(new Configuration(), new IFrameFinder(Driver, "I am iframe one", Root), Driver, null, null, null);

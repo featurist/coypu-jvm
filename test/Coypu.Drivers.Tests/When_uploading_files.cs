@@ -1,13 +1,13 @@
-﻿using System.IO;
-using NSpec;
-using NUnit.Framework;
+﻿
 
-namespace Coypu.Drivers.Tests
+
+
+package Coypu.Drivers.Tests
 {
     internal class When_uploading_files : DriverSpecs
     {
 
-  [Test]
+  @Test
   public void Sets_the_path_to_be_uploaded()
 
             {

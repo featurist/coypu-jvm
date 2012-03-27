@@ -1,8 +1,8 @@
-﻿using Coypu.Finders;
-using NSpec;
-using NUnit.Framework;
+﻿
 
-namespace Coypu.Drivers.Tests
+
+
+package Coypu.Drivers.Tests
 {
     public class When_finding_buttons_within_scope : DriverSpecs
     {
@@ -16,21 +16,21 @@ namespace Coypu.Drivers.Tests
             scope2 = new DriverScope(new Configuration(), new IdFinder(Driver, "scope2", Root), Driver,null,null,null);
         }
 
-        [Test]
+        @Test
         public void Finds_button_by_name()
         {
             Driver.FindButton("scopedButtonName", scope1).Id.should_be("scope1ButtonId");
             Driver.FindButton("scopedButtonName", scope2).Id.should_be("scope2ButtonId");
         }
 
-        [Test]
+        @Test
         public void Finds_input_button_by_value()
         {
             Driver.FindButton("scoped input button", scope1).Id.should_be("scope1InputButtonId");
             Driver.FindButton("scoped input button", scope2).Id.should_be("scope2InputButtonId");
         }
 
-        [Test]
+        @Test
         public void Finds_button_by_text()
         {
             Driver.FindButton("scoped button", scope1).Id.should_be("scope1ButtonId");

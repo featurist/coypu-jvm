@@ -1,10 +1,10 @@
-﻿using NSpec;
-using NUnit.Framework;
-namespace Coypu.Drivers.Tests
+﻿
+
+package Coypu.Drivers.Tests
 {
     internal class When_inspecting_dialog_text : DriverSpecs
     {
-        [Test]
+        @Test
         public void Finds_exact_text_in_alert()
         {
             using (Driver)
@@ -14,7 +14,7 @@ namespace Coypu.Drivers.Tests
                 Driver.HasDialog("You have triggered a different alert and this is the different text.", Root).should_be_false();
             }
         }
-        [Test]
+        @Test
         public void Finds_exact_text_in_confirm()
         {
             using (Driver)

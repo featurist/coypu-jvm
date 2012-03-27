@@ -1,11 +1,11 @@
-﻿using NSpec;
-using NUnit.Framework;
+﻿
 
-namespace Coypu.Drivers.Tests
+
+package Coypu.Drivers.Tests
 {
     internal class When_executing_script : DriverSpecs
     {
-        [Test]
+        @Test
         public void Runs_the_script_in_the_browser()
         {
             Driver.FindButton("firstButtonId", Root).Text.should_be("first button");
@@ -16,7 +16,7 @@ namespace Coypu.Drivers.Tests
         }
 
 
-        [Test]
+        @Test
         public void Returns_the_result()
 
         {

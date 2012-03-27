@@ -1,25 +1,25 @@
-﻿using NSpec;
-using NUnit.Framework;
+﻿
 
-namespace Coypu.Drivers.Tests
+
+package Coypu.Drivers.Tests
 {
     internal class When_finding_fieldsets : DriverSpecs
     {
-        [Test]
+        @Test
         public void Finds_by_legend_text()
         {
             Driver.FindFieldset("Scope 1", Root).Id.should_be("fieldsetScope1");
             Driver.FindFieldset("Scope 2", Root).Id.should_be("fieldsetScope2");
         }
 
-        [Test]
+        @Test
         public void Finds_by_id()
         {
             Driver.FindFieldset("fieldsetScope1", Root).Native.should_be(Driver.FindFieldset("Scope 1", Root).Native);
             Driver.FindFieldset("fieldsetScope2", Root).Native.should_be(Driver.FindFieldset("Scope 2", Root).Native);
         }
 
-        [Test]
+        @Test
         public void Finds_only_fieldsets()
         {
             Assert.Throws<MissingHtmlException>(() => Driver.FindFieldset("scope1TextInputFieldId", Root));

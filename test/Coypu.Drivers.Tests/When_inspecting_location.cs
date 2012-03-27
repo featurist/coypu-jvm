@@ -1,11 +1,11 @@
-﻿using System;
-using NUnit.Framework;
+﻿
 
-namespace Coypu.Drivers.Tests
+
+package Coypu.Drivers.Tests
 {
     internal class When_inspecting_location : DriverSpecs
     {
-        [Test]
+        @Test
         public void Gets_the_current_browser_location()
 
         {
@@ -17,7 +17,7 @@ namespace Coypu.Drivers.Tests
         }
 
 
-        [Test]
+        @Test
         public void Not_just_when_set_by_visit()
 
         {

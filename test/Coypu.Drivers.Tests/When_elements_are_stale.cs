@@ -1,12 +1,12 @@
-using Coypu.Finders;
-using NSpec;
-using NUnit.Framework;
 
-namespace Coypu.Drivers.Tests
+
+
+
+package Coypu.Drivers.Tests
 {
     internal class When_elements_are_stale : DriverSpecs
     {
-        [Test]
+        @Test
         public void Stale_element_removed_from_DOM()
         {
             var elementWithinScope1 = Driver.FindFieldset("Scope 1", Root);
@@ -17,7 +17,7 @@ namespace Coypu.Drivers.Tests
             elementWithinScope1.Stale.should_be_true();
         }
 
-        [Test]
+        @Test
         public void Stale_element_became_invisible()
         {
             var elementWithinScope1 = Driver.FindFieldset("Scope 1", Root);
@@ -28,7 +28,7 @@ namespace Coypu.Drivers.Tests
             elementWithinScope1.Stale.should_be_true();
         }
 
-        [Test]
+        @Test
         public void Stale_iframe()
         {
             var frame = Driver.FindIFrame("iframe1", Root);
@@ -39,7 +39,7 @@ namespace Coypu.Drivers.Tests
             frame.Stale.should_be_true();
         }
 
-        [Test]
+        @Test
         public void Stale_iframe_becomes_invisible()
         {
             var frame = Driver.FindIFrame("iframe1", Root);
@@ -50,7 +50,7 @@ namespace Coypu.Drivers.Tests
             frame.Stale.should_be_true();
         }
 
-        [Test]
+        @Test
         public void Stale_window_closed()
         {
             Driver.Click(Driver.FindLink("Open pop up window", Root));

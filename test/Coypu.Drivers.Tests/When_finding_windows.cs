@@ -1,12 +1,12 @@
-﻿using Coypu.Finders;
-using NSpec;
-using NUnit.Framework;
+﻿
 
-namespace Coypu.Drivers.Tests
+
+
+package Coypu.Drivers.Tests
 {
     internal class When_finding_windows : DriverSpecs
     {
-        [Test]
+        @Test
         public void Finds_by_name()
         {
             Driver.Click(Driver.FindLink("Open pop up window",Root));
@@ -14,7 +14,7 @@ namespace Coypu.Drivers.Tests
             Driver.HasContent("Open pop up window",Root);
         }
 
-        [Test]
+        @Test
         public void Finds_by_title()
         {
             Driver.Click(Driver.FindLink("Open pop up window", Root));
@@ -22,7 +22,7 @@ namespace Coypu.Drivers.Tests
             Driver.HasContent("Open pop up window", Root);
         }
 
-        [Test]
+        @Test
         public void Finds_scoped_by_window()
         {
             Driver.Click(Driver.FindLink("Open pop up window", Root));
@@ -33,7 +33,7 @@ namespace Coypu.Drivers.Tests
             Assert.That(Driver.HasContent("I am a pop up window", Root), Is.False);
         }
 
-        [Test]
+        @Test
         public void Errors_on_no_such_window()
         {
             Driver.Click(Driver.FindLink("Open pop up window", Root));

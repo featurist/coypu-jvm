@@ -1,11 +1,11 @@
-﻿using NSpec;
-using NUnit.Framework;
+﻿
 
-namespace Coypu.Drivers.Tests
+
+package Coypu.Drivers.Tests
 {
     internal class When_choosing : DriverSpecs
     {
-        [Test]
+        @Test
         public void Chooses_radio_button_from_list()
         {
             var radioButton1 = Driver.FindField("chooseRadio1", Root);
@@ -30,7 +30,7 @@ namespace Coypu.Drivers.Tests
         }
 
 
-        [Test]
+        @Test
         public void Fires_onclick_event()
         {
             var radio = Driver.FindField("chooseRadio2", Root);

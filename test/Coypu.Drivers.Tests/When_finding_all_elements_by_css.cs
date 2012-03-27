@@ -1,13 +1,13 @@
-﻿using System.Linq;
-using NSpec;
-using NUnit.Framework;
+﻿
 
-namespace Coypu.Drivers.Tests
+
+
+package Coypu.Drivers.Tests
 {
     internal class When_finding_all_elements_by_css : DriverSpecs
     {
 
-  [Test]
+  @Test
   public void Returns_empty_if_no_matches()
  
             {
@@ -16,7 +16,7 @@ namespace Coypu.Drivers.Tests
             }
 
             
-    [Test]
+    @Test
     public void Returns_all_matches_by_css()
   
             {

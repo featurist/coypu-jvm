@@ -1,13 +1,13 @@
-﻿using System;
-using NSpec;
-using NUnit.Framework;
+﻿
 
-namespace Coypu.Drivers.Tests
+
+
+package Coypu.Drivers.Tests
 {
     internal class When_selecting_options : DriverSpecs
     {
             
-  [Test]
+  @Test
   public void Sets_text_of_selected_option()
 
             {

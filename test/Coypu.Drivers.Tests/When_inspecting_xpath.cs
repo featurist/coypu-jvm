@@ -1,10 +1,10 @@
-﻿using NUnit.Framework;
+﻿
 
-namespace Coypu.Drivers.Tests
+package Coypu.Drivers.Tests
 {
     internal class When_inspecting_xpath : DriverSpecs
     {
-        [Test]
+        @Test
         public void Does_not_find_missing_examples()
 
         {
@@ -13,7 +13,7 @@ namespace Coypu.Drivers.Tests
         }
 
 
-        [Test]
+        @Test
         public void Only_finds_visible_elements()
 
         {
@@ -22,7 +22,7 @@ namespace Coypu.Drivers.Tests
         }
 
 
-        [Test]
+        @Test
         public void Finds_present_examples()
 
         {

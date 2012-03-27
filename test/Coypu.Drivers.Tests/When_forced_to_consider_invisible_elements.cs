@@ -1,7 +1,7 @@
-﻿using Coypu.Finders;
-using NUnit.Framework;
+﻿
 
-namespace Coypu.Drivers.Tests
+
+package Coypu.Drivers.Tests
 {
     public class When_forced_to_find_invisible_elements : DriverSpecs
     {
@@ -17,7 +17,7 @@ namespace Coypu.Drivers.Tests
             }
         }
 
-        [Test]
+        @Test
         public void Does_find_hidden_inputs()
         {
             Assert.That(Driver.FindField("firstHiddenInputId", RootConsideringInvisibleElements).Value, Is.EqualTo("first hidden input"));
@@ -26,7 +26,7 @@ namespace Coypu.Drivers.Tests
         }
 
 
-        [Test]
+        @Test
         public void Does_find_invisible_elements()
         {
             Assert.That(Driver.FindButton("firstInvisibleInputId", RootConsideringInvisibleElements).Name, Is.EqualTo("firstInvisibleInputName"));

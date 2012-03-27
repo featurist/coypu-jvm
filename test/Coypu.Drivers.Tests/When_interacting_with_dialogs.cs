@@ -1,11 +1,11 @@
-﻿using NSpec;
-using NUnit.Framework;
+﻿
 
-namespace Coypu.Drivers.Tests
+
+package Coypu.Drivers.Tests
 {
     internal class When_interacting_with_dialogs : DriverSpecs
     {
-        [Test]
+        @Test
         public void Accepts_alerts()
         {
             using (Driver)
@@ -18,7 +18,7 @@ namespace Coypu.Drivers.Tests
         }
 
 
-        [Test]
+        @Test
         public void Clears_dialog()
         {
             using (Driver)
@@ -30,7 +30,7 @@ namespace Coypu.Drivers.Tests
             }
         }
 
-        [Test]
+        @Test
         public void Returns_true()
         {
             using (Driver)
@@ -42,7 +42,7 @@ namespace Coypu.Drivers.Tests
         }
 
 
-        [Test]
+        @Test
         public void Cancel_Clears_dialog()
         {
             using (Driver)
@@ -54,7 +54,7 @@ namespace Coypu.Drivers.Tests
             }
         }
 
-        [Test]
+        @Test
         public void Cancel_Returns_false()
         {
             using (Driver)

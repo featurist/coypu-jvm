@@ -1,12 +1,12 @@
-﻿using NSpec;
-using NUnit.Framework;
+﻿
 
-namespace Coypu.Drivers.Tests
+
+package Coypu.Drivers.Tests
 {
     internal class When_setting_fields : DriverSpecs
     {
             
-  [Test]
+  @Test
   public void Sets_value_of_text_input_field()
 
             {
@@ -20,7 +20,7 @@ namespace Coypu.Drivers.Tests
             }
 
             
-    [Test]
+    @Test
     public void Sets_value_of_textarea_field()
   
             {
@@ -34,7 +34,7 @@ namespace Coypu.Drivers.Tests
             }
 
             
-    [Test]
+    @Test
     public void Selects_option_by_text_or_value()
   
             {
@@ -53,7 +53,7 @@ namespace Coypu.Drivers.Tests
             }
                            
             
-    [Test]
+    @Test
     public void Fires_change_event_when_selecting_an_option()
   
             {

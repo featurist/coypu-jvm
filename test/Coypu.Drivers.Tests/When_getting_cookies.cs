@@ -1,8 +1,8 @@
-using System;
-using System.Linq;
-using NUnit.Framework;
 
-namespace Coypu.Drivers.Tests
+
+
+
+package Coypu.Drivers.Tests
 {
     internal class When_getting_cookies : DriverSpecs
     {
@@ -17,7 +17,7 @@ namespace Coypu.Drivers.Tests
         }
 
 
-        [Test]
+        @Test
         public void Gets_all_the_session_cookies()
         {
             Driver.ExecuteScript("document.cookie = 'cookie1=value1; '", Root);
@@ -29,7 +29,7 @@ namespace Coypu.Drivers.Tests
             Assert.That(cookies.First(c => c.Name == "cookie2").Value, Is.EqualTo("value2"));
         }
 
-        [Test]
+        @Test
         public void Gets_all_the_persistent_cookies()
         {
             var expires = DateTime.UtcNow.AddDays(2);
@@ -47,7 +47,7 @@ namespace Coypu.Drivers.Tests
         // Internet Explorer fails this test - cookie information with path isn't available,
         // unless it's a persistent cookie that's been retrieved from the cache (and even then
         // the path value seems to be wrong?)
-        [Test]
+        @Test
         public void Gets_the_cookie_path()
 
         {

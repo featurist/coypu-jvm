@@ -1,8 +1,8 @@
-﻿using Coypu.Finders;
-using NSpec;
-using NUnit.Framework;
+﻿
 
-namespace Coypu.Drivers.Tests
+
+
+package Coypu.Drivers.Tests
 {
     internal class When_inspecting_content_within_scope : DriverSpecs
     {
@@ -16,14 +16,14 @@ namespace Coypu.Drivers.Tests
             scope2 = new DriverScope(new Configuration(), new IdFinder(Driver, "scope2", Root), Driver,null,null,null);
         }
 
-        [Test]
+        @Test
         public void Finds_content_within_scope()
         {
             Driver.HasContent("Scope 1", scope1).should_be_true();
             Driver.HasContent("Scope 2", scope2).should_be_true();
         }
 
-        [Test]
+        @Test
         public void Does_not_find_content_outside_scope()
         {
             Driver.HasContent("Scope 2", scope1).should_be_false();
