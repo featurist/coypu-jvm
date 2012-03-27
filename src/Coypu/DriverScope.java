@@ -22,7 +22,7 @@ public class DriverScope implements Coypu.Scope
     private ElementFound element;
     private Options options;
 
-    protected DriverScope(Configuration configuration, ElementFinder elementFinder, Driver driver, RobustWrapper robustWrapper, Waiter waiter, UrlBuilder urlBuilder)
+    public DriverScope(Configuration configuration, ElementFinder elementFinder, Driver driver, RobustWrapper robustWrapper, Waiter waiter, UrlBuilder urlBuilder)
     {
         this.elementFinder = elementFinder == null ?  new DocumentElementFinder(driver) : elementFinder;
         this.configuration = configuration;

@@ -23,7 +23,7 @@ public class Location
     @Before
     public void SetUp()
     {
-        //sinatraSite = new SinatraSite(String.format("sites\\%1$s.rb", "site_with_secure_resources"));
+        //sinatraSite = new SinatraSite(String.format("Sites\\%1$s.rb", "site_with_secure_resources"));
 
         Configuration configuration = new Configuration();
         configuration.Timeout = TimeSpan.FromMilliseconds(1000);

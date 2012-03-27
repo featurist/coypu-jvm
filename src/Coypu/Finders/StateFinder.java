@@ -1,6 +1,5 @@
 package Coypu.Finders;
 
-import Coypu.MissingHtmlException;
 import Coypu.Options;
 import Coypu.Queries.PredicateQuery;
 import Coypu.Robustness.RobustWrapper;
@@ -19,17 +18,16 @@ public class StateFinder
     public State FindState(Options options, final State[] states) {
         PredicateQuery query = new PredicateQuery(options) {
             @Override
-            public void Run()  {
+            public boolean Predicate()  {
                 boolean was = robustWrapper.GetZeroTimeout();
                 robustWrapper.SetZeroTimeout(true);
                 try
                 {
                     for (State state : states) {
                         if (state.CheckCondition())
-                       result = true;
-                       return;
+                       return true;
                     }
-                    result = false;
+                    return false;
                 }
                 finally
                 {
