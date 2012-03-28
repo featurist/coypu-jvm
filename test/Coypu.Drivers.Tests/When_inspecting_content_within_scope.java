@@ -24,14 +24,14 @@ public class When_inspecting_content_within_scope extends DriverSpecs
     @Test
     public void Finds_content_within_scope()
     {
-        assertThat(Driver().HasContent("Scope 1", scope1), is(true));
-        assertThat(Driver().HasContent("Scope 2", scope2), is(true));
+        assertThat(Driver().HasContent("scope 1", scope1), is(true));
+        assertThat(Driver().HasContent("scope 2", scope2), is(true));
     }
 
     @Test
     public void Does_not_find_content_outside_scope()
     {
-        assertThat(Driver().HasContent("Scope 2", scope1), is(false));
-        assertThat(Driver().HasContent("Scope 1", scope2), is(false));
+        assertThat(Driver().HasContent("scope 2", scope1), is(false));
+        assertThat(Driver().HasContent("scope 1", scope2), is(false));
     }
 }

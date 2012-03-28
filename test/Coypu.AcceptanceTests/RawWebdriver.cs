@@ -3,7 +3,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 
-namespace Coypu.AcceptanceTests
+package Coypu.AcceptanceTests
 {
 	[TestFixture,Explicit]
 	public class RawWebDriver

@@ -183,7 +183,7 @@ public class ApiExamples
 
     @Test
     public void FindFieldset_example()  {
-        assertThat(browser.FindFieldset("Scope 1", tempOptions).Id(), is(equalTo("fieldsetScope1")));
+        assertThat(browser.FindFieldset("scope 1", tempOptions).Id(), is(equalTo("fieldsetScope1")));
     }
 
     @Test
@@ -321,10 +321,10 @@ public class ApiExamples
     public void WithinFieldset_example()  {
         String locatorThatAppearsInMultipleScopes = "scoped text input field linked by for";
 
-        ElementScope expectingScope1 = browser.FindFieldset("Scope 1",tempOptions)
+        ElementScope expectingScope1 = browser.FindFieldset("scope 1",tempOptions)
                                      .FindField(locatorThatAppearsInMultipleScopes,tempOptions);
 
-        ElementScope expectingScope2 = browser.FindFieldset("Scope 2",tempOptions)
+        ElementScope expectingScope2 = browser.FindFieldset("scope 2",tempOptions)
                                      .FindField(locatorThatAppearsInMultipleScopes, tempOptions);
 
         assertThat(expectingScope1.Id(), is(equalTo("scope1TextInputFieldId")));

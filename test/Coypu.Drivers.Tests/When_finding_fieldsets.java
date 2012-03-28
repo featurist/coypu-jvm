@@ -13,15 +13,15 @@ public class When_finding_fieldsets extends DriverSpecs
     @Test
     public void Finds_by_legend_text()
     {
-        assertThat(Driver().FindFieldset("Scope 1", Root()).Id(), is(equalTo("fieldsetScope1")));
-        assertThat(Driver().FindFieldset("Scope 2", Root()).Id(), is(equalTo("fieldsetScope2")));
+        assertThat(Driver().FindFieldset("scope 1", Root()).Id(), is(equalTo("fieldsetScope1")));
+        assertThat(Driver().FindFieldset("scope 2", Root()).Id(), is(equalTo("fieldsetScope2")));
     }
 
     @Test
     public void Finds_by_id()
     {
-        assertThat(Driver().FindFieldset("fieldsetScope1", Root()).Native(), is(equalTo(Driver().FindFieldset("Scope 1", Root()).Native())));
-        assertThat(Driver().FindFieldset("fieldsetScope2", Root()).Native(), is(equalTo(Driver().FindFieldset("Scope 2", Root()).Native())));
+        assertThat(Driver().FindFieldset("fieldsetScope1", Root()).Native(), is(equalTo(Driver().FindFieldset("scope 1", Root()).Native())));
+        assertThat(Driver().FindFieldset("fieldsetScope2", Root()).Native(), is(equalTo(Driver().FindFieldset("scope 2", Root()).Native())));
     }
 
     @Test

@@ -4,7 +4,7 @@ using System.Text;
 using Coypu.Drivers.Tests.Sites;
 using NUnit.Framework;
 
-namespace Coypu.AcceptanceTests
+package Coypu.AcceptanceTests
 {
     [TestFixture]
     public class WebRequests
@@ -12,7 +12,7 @@ namespace Coypu.AcceptanceTests
         private SinatraSite sinatraSite;
         private BrowserSession browser;
 
-        [SetUp]
+        @Before
         public void SetUp()
         {
             sinatraSite = new SinatraSite(string.Format(@"sites\%1$s.rb", "site_with_secure_resources"));
@@ -26,7 +26,7 @@ namespace Coypu.AcceptanceTests
             browser.Visit("/");
         }
 
-        [TearDown]
+        @After
         public void TearDown()
         {
             browser.Dispose();
