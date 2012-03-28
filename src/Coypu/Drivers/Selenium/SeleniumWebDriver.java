@@ -183,11 +183,11 @@ public class SeleniumWebDriver implements Driver
     }
 
     public boolean HasCss(String cssSelector, DriverScope scope)  {
-        return Find(By.cssSelector(cssSelector), scope).iterator().hasNext();
+        return Iterators.AllVisible(Find(By.cssSelector(cssSelector), scope),scope).size() > 0;
     }
 
     public boolean HasXPath(String xpath, DriverScope scope)  {
-        return Find(By.xpath(xpath), scope).iterator().hasNext();
+        return Iterators.AllVisible(Find(By.xpath(xpath), scope),scope).size() > 0;
     }
 
     public boolean HasDialog(String withText, DriverScope scope)  {
@@ -275,9 +275,9 @@ public class SeleniumWebDriver implements Driver
         catch (InvalidElementStateException ex) // Non user-editable elements (file inputs) - chrome/IE
         {
         }
-//        catch(InvalidOperationException ex)  // Non user-editable elements (file inputs) - firefox
-//        {
-//        }
+        catch(WebDriverException ex)  // Non user-editable elements (file inputs) - firefox
+        {
+        }
         seleniumElement.sendKeys(value);
     }
 

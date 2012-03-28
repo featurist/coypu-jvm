@@ -1,9 +1,8 @@
-﻿package Coypu.Drivers.Tests;
+package Coypu.Drivers.Tests;
 
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertThat;
 
 public class When_interacting_with_dialogs extends DriverSpecs
@@ -45,7 +44,8 @@ public class When_interacting_with_dialogs extends DriverSpecs
         try {
             Driver().Click(Driver().FindLink("Trigger a confirm", Root()));
             Driver().AcceptModalDialog(Root());
-            assertThat(Driver().FindLink("Trigger a confirm - accepted", Root()), is(not(null)));
+
+            Driver().FindLink("Trigger a confirm - accepted", Root());
         }
         finally {
             Driver().Dispose();
@@ -74,7 +74,8 @@ public class When_interacting_with_dialogs extends DriverSpecs
         try {
             Driver().Click(Driver().FindLink("Trigger a confirm", Root()));
             Driver().CancelModalDialog(Root());
-            assertThat(Driver().FindLink("Trigger a confirm - cancelled", Root()), is(not(null)));
+
+            Driver().FindLink("Trigger a confirm - cancelled", Root());
         }
         finally {
             Driver().Dispose();

@@ -1,9 +1,8 @@
 package Coypu.Drivers.Selenium;
 
 import Coypu.DriverScope;
-import Coypu.Iterators;
 import Coypu.Drivers.XPath;
-import Coypu.MissingHtmlException;
+import Coypu.Iterators;
 import com.google.common.base.Predicate;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -28,7 +27,9 @@ class ButtonFinder
             new Predicate<WebElement>() {
                 @Override
                 public boolean apply(@Nullable WebElement e) {
-                    return e.getTagName().equals("button") || IsInputButton(e) || e.getAttribute("role").equals("button");
+                    return e.getTagName().equals("button") ||
+                            IsInputButton(e) ||
+                            (e.getAttribute("role") != null && e.getAttribute("role").equals("button"));
                 }
             };
 

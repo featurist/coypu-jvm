@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import static junit.framework.Assert.fail;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 
 public class When_finding_windows extends DriverSpecs
@@ -17,7 +16,7 @@ public class When_finding_windows extends DriverSpecs
     public void Finds_by_name()
     {
         Driver().Click(Driver().FindLink("Open pop up window", Root()));
-        assertThat(Driver().FindWindow("popUpWindowName", Root()).Text(), is(equalTo("I am a pop up window")));
+        assertThat(Driver().FindWindow("popUpWindowName", Root()).Text().startsWith("I am a pop up window"),is(true));
         assertThat(Driver().HasContent("Open pop up window", Root()), is(true));
     }
 

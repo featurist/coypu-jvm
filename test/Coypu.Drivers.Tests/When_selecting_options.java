@@ -1,4 +1,4 @@
-﻿package Coypu.Drivers.Tests;
+package Coypu.Drivers.Tests;
 
 import Coypu.ElementFound;
 import org.junit.Test;

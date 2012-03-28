@@ -47,12 +47,6 @@ public class When_finding_buttons extends DriverSpecs
     }
 
     @Test
-    public void Finds_a_particular_input_button_by_id_ends_with()
-    {
-        assertThat(Driver().FindButton("rdInputButtonId", Root()).Value(), is(equalTo("third input button")));
-    }
-
-    @Test
     public void Finds_a_particular_input_button_by_its_name()
     {
         assertThat(Driver().FindButton("secondInputButtonId", Root()).Value(), is(equalTo("second input button")));
@@ -123,11 +117,6 @@ public class When_finding_buttons extends DriverSpecs
     @Test
     public void Finds_img_elements_with_role_button_by_alt_text()
     {
-        try{
-            fail("Expected MissingHtmlException");
-        }
-        catch(MissingHtmlException ex) {
-        }
         assertThat(Driver().FindButton("I'm an image with the role of button", Root()).Id(), is(equalTo("roleImageButtonId")));
     }
 

@@ -1,4 +1,4 @@
-﻿package Coypu.Drivers.Tests;
+package Coypu.Drivers.Tests;
 
 import org.junit.Test;
 
@@ -32,9 +32,8 @@ public class When_inspecting_css extends DriverSpecs
 
     @Test
     public void Only_finds_visible_elements()
-
     {
         String shouldNotFind = "#inspectingContent p.css-test img.invisible";
-        assertThat("Expected not to find something at: " + shouldNotFind,Driver().HasCss(shouldNotFind, Root()), is(false));
+        assertThat("Expected not to find something at: " + shouldNotFind, Driver().HasCss(shouldNotFind, Root()), is(false));
     }
 }

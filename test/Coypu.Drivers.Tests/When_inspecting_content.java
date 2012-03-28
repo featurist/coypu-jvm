@@ -1,4 +1,4 @@
-﻿package Coypu.Drivers.Tests;
+package Coypu.Drivers.Tests;
 
 import org.junit.Test;
 
@@ -33,7 +33,7 @@ public class When_inspecting_content extends DriverSpecs
     @Test
     public void Finds_text_in_a_list()
     {
-        assertThat(Driver().HasContent("Some\r\ntext\r\nin\r\na\r\nlist", Root()), is(true));
+        assertThat(Driver().HasContent("Some\ntext\nin\na\nlist", Root()), is(true));
     }
 
 
@@ -47,8 +47,8 @@ public class When_inspecting_content extends DriverSpecs
     @Test
     public void Finds_text_displayed_over_multiple_lines_in_source()
     {
-        assertThat(Driver().HasContent("Some text displayed over\r\nmultiple lines", Root()), is(true));
-        assertThat(Driver().HasContent("Some text displayed over\r\ntwo paragraphs", Root()), is(true));
+        assertThat(Driver().HasContent("Some text displayed over\nmultiple lines", Root()), is(true));
+        assertThat(Driver().HasContent("Some text displayed over\ntwo paragraphs", Root()), is(true));
     }
 
 
