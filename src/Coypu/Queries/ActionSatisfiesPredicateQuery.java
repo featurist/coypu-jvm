@@ -1,13 +1,12 @@
 package Coypu.Queries;
 
 import Coypu.Actions.BrowserAction;
-import Coypu.MissingHtmlException;
 import Coypu.Robustness.RobustWrapper;
 import Coypu.TimeSpan;
 
 public class ActionSatisfiesPredicateQuery implements Query<Boolean> {
     private BrowserAction tryThis;
-    private Query<Boolean> until;
+    private PredicateQuery until;
     private TimeSpan waitBeforeRetry;
     private RobustWrapper robustWrapper;
     private TimeSpan retryInterval;
@@ -22,7 +21,7 @@ public class ActionSatisfiesPredicateQuery implements Query<Boolean> {
         return timeout;
     }
 
-    public ActionSatisfiesPredicateQuery(BrowserAction tryThis, Query<Boolean> until, TimeSpan overallTimeout, TimeSpan retryInterval, TimeSpan waitBeforeRetry, RobustWrapper robustWrapper) {
+    public ActionSatisfiesPredicateQuery(BrowserAction tryThis, PredicateQuery until, TimeSpan overallTimeout, TimeSpan retryInterval, TimeSpan waitBeforeRetry, RobustWrapper robustWrapper) {
         this.tryThis = tryThis;
         this.until = until;
         this.waitBeforeRetry = waitBeforeRetry;

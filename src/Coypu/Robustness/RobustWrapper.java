@@ -1,13 +1,14 @@
 package Coypu.Robustness;
 
 import Coypu.Actions.BrowserAction;
+import Coypu.Queries.PredicateQuery;
 import Coypu.Queries.Query;
 import Coypu.TimeSpan;
 
 public interface RobustWrapper {
     public <T> T Robustly(Query<T> query);
 
-    public void TryUntil(BrowserAction tryThis, Query<Boolean> until, TimeSpan overallTimeout, TimeSpan waitBeforeRetry);
+    public void TryUntil(BrowserAction tryThis, PredicateQuery until, TimeSpan overallTimeout, TimeSpan waitBeforeRetry);
 
     public boolean GetZeroTimeout();
 

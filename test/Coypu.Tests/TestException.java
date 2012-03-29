@@ -1,5 +1,5 @@
 package Coypu.Tests;
-public class TestException extends Exception
+public class TestException extends RuntimeException
 {
     public TestException(String message)
     {

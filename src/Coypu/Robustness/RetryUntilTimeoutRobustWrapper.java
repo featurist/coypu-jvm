@@ -2,6 +2,7 @@ package Coypu.Robustness;
 
 import Coypu.Actions.BrowserAction;
 import Coypu.Queries.ActionSatisfiesPredicateQuery;
+import Coypu.Queries.PredicateQuery;
 import Coypu.Queries.Query;
 import Coypu.Stopwatch;
 import Coypu.TimeSpan;
@@ -27,7 +28,7 @@ public class RetryUntilTimeoutRobustWrapper implements RobustWrapper {
         overrideTimeout = null;
     }
 
-    public void TryUntil(BrowserAction tryThis, Query<Boolean> until, TimeSpan overallTimeout, TimeSpan waitBeforeRetry) {
+    public void TryUntil(BrowserAction tryThis, PredicateQuery until, TimeSpan overallTimeout, TimeSpan waitBeforeRetry) {
         boolean outcome = Robustly(new ActionSatisfiesPredicateQuery(tryThis, until, overallTimeout, until.RetryInterval(), waitBeforeRetry, this));
         if (!outcome)
             throw new TimeoutException("Timeout from TryUntil: the page never reached the required state.");
