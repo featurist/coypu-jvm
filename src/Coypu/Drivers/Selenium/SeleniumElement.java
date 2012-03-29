@@ -10,42 +10,34 @@ import org.openqa.selenium.WebElement;
 
 import javax.annotation.Nullable;
 
-class SeleniumElement implements ElementFound
-{
+class SeleniumElement implements ElementFound {
     private final WebElement nativeElement;
 
-    protected WebElement NativeSeleniumElement()
-    {
+    protected WebElement NativeSeleniumElement() {
         return nativeElement;
     }
 
-    public SeleniumElement(WebElement seleniumElement)
-    {
+    public SeleniumElement(WebElement seleniumElement) {
         nativeElement = seleniumElement;
     }
 
-    public String Id()
-    {
+    public String Id() {
         return NativeSeleniumElement().getAttribute("id");
     }
 
-    public String Text()
-    {
+    public String Text() {
         return NativeSeleniumElement().getText();
     }
 
-    public String Value()
-    {
+    public String Value() {
         return NativeSeleniumElement().getAttribute("value");
     }
 
-    public String Name()
-    {
+    public String Name() {
         return NativeSeleniumElement().getAttribute("name");
     }
 
-    public String SelectedOption()
-    {
+    public String SelectedOption() {
         WebElement option = Iterators.FirstOrDefault(NativeSeleniumElement().findElements(By.tagName("option")), new Predicate<WebElement>() {
             @Override
             public boolean apply(@Nullable WebElement e) {
@@ -55,35 +47,26 @@ class SeleniumElement implements ElementFound
         return option == null ? null : option.getText();
     }
 
-    public boolean Selected()
-    {
+    public boolean Selected() {
         return NativeSeleniumElement().isSelected();
     }
 
-    public Object Native()
-    {
+    public Object Native() {
         return nativeElement;
     }
 
-    public boolean Stale()
-    {
-        try
-        {
+    public boolean Stale() {
+        try {
             NativeSeleniumElement().findElement(By.xpath("."));
             return !NativeSeleniumElement().isDisplayed();
-        }
-        catch (StaleElementReferenceException ex)
-        {
+        } catch (StaleElementReferenceException ex) {
             return true;
-        }
-        catch (WebDriverException ex)
-        {
+        } catch (WebDriverException ex) {
             return true;
         }
     }
 
-    public String Attribute(String attributeName)
-    {
+    public String Attribute(String attributeName) {
         return NativeSeleniumElement().getAttribute(attributeName);
     }
 }

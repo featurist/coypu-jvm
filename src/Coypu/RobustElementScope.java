@@ -6,17 +6,15 @@ import Coypu.Robustness.RobustWrapper;
 
 import java.util.concurrent.*;
 
-public class RobustElementScope extends ElementScope
-{
+public class RobustElementScope extends ElementScope {
     protected final Options options;
 
-    public RobustElementScope(ElementFinder elementFinder, DriverScope outerScope, Options options)
-    {
+    public RobustElementScope(ElementFinder elementFinder, DriverScope outerScope, Options options) {
         super(elementFinder, outerScope);
         this.options = options;
     }
 
-    public ElementFound Now()  {
+    public ElementFound Now() {
         outerScope.Now();
         return robustWrapper.Robustly(new ElementQuery(this, options));
     }

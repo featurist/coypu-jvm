@@ -14,8 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.*;
 
-public class SeleniumWebDriver implements Driver
-{
+public class SeleniumWebDriver implements Driver {
     private Browser browser;
     private boolean disposed;
 
@@ -27,8 +26,7 @@ public class SeleniumWebDriver implements Driver
         return selenium.getCurrentUrl();
     }
 
-    public ElementFound Window()
-    {
+    public ElementFound Window() {
         return new WindowHandle(selenium, selenium.getWindowHandle());
     }
 
@@ -49,13 +47,12 @@ public class SeleniumWebDriver implements Driver
         this.browser = browser;
     }
 
-    protected SeleniumWebDriver(RemoteWebDriver webDriver)
-    {
+    protected SeleniumWebDriver(RemoteWebDriver webDriver) {
         selenium = webDriver;
         xPath = new XPath();
         elementFinder = new ElementFinder(xPath);
         fieldFinder = new FieldFinder(elementFinder, xPath);
-        iframeFinder = new IFrameFinder(selenium, elementFinder,xPath);
+        iframeFinder = new IFrameFinder(selenium, elementFinder, xPath);
         textMatcher = new TextMatcher();
         buttonFinder = new ButtonFinder(elementFinder, textMatcher, xPath);
         sectionFinder = new SectionFinder(elementFinder, textMatcher);
@@ -64,47 +61,46 @@ public class SeleniumWebDriver implements Driver
         optionSelector = new OptionSelector();
     }
 
-    public Object Native()
-    {
+    public Object Native() {
         return Window().Native();
     }
 
-    public ElementFound FindField(String locator, DriverScope scope)  {
-        return BuildElement(fieldFinder.FindField(locator,scope), "No such field: " + locator);
+    public ElementFound FindField(String locator, DriverScope scope) {
+        return BuildElement(fieldFinder.FindField(locator, scope), "No such field: " + locator);
     }
 
-    public ElementFound FindButton(String locator, DriverScope scope)  {
+    public ElementFound FindButton(String locator, DriverScope scope) {
         return BuildElement(buttonFinder.FindButton(locator, scope), "No such button: " + locator);
     }
 
-    public ElementFound FindIFrame(String locator, DriverScope scope)  {
+    public ElementFound FindIFrame(String locator, DriverScope scope) {
         WebElement element = iframeFinder.FindIFrame(locator, scope);
 
         if (element == null)
             throw new MissingHtmlException("Failed to find frame: " + locator);
 
-        return new SeleniumFrame(element,selenium);
+        return new SeleniumFrame(element, selenium);
     }
 
-    public ElementFound FindLink(String linkText, DriverScope scope)  {
+    public ElementFound FindLink(String linkText, DriverScope scope) {
         return BuildElement(Iterators.FirstOrDefault(Find(By.linkText(linkText), scope), scope), "No such link: " + linkText);
     }
 
-    public ElementFound FindId(String id,DriverScope scope )  {
+    public ElementFound FindId(String id, DriverScope scope) {
         return BuildElement(Iterators.FirstOrDefault(Find(By.id(id), scope), scope), "Failed to find id: " + id);
     }
 
-    public ElementFound FindFieldset(String locator, DriverScope scope)  {
-        
-        WebElement fieldset = Iterators.FirstOrDefault(Find(By.xpath(xPath.Format(".//fieldset[legend[text() = %1$s]]", locator)),scope),scope);
-        
+    public ElementFound FindFieldset(String locator, DriverScope scope) {
+
+        WebElement fieldset = Iterators.FirstOrDefault(Find(By.xpath(xPath.Format(".//fieldset[legend[text() = %1$s]]", locator)), scope), scope);
+
         if (fieldset == null)
-            fieldset = Iterators.FirstOrDefault(Find(By.id(locator),scope),tagNameMatches("fieldset"), scope);
+            fieldset = Iterators.FirstOrDefault(Find(By.id(locator), scope), tagNameMatches("fieldset"), scope);
 
         return BuildElement(fieldset, "Failed to find fieldset: " + locator);
     }
-    
-    public Predicate<WebElement> tagNameMatches(final String tagName){
+
+    public Predicate<WebElement> tagNameMatches(final String tagName) {
         return new Predicate<WebElement>() {
             @Override
             public boolean apply(@Nullable WebElement e) {
@@ -113,25 +109,25 @@ public class SeleniumWebDriver implements Driver
         };
     }
 
-    public ElementFound FindSection(String locator, DriverScope scope)  {
-        return BuildElement(sectionFinder.FindSection(locator,scope), "Failed to find section: " + locator);
+    public ElementFound FindSection(String locator, DriverScope scope) {
+        return BuildElement(sectionFinder.FindSection(locator, scope), "Failed to find section: " + locator);
     }
 
-    public ElementFound FindCss(String cssSelector,DriverScope scope)  {
+    public ElementFound FindCss(String cssSelector, DriverScope scope) {
         return BuildElement(Iterators.FirstOrDefault(Find(By.cssSelector(cssSelector), scope), scope), "No element found by css: " + cssSelector);
     }
 
-    public ElementFound FindXPath(String xpath, DriverScope scope)  {
-        return BuildElement(Iterators.FirstOrDefault(Find(By.xpath(xpath), scope), scope),"No element found by xpath: " + xpath);
+    public ElementFound FindXPath(String xpath, DriverScope scope) {
+        return BuildElement(Iterators.FirstOrDefault(Find(By.xpath(xpath), scope), scope), "No element found by xpath: " + xpath);
     }
 
-    public List<ElementFound> FindAllCss(String cssSelector, DriverScope scope)  {
+    public List<ElementFound> FindAllCss(String cssSelector, DriverScope scope) {
         ArrayList<WebElement> allVisible = Iterators.AllVisible(Find(By.cssSelector(cssSelector), scope), scope);
 
         return asElementsFound(allVisible);
     }
 
-    public List<ElementFound> FindAllXPath(String xpath, DriverScope scope)  {
+    public List<ElementFound> FindAllXPath(String xpath, DriverScope scope) {
         ArrayList<WebElement> allVisible = Iterators.AllVisible(Find(By.xpath(xpath), scope), scope);
 
         return asElementsFound(allVisible);
@@ -145,68 +141,63 @@ public class SeleniumWebDriver implements Driver
         return elements;
     }
 
-    private Iterable<WebElement> Find(By by, DriverScope scope)  {
+    private Iterable<WebElement> Find(By by, DriverScope scope) {
         return elementFinder.Find(by, scope);
     }
 
-    private ElementFound BuildElement(WebElement element, String failureMessage)  {
+    private ElementFound BuildElement(WebElement element, String failureMessage) {
         if (element == null)
             throw new MissingHtmlException(failureMessage);
 
         return BuildElement(element);
     }
 
-    private SeleniumElement BuildElement(WebElement element)
-    {
+    private SeleniumElement BuildElement(WebElement element) {
         return new SeleniumElement(element);
     }
 
-    public boolean HasContent(String text, DriverScope scope)  {
+    public boolean HasContent(String text, DriverScope scope) {
         return GetContent(scope).contains(text);
     }
 
-    public boolean HasContentMatch(Pattern pattern, DriverScope scope)  {
+    public boolean HasContentMatch(Pattern pattern, DriverScope scope) {
         return pattern.matcher(GetContent(scope)).find();
     }
 
-    private String GetContent(DriverScope scope)  {
+    private String GetContent(DriverScope scope) {
         SearchContext seleniumScope = elementFinder.SeleniumScope(scope);
         return seleniumScope instanceof RemoteWebDriver
-                   ? GetText(By.cssSelector("body"), seleniumScope)
-                   : GetText(By.xpath("."), seleniumScope);
+                ? GetText(By.cssSelector("body"), seleniumScope)
+                : GetText(By.xpath("."), seleniumScope);
     }
 
-    private String GetText(By xpath, SearchContext seleniumScope)
-    {   
+    private String GetText(By xpath, SearchContext seleniumScope) {
         String pageText = seleniumScope.findElement(xpath).getText();
         return NormalizeCRLFBetweenBrowserImplementations(pageText);
     }
 
-    public boolean HasCss(String cssSelector, DriverScope scope)  {
-        return Iterators.AllVisible(Find(By.cssSelector(cssSelector), scope),scope).size() > 0;
+    public boolean HasCss(String cssSelector, DriverScope scope) {
+        return Iterators.AllVisible(Find(By.cssSelector(cssSelector), scope), scope).size() > 0;
     }
 
-    public boolean HasXPath(String xpath, DriverScope scope)  {
-        return Iterators.AllVisible(Find(By.xpath(xpath), scope),scope).size() > 0;
+    public boolean HasXPath(String xpath, DriverScope scope) {
+        return Iterators.AllVisible(Find(By.xpath(xpath), scope), scope).size() > 0;
     }
 
-    public boolean HasDialog(String withText, DriverScope scope)  {
+    public boolean HasDialog(String withText, DriverScope scope) {
         elementFinder.SeleniumScope(scope);
         return dialogs.HasDialog(withText);
     }
 
-    public void Visit(String url) 
-    {
+    public void Visit(String url) {
         selenium.navigate().to(url);
     }
 
-    public void Click(Element element) 
-    {
+    public void Click(Element element) {
         SeleniumElement(element).click();
     }
 
-    public void Hover(Element element)
-    {
+    public void Hover(Element element) {
         mouseControl.Hover(element);
     }
 
@@ -218,26 +209,21 @@ public class SeleniumWebDriver implements Driver
 //        }
 //    }
 
-    public ElementFound FindWindow(String titleOrName, DriverScope scope)  {
+    public ElementFound FindWindow(String titleOrName, DriverScope scope) {
         return new WindowHandle(selenium, FindWindowHandle(titleOrName));
     }
 
-    private String FindWindowHandle(String titleOrName)  {
+    private String FindWindowHandle(String titleOrName) {
         String currentHandle = GetCurrentWindowHandle();
         String matchingWindowHandle = null;
 
-        try
-        {
+        try {
             selenium.switchTo().window(titleOrName);
             matchingWindowHandle = selenium.getWindowHandle();
-        }
-        catch (NoSuchWindowException ex)
-        {
-            for (String windowHandle : selenium.getWindowHandles())
-            {
+        } catch (NoSuchWindowException ex) {
+            for (String windowHandle : selenium.getWindowHandles()) {
                 selenium.switchTo().window(windowHandle);
-                if (windowHandle.equals(titleOrName) || selenium.getTitle().equals(titleOrName))
-                {
+                if (windowHandle.equals(titleOrName) || selenium.getTitle().equals(titleOrName)) {
                     matchingWindowHandle = windowHandle;
                     break;
                 }
@@ -251,97 +237,83 @@ public class SeleniumWebDriver implements Driver
         return matchingWindowHandle;
     }
 
-    private String GetCurrentWindowHandle()
-    {
-        try
-        {
+    private String GetCurrentWindowHandle() {
+        try {
             return selenium.getWindowHandle();
-        }
-        catch (Exception ex) // was InvalidOperationException in c#
-                
+        } catch (Exception ex) // was InvalidOperationException in c#
+
         {
             return null;
         }
     }
 
-    public void Set(Element element, String value) 
-    {
+    public void Set(Element element, String value) {
         WebElement seleniumElement = SeleniumElement(element);
 
-        try
-        {
+        try {
             seleniumElement.clear();
-        }
-        catch (InvalidElementStateException ex) // Non user-editable elements (file inputs) - chrome/IE
+        } catch (InvalidElementStateException ex) // Non user-editable elements (file inputs) - chrome/IE
         {
-        }
-        catch(WebDriverException ex)  // Non user-editable elements (file inputs) - firefox
+        } catch (WebDriverException ex)  // Non user-editable elements (file inputs) - firefox
         {
         }
         seleniumElement.sendKeys(value);
     }
 
-    public void Select(Element element, String option)  {
+    public void Select(Element element, String option) {
         optionSelector.Select(element, option);
     }
 
-    public void AcceptModalDialog(DriverScope scope)  {
+    public void AcceptModalDialog(DriverScope scope) {
         elementFinder.SeleniumScope(scope);
         dialogs.AcceptModalDialog();
     }
 
-    public void CancelModalDialog(DriverScope scope)  {
+    public void CancelModalDialog(DriverScope scope) {
         elementFinder.SeleniumScope(scope);
         dialogs.CancelModalDialog();
     }
 
-    public void Check(Element field)
-    {
+    public void Check(Element field) {
         WebElement seleniumElement = SeleniumElement(field);
 
         if (!seleniumElement.isSelected())
             seleniumElement.click();
     }
 
-    public void Uncheck(Element field)
-    {
+    public void Uncheck(Element field) {
         WebElement seleniumElement = SeleniumElement(field);
 
         if (seleniumElement.isSelected())
             seleniumElement.click();
     }
 
-    public void Choose(Element field)
-    {
+    public void Choose(Element field) {
         SeleniumElement(field).click();
     }
 
-    public String ExecuteScript(String javascript, DriverScope scope)  {
+    public String ExecuteScript(String javascript, DriverScope scope) {
         elementFinder.SeleniumScope(scope);
         Object result = selenium.executeScript(javascript);
         return result == null ? null : result.toString();
     }
 
-    private String NormalizeCRLFBetweenBrowserImplementations(String text)
-    {
+    private String NormalizeCRLFBetweenBrowserImplementations(String text) {
         if (selenium instanceof ChromeDriver) // Which adds extra whitespace around CRLF
             text = StripWhitespaceAroundCRLFs(text);
 
         return Pattern.compile("(\r\n)+").matcher(text).replaceAll("\r\n");
     }
 
-    private String StripWhitespaceAroundCRLFs(String pageText)
-    {
+    private String StripWhitespaceAroundCRLFs(String pageText) {
         return Pattern.compile("\\s*\r\n\\s*").matcher(pageText).replaceAll("\r\n");
     }
 
-    private WebElement SeleniumElement(Element element)
-    {
+    private WebElement SeleniumElement(Element element) {
         return ((WebElement) element.Native());
     }
 
-    public void Dispose()
-    {
+    public void Dispose() {
         if (selenium == null)
             return;
 
@@ -352,13 +324,11 @@ public class SeleniumWebDriver implements Driver
         disposed = true;
     }
 
-    private void AcceptAnyAlert()
-    {
-        try
-        {
+    private void AcceptAnyAlert() {
+        try {
             selenium.switchTo().alert().accept();
+        } catch (WebDriverException ex) {
         }
-        catch (WebDriverException ex){}
 //        catch (KeyNotFoundException){} // Chrome
 //        catch (InvalidOperationException){}
     }

@@ -3,16 +3,13 @@ package Coypu;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class FullyQualifiedUrlBuilder implements UrlBuilder
-{
-    public String GetFullyQualifiedUrl(String virtualPath, Configuration configuration)
-    {
+public class FullyQualifiedUrlBuilder implements UrlBuilder {
+    public String GetFullyQualifiedUrl(String virtualPath, Configuration configuration) {
         try {
             new URI(virtualPath);
             return virtualPath;
-        }
-        catch (URISyntaxException ex) {
-            virtualPath = virtualPath.replaceFirst("/","");
+        } catch (URISyntaxException ex) {
+            virtualPath = virtualPath.replaceFirst("/", "");
             String scheme = configuration.SSL ? "https" : "http";
 
             return configuration.Port == 80

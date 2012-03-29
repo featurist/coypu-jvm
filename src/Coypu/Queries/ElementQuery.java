@@ -2,19 +2,16 @@ package Coypu.Queries;
 
 import Coypu.*;
 
-public class ElementQuery extends DriverScopeQuery<ElementFound>
-{
-    public ElementQuery(DriverScope driverScope, Options options)
-    {
+public class ElementQuery extends DriverScopeQuery<ElementFound> {
+    public ElementQuery(DriverScope driverScope, Options options) {
         super(driverScope, options);
     }
 
-    public Object ExpectedResult()
-    {
+    public Object ExpectedResult() {
         return null;
     }
 
-    public void Run()  {
+    public void Run() {
         SetResult(DriverScope().FindElement());
     }
 }

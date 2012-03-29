@@ -11,8 +11,7 @@ import Coypu.Robustness.Waiter;
 /// <summary>
 /// A browser session
 /// </summary>
-public class BrowserSession extends BrowserWindow
-{
+public class BrowserSession extends BrowserWindow {
 
     private boolean wasDisposed;
     //private final RestrictedResourceDownloader restrictedResourceDownloader;
@@ -21,16 +20,14 @@ public class BrowserSession extends BrowserWindow
     /// A new browser session. Control the lifecycle of this session with using{} / session.Dispose()
     /// </summary>
     /// <returns>The new session with default configuration </returns>
-    public BrowserSession()
-    {
+    public BrowserSession() {
         this(new Configuration());
     }
 
     /// <summary>
     /// The native driver for the Coypu.Driver / browser combination you supplied. E.g. for SeleniumWebDriver + Firefox it will currently be a OpenQA.Selenium.Firefox.FirefoxDriver.
     /// </summary>
-    public Object Native()
-    {
+    public Object Native() {
         return driver.Native();
     }
 
@@ -39,8 +36,7 @@ public class BrowserSession extends BrowserWindow
     /// </summary>
     /// <param name="configuration">Your configuration for this session</param>
     /// <returns>The new session</returns>
-    public BrowserSession(Configuration configuration)
-    {
+    public BrowserSession(Configuration configuration) {
         this(new ActivatorDriverFactory(),
                 configuration,
                 new RetryUntilTimeoutRobustWrapper(),
@@ -51,14 +47,12 @@ public class BrowserSession extends BrowserWindow
 
     public BrowserSession(DriverFactory driver, Configuration configuration, RobustWrapper robustWrapper, Waiter waiter,
                           //RestrictedResourceDownloader restrictedResourceDownloader,
-                          UrlBuilder urlBuilder)
-    {
+                          UrlBuilder urlBuilder) {
         super(configuration, null, driver.NewWebDriver(configuration.Driver, configuration.Browser), robustWrapper, waiter, urlBuilder);
         //this.restrictedResourceDownloader = restrictedResourceDownloader;
     }
 
-    public Driver Driver()
-    {
+    public Driver Driver() {
         return driver;
     }
 
@@ -70,8 +64,7 @@ public class BrowserSession extends BrowserWindow
     /// <summary>
     /// Disposes the current session, closing any open browser.
     /// </summary>
-    public void Dispose()
-    {
+    public void Dispose() {
         if (wasDisposed)
             return;
 
@@ -87,14 +80,16 @@ public class BrowserSession extends BrowserWindow
     /// </summary>
     /// <param name="resource"> The location of the resource to download</param>
     /// <param name="saveAs">Path to save the file to</param>
-    public void SaveWebResource(String resource, String saveAs)
-    {
+    public void SaveWebResource(String resource, String saveAs) {
         //restrictedResourceDownloader.SetCookies(driver.GetBrowserCookies());
         //restrictedResourceDownloader.DownloadFile(urlBuilder.GetFullyQualifiedUrl(resource, configuration), saveAs);
     }
 
-    public BrowserWindow FindWindow(String titleOrName, Options options)
-    {
+    public BrowserWindow FindWindow(String titleOrName) {
+        return FindWindow(titleOrName,configuration);
+    }
+
+    public BrowserWindow FindWindow(String titleOrName, Options options) {
         return new RobustWindowScope(driver, configuration, robustWrapper, waiter, urlBuilder, SetOptions(options), new WindowFinder(driver, titleOrName, this));
     }
 }

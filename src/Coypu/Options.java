@@ -1,17 +1,16 @@
 package Coypu;
+
 /// <summary>
 /// Options for how Coypu interacts with the browser.
 /// </summary>
-public class Options
-{
+public class Options {
     final long DEFAULT_TIMEOUT_MILLISECONDS = 1000;
     final long DEFAULT_INTERVAL_MILLISECONDS = 100;
 
     /// <summary>
     /// New default options
     /// </summary>
-    public Options()
-    {
+    public Options() {
         Timeout = TimeSpan.FromMilliseconds(DEFAULT_TIMEOUT_MILLISECONDS);
         RetryInterval = TimeSpan.FromMilliseconds(DEFAULT_INTERVAL_MILLISECONDS);
         WaitBeforeClick = TimeSpan.Zero();

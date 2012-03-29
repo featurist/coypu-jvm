@@ -4,14 +4,12 @@ import Coypu.*;
 import Coypu.Finders.ElementFinder;
 import Coypu.Robustness.Waiter;
 
-public class WaitThenClick extends DriverAction
-{
+public class WaitThenClick extends DriverAction {
     private Options options;
     private Waiter waiter;
     private ElementFinder elementFinder;
 
-    public WaitThenClick(Driver driver, Options options, Waiter waiter, ElementFinder elementFinder)
-    {
+    public WaitThenClick(Driver driver, Options options, Waiter waiter, ElementFinder elementFinder) {
         super(driver, options);
 
         this.options = options;
@@ -19,8 +17,7 @@ public class WaitThenClick extends DriverAction
         this.elementFinder = elementFinder;
     }
 
-    public void Act()
-    {
+    public void Act() {
         ElementFound element = elementFinder.Find();
         waiter.Wait(options.WaitBeforeClick);
         Driver.Click(element);

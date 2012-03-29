@@ -1,7 +1,6 @@
 package Coypu;
 
-public class TimeSpan
-{
+public class TimeSpan {
     private final long milliseconds;
 
     private TimeSpan(long milliseconds) {
@@ -9,23 +8,19 @@ public class TimeSpan
         this.milliseconds = milliseconds;
     }
 
-    public static TimeSpan FromSeconds(long seconds)
-    {
+    public static TimeSpan FromSeconds(long seconds) {
         return new TimeSpan(seconds * 1000);
     }
 
-    public static TimeSpan FromMilliseconds(long milliseconds)
-    {
+    public static TimeSpan FromMilliseconds(long milliseconds) {
         return new TimeSpan(milliseconds);
     }
 
-    public static TimeSpan Zero()
-    {
+    public static TimeSpan Zero() {
         return new TimeSpan(0);
     }
 
-    public long getMilliseconds()
-    {
+    public long getMilliseconds() {
         return milliseconds;
     }
 }

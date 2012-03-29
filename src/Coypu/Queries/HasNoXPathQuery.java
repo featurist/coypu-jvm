@@ -2,22 +2,23 @@ package Coypu.Queries;
 
 import Coypu.*;
 
-public class HasNoXPathQuery extends DriverScopeQuery<Boolean>
-{
+public class HasNoXPathQuery extends DriverScopeQuery<Boolean> {
     private final Driver driver;
     private final String xpath;
-    public Object ExpectedResult(){ return true; }
+
+    public Object ExpectedResult() {
+        return true;
+    }
 
 
-    public HasNoXPathQuery(Driver driver, DriverScope scope, String xpath, Options options)
-    {
+    public HasNoXPathQuery(Driver driver, DriverScope scope, String xpath, Options options) {
         super(scope, options);
 
         this.driver = driver;
         this.xpath = xpath;
     }
 
-    public void Run()  {
+    public void Run() {
         SetResult(!driver.HasXPath(xpath, DriverScope()));
     }
 }

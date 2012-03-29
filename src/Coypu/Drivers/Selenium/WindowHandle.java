@@ -6,68 +6,54 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-class WindowHandle implements ElementFound
-{
+class WindowHandle implements ElementFound {
     private final RemoteWebDriver selenium;
     private final String windowHandle;
 
-    public WindowHandle(RemoteWebDriver selenium, String windowHandle)
-    {
+    public WindowHandle(RemoteWebDriver selenium, String windowHandle) {
         this.selenium = selenium;
         this.windowHandle = windowHandle;
     }
 
-    public String Id()
-    {
+    public String Id() {
         throw new UnsupportedOperationException();
     }
 
-    public String Text()
-    {
-            String currentWindowHandle = selenium.getWindowHandle();
-            try
-            {
-                return ((SearchContext)Native()).findElement(By.cssSelector("body")).getText();
-            }
-            finally
-            {
-                selenium.switchTo().window(currentWindowHandle);
-            }
+    public String Text() {
+        String currentWindowHandle = selenium.getWindowHandle();
+        try {
+            return ((SearchContext) Native()).findElement(By.cssSelector("body")).getText();
+        } finally {
+            selenium.switchTo().window(currentWindowHandle);
+        }
     }
 
-    public String Value()
-    {
+    public String Value() {
         throw new UnsupportedOperationException();
     }
 
-    public String Name()
-    {
+    public String Name() {
         throw new UnsupportedOperationException();
     }
 
-    public String SelectedOption()
-    {
+    public String SelectedOption() {
         throw new UnsupportedOperationException();
     }
 
-    public boolean Selected()
-    {
+    public boolean Selected() {
         throw new UnsupportedOperationException();
     }
 
-    public Object Native()
-    {
+    public Object Native() {
         selenium.switchTo().window(windowHandle);
         return selenium;
     }
 
-    public boolean Stale()
-    {
+    public boolean Stale() {
         return !selenium.getWindowHandles().contains(windowHandle);
     }
 
-    public String Attribute(String attributeName)
-    {
+    public String Attribute(String attributeName) {
         throw new UnsupportedOperationException();
     }
 }

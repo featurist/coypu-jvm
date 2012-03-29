@@ -7,14 +7,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 import java.rmi.activation.Activator;
 
-public class ActivatorDriverFactory implements DriverFactory
-{
+public class ActivatorDriverFactory implements DriverFactory {
     public static int OpenDrivers;
 
-    public Driver NewWebDriver(Class driverType, Coypu.Drivers.Browser browser)
-    {
-        try
-        {
+    public Driver NewWebDriver(Class driverType, Coypu.Drivers.Browser browser) {
+        try {
             Driver driver = (Driver) driverType.getDeclaredConstructor(Browser.class).newInstance(browser);
 
             OpenDrivers++;

@@ -11,27 +11,24 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import static Coypu.Drivers.Browser.*;
 
-class DriverFactory
-{
+class DriverFactory {
     public RemoteWebDriver NewRemoteWebDriver(Browser browser) throws BrowserNotSupportedException {
         if (browser == Firefox)
-                return new FirefoxDriver();
-        if (browser == InternetExplorer)
-        {
+            return new FirefoxDriver();
+        if (browser == InternetExplorer) {
             DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
             return new InternetExplorerDriver(desiredCapabilities);
         }
         if (browser == Chrome)
-                return new ChromeDriver();
+            return new ChromeDriver();
         if (browser == Android)
-                return new AndroidDriver();
+            return new AndroidDriver();
         if (browser == HtmlUnit)
-                return new RemoteWebDriver(DesiredCapabilities.htmlUnit());
-        if (browser == HtmlUnitWithJavaScript)
-        {
+            return new RemoteWebDriver(DesiredCapabilities.htmlUnit());
+        if (browser == HtmlUnitWithJavaScript) {
             DesiredCapabilities desiredCapabilities = DesiredCapabilities.htmlUnit();
-                desiredCapabilities.setJavascriptEnabled(true);
-                return new RemoteWebDriver(desiredCapabilities);         
+            desiredCapabilities.setJavascriptEnabled(true);
+            return new RemoteWebDriver(desiredCapabilities);
         }
         throw new BrowserNotSupportedException(browser, getClass());
     }

@@ -9,18 +9,17 @@ import org.openqa.selenium.WebElement;
 
 import javax.annotation.Nullable;
 
-class OptionSelector
-{
-    public void Select(Element element, final String option)  {
-        WebElement select = (WebElement)element.Native();
+class OptionSelector {
+    public void Select(Element element, final String option) {
+        WebElement select = (WebElement) element.Native();
 
         WebElement optionToSelect =
-            Iterators.FirstOrDefault(select.findElements(By.tagName("option")),new Predicate<WebElement>() {
-                @Override
-                public boolean apply(@Nullable WebElement e) {
-                    return e.getText().equals(option) || e.getAttribute("value").equals(option);
-                }
-            });
+                Iterators.FirstOrDefault(select.findElements(By.tagName("option")), new Predicate<WebElement>() {
+                    @Override
+                    public boolean apply(@Nullable WebElement e) {
+                        return e.getText().equals(option) || e.getAttribute("value").equals(option);
+                    }
+                });
 
         if (optionToSelect == null)
             throw new MissingHtmlException("No such option: " + option);

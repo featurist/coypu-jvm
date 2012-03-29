@@ -5,8 +5,7 @@ import Coypu.MissingHtmlException;
 import Coypu.Robustness.RobustWrapper;
 import Coypu.TimeSpan;
 
-public class ActionSatisfiesPredicateQuery implements Query<Boolean>
-{
+public class ActionSatisfiesPredicateQuery implements Query<Boolean> {
     private BrowserAction tryThis;
     private Query<Boolean> until;
     private TimeSpan waitBeforeRetry;
@@ -15,18 +14,15 @@ public class ActionSatisfiesPredicateQuery implements Query<Boolean>
     private TimeSpan timeout;
     private Boolean result;
 
-    public TimeSpan RetryInterval()
-    {
+    public TimeSpan RetryInterval() {
         return retryInterval;
     }
 
-    public  TimeSpan Timeout()
-    {
+    public TimeSpan Timeout() {
         return timeout;
     }
 
-    public ActionSatisfiesPredicateQuery(BrowserAction tryThis, Query<Boolean> until,  TimeSpan overallTimeout,  TimeSpan retryInterval,  TimeSpan waitBeforeRetry, RobustWrapper robustWrapper)
-    {
+    public ActionSatisfiesPredicateQuery(BrowserAction tryThis, Query<Boolean> until, TimeSpan overallTimeout, TimeSpan retryInterval, TimeSpan waitBeforeRetry, RobustWrapper robustWrapper) {
         this.tryThis = tryThis;
         this.until = until;
         this.waitBeforeRetry = waitBeforeRetry;
@@ -35,28 +31,23 @@ public class ActionSatisfiesPredicateQuery implements Query<Boolean>
         this.timeout = overallTimeout;
     }
 
-    public void Run()  {
+    public void Run() {
         tryThis.Act();
 
-        try
-        {
+        try {
             robustWrapper.SetOverrideTimeout(waitBeforeRetry);
             until.Run();
-        }
-        finally
-        {
+        } finally {
             robustWrapper.ClearOverrideTimeout();
         }
         this.result = until.Result();
     }
 
-    public Object ExpectedResult()
-    {
+    public Object ExpectedResult() {
         return true;
     }
 
-    public Boolean Result()
-    {
+    public Boolean Result() {
         return result;
     }
 }

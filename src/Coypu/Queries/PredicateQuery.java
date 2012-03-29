@@ -3,19 +3,16 @@ package Coypu.Queries;
 import Coypu.Options;
 import Coypu.TimeSpan;
 
-public abstract class PredicateQuery implements Query<Boolean>
-{
+public abstract class PredicateQuery implements Query<Boolean> {
 
     private TimeSpan timeout;
     private TimeSpan retryInterval;
     protected Boolean result;
 
-    protected PredicateQuery()
-    {
+    protected PredicateQuery() {
     }
 
-    protected PredicateQuery(Options options)
-    {
+    protected PredicateQuery(Options options) {
         this.timeout = options.Timeout;
         this.retryInterval = options.RetryInterval;
     }
@@ -24,24 +21,21 @@ public abstract class PredicateQuery implements Query<Boolean>
         return result;
     }
 
-    public abstract boolean Predicate() ;
+    public abstract boolean Predicate();
 
     public void Run() {
         this.result = Predicate();
     }
 
-    public Object ExpectedResult()
-    {
+    public Object ExpectedResult() {
         return true;
     }
 
-    public TimeSpan Timeout()
-    {
+    public TimeSpan Timeout() {
         return timeout;
     }
 
-    public TimeSpan RetryInterval()
-    {
+    public TimeSpan RetryInterval() {
         return retryInterval;
     }
 }

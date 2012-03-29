@@ -5,8 +5,7 @@ import Coypu.StringJoiner;
 /// <summary>
 /// Helper for formatting XPath queries
 /// </summary>
-public class XPath
-{
+public class XPath {
     /// <summary>
     /// <para>Format an XPath query that uses String values for comparison that may contain single or TimeSpan quotes</para>
     /// <para>Wraps the String in the appropriate quotes or uses concat() to separate them if both are present.</para>
@@ -16,17 +15,15 @@ public class XPath
     /// <param name="value"></param>
     /// <param name="args"></param>
     /// <returns></returns>
-    public String Format(String value, Object... args)
-    {
+    public String Format(String value, Object... args) {
         Object[] literals = new Object[args.length];
-        for(int i = 0; i < args.length; i++) {
+        for (int i = 0; i < args.length; i++) {
             literals[i] = Literal(args[i].toString());
         }
         return String.format(value, literals);
     }
 
-    public String Literal(String value)
-    {
+    public String Literal(String value) {
         if (HasNoDoubleQuotes(value))
             return WrapInDoubleQuotes(value);
 
@@ -36,12 +33,11 @@ public class XPath
         return BuildConcatSeparatingSingleAndDoubleQuotes(value);
     }
 
-    private String BuildConcatSeparatingSingleAndDoubleQuotes(String value)
-    {
+    private String BuildConcatSeparatingSingleAndDoubleQuotes(String value) {
         String[] splitOnDouble = value.split("\"");
         String[] doubleQuotedParts = new String[splitOnDouble.length];
-        
-        for(int i = 0; i < splitOnDouble.length; i++) {
+
+        for (int i = 0; i < splitOnDouble.length; i++) {
             doubleQuotedParts[i] = WrapInDoubleQuotes(splitOnDouble[i]);
         }
 
@@ -50,29 +46,24 @@ public class XPath
         return String.format("concat(%1$s)", TrimEmptyParts(reJoinedWithDoubleQuoteParts));
     }
 
-    private String WrapInSingleQuote(String value)
-    {
+    private String WrapInSingleQuote(String value) {
         return String.format("'%1$s'", value);
     }
 
-    private String WrapInDoubleQuotes(String value)
-    {
-        return String.format("\"%1$s\"",value);
+    private String WrapInDoubleQuotes(String value) {
+        return String.format("\"%1$s\"", value);
     }
 
-    private String TrimEmptyParts(String concatArguments)
-    {
+    private String TrimEmptyParts(String concatArguments) {
         return concatArguments.replace(", \"\"", "")
-                              .replace("\"\", ", "");
+                .replace("\"\", ", "");
     }
 
-    private boolean HasNoSingleQuotes(String value)
-    {
+    private boolean HasNoSingleQuotes(String value) {
         return !value.contains("'");
     }
 
-    private boolean HasNoDoubleQuotes(String value)
-    {
+    private boolean HasNoDoubleQuotes(String value) {
         return !value.contains("\"");
     }
 }

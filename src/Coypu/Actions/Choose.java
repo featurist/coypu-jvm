@@ -1,19 +1,18 @@
 package Coypu.Actions;
+
 import Coypu.*;
 
-public class Choose extends DriverAction
-{
+public class Choose extends DriverAction {
     private DriverScope scope;
     private String locator;
 
-    public Choose(Driver driver, DriverScope scope, String locator, Options options)
-    {
+    public Choose(Driver driver, DriverScope scope, String locator, Options options) {
         super(driver, options);
         this.scope = scope;
         this.locator = locator;
     }
 
-    public void Act()  {
+    public void Act() {
         Driver.Choose(Driver.FindField(locator, scope));
     }
 }

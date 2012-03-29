@@ -7,17 +7,14 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-class MouseControl
-{
+class MouseControl {
     private final WebDriver selenium;
 
-    public MouseControl(RemoteWebDriver selenium)
-    {
+    public MouseControl(RemoteWebDriver selenium) {
         this.selenium = selenium;
     }
 
-    public void Hover(Element element)
-    {
+    public void Hover(Element element) {
         Actions sequenceBuilder = new Actions(selenium);
         Actions actionSequenceBuilder = sequenceBuilder.moveToElement((WebElement) element.Native());
         Action action = actionSequenceBuilder.build();

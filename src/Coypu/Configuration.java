@@ -8,18 +8,16 @@ import java.lang.reflect.Type;
 /// <summary>
 /// Global configuration settings
 /// </summary>
-public class Configuration extends Options
-{
+public class Configuration extends Options {
     final String DEFAULT_APP_HOST = "localhost";
     final int DEFAULT_PORT = 80;
-    
+
     private String appHost;
 
     /// <summary>
     /// New default configuration
     /// </summary>
-    public Configuration()
-    {
+    public Configuration() {
         appHost = DEFAULT_APP_HOST;
         Port = DEFAULT_PORT;
         SSL = false;
@@ -44,13 +42,11 @@ public class Configuration extends Options
     /// <para>The host of the website you are testing, e.g. 'github.com'</para>
     /// <para>Default: localhost</para>
     /// </summary>
-    public String GetAppHost()
-    {
+    public String GetAppHost() {
         return appHost;
     }
 
-    public void SetAppHost(String value)
-    {
+    public void SetAppHost(String value) {
         appHost = value == null ? null : value.replaceAll("/$", "");
     }
 

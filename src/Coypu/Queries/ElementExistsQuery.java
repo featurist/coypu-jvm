@@ -4,26 +4,20 @@ import Coypu.DriverScope;
 import Coypu.MissingHtmlException;
 import Coypu.Options;
 
-public class ElementExistsQuery extends DriverScopeQuery<Boolean>
-{
-    public Object ExpectedResult()
-    {
+public class ElementExistsQuery extends DriverScopeQuery<Boolean> {
+    public Object ExpectedResult() {
         return true;
     }
 
-    public ElementExistsQuery(DriverScope driverScope, Options options)
-    {
+    public ElementExistsQuery(DriverScope driverScope, Options options) {
         super(driverScope, options);
     }
 
     public void Run() {
-        try
-        {
+        try {
             DriverScope().FindElement();
             SetResult(true);
-        }
-        catch (MissingHtmlException ex)
-        {
+        } catch (MissingHtmlException ex) {
             SetResult(false);
         }
     }
