@@ -79,11 +79,11 @@ public class BrowserWindow extends DriverScope {
     /// </summary>
     /// <param name="element">The text field</param>
     /// <returns>With</returns>
-    public FillInWith FillIn(ElementScope element) {
+    public FillInWith FillIn(Element element) {
         return FillIn(element,configuration);
     }
 
-    public FillInWith FillIn(ElementScope element, Options options) {
+    public FillInWith FillIn(Element element, Options options) {
         return new FillInWith(element, driver, robustWrapper, this, SetOptions(options));
     }
 }

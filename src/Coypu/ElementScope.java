@@ -5,7 +5,7 @@ import Coypu.Finders.ElementFinder;
 import Coypu.Queries.ElementExistsQuery;
 import Coypu.Queries.ElementMissingQuery;
 
-public class ElementScope extends DriverScope {
+public class ElementScope extends DriverScope implements Element {
     public ElementScope(ElementFinder elementFinder, DriverScope outer) {
         super(elementFinder, outer);
     }

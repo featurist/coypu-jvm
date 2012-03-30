@@ -6,18 +6,18 @@ public class FillIn extends DriverAction {
     private String locator;
     private DriverScope scope;
     private String value;
-    private ElementScope elementScope;
+    private Element element;
 
-    public FillIn(Driver driver, DriverScope scope, String locator, ElementScope elementScope, String value, Options options) {
+    public FillIn(Driver driver, DriverScope scope, String locator, Element elementScope, String value, Options options) {
         super(driver, options);
         this.locator = locator;
-        this.elementScope = elementScope;
+        this.element = elementScope;
         this.scope = scope;
         this.value = value;
     }
 
     public Element Field() {
-        return elementScope == null ? Driver.FindField(locator, scope) : elementScope.Now();
+        return element == null ? Driver.FindField(locator, scope) : element;
     }
 
     private void BringIntoFocus() {
