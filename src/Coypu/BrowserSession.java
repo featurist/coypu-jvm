@@ -5,6 +5,7 @@ import Coypu.Robustness.RetryUntilTimeoutRobustWrapper;
 import Coypu.Robustness.RobustWrapper;
 import Coypu.Robustness.StopwatchWaiter;
 import Coypu.Robustness.Waiter;
+import Coypu.WebRequests.RestrictedResourceDownloader;
 //import Coypu.WebRequests.RestrictedResourceDownloader;
 //import Coypu.WebRequests.WebClientWithCookies;
 
@@ -14,6 +15,7 @@ import Coypu.Robustness.Waiter;
 public class BrowserSession extends BrowserWindow {
 
     private boolean wasDisposed;
+    private RestrictedResourceDownloader restrictedResourceDownloader;
     //private final RestrictedResourceDownloader restrictedResourceDownloader;
 
     /// <summary>
@@ -41,15 +43,15 @@ public class BrowserSession extends BrowserWindow {
                 configuration,
                 new RetryUntilTimeoutRobustWrapper(),
                 new StopwatchWaiter(),
-                //new WebClientWithCookies(),
+                null, // TODO: Cookies
                 new FullyQualifiedUrlBuilder());
     }
 
     public BrowserSession(DriverFactory driver, Configuration configuration, RobustWrapper robustWrapper, Waiter waiter,
-                          //RestrictedResourceDownloader restrictedResourceDownloader,
+                          RestrictedResourceDownloader restrictedResourceDownloader,
                           UrlBuilder urlBuilder) {
         super(configuration, null, driver.NewWebDriver(configuration.Driver, configuration.Browser), robustWrapper, waiter, urlBuilder);
-        //this.restrictedResourceDownloader = restrictedResourceDownloader;
+        this.restrictedResourceDownloader = restrictedResourceDownloader;
     }
 
     public Driver Driver() {

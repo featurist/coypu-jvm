@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Coypu.Tests.TestDoubles;
 using Coypu.Tests.When_interacting_with_the_browser;

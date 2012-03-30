@@ -1,4 +1,4 @@
-﻿using Coypu.Drivers;
+using Coypu.Drivers;
 using NUnit.Framework;
 
 package Coypu.Tests.When_interacting_with_the_browser

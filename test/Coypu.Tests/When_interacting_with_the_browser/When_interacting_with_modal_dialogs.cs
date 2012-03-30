@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using NUnit.Framework;
 
 package Coypu.Tests.When_interacting_with_the_browser
