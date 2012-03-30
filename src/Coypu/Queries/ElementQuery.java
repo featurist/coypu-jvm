@@ -7,7 +7,7 @@ public class ElementQuery extends DriverScopeQuery<ElementFound> {
         super(driverScope, options);
     }
 
-    public Object ExpectedResult() {
+    public ElementFound ExpectedResult() {
         return null;
     }
 

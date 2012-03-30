@@ -8,7 +8,7 @@ public class HasContentMatchQuery extends DriverScopeQuery<Boolean> {
     private final Driver driver;
     private final Pattern text;
 
-    public Object ExpectedResult() {
+    public Boolean ExpectedResult() {
         return true;
     }
 

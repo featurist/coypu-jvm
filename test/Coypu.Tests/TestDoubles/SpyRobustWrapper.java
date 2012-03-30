@@ -15,25 +15,31 @@ public class SpyRobustWrapper implements RobustWrapper
 
     private Object alwaysReturn;
     private final Dictionary<Object, Object> stubbedQueryResult = new Hashtable<Object, Object>();
-    private final List<Object> queriesRan = new ArrayList<Object>();
+    private final List<Query> queriesRan = new ArrayList<Query>();
     public static final Object NO_EXPECTED_RESULT = new Object();
     private boolean zeroTimeout;
 
-    public <T> List<Query<T>> QueriesRan(Class<Query<T>> type)
+    public <T> List<Query<T>> QueriesRan(Class<T> type)
     {
         return ofType(type);
     }
 
     public List<DriverAction> ActionsRan()
     {
-        return ofType(DriverAction.class);
+        List<DriverAction> queries = new ArrayList<DriverAction>();
+        for (Query query : queriesRan) {
+            if (query instanceof DriverAction)   {
+                queries.add((DriverAction)query);
+            }
+        }
+        return queries;
     }
 
-    private <T> List<T> ofType(Class<T> type) {
-        List<T> queries = new ArrayList<T>();
-        for (Object query : queriesRan) {
-            if (query.getClass().equals(type.getClass()))   {
-                queries.add((T) query);
+    private <T> List<Query<T>> ofType(Class<T> type) {
+        List<Query<T>> queries = new ArrayList<Query<T>>();
+        for (Query query : queriesRan) {
+            if (query.ExpectedResult().getClass().equals(type.getClass()))   {
+                queries.add((Query<T>) query);
             }
         }
         return queries;

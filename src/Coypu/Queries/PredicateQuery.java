@@ -27,7 +27,7 @@ public abstract class PredicateQuery implements Query<Boolean> {
         this.result = Predicate();
     }
 
-    public Object ExpectedResult() {
+    public Boolean ExpectedResult() {
         return true;
     }
 

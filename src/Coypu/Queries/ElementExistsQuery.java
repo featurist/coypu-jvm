@@ -5,7 +5,7 @@ import Coypu.MissingHtmlException;
 import Coypu.Options;
 
 public class ElementExistsQuery extends DriverScopeQuery<Boolean> {
-    public Object ExpectedResult() {
+    public Boolean ExpectedResult() {
         return true;
     }
 

@@ -42,7 +42,7 @@ public class ActionSatisfiesPredicateQuery implements Query<Boolean> {
         this.result = until.Result();
     }
 
-    public Object ExpectedResult() {
+    public Boolean ExpectedResult() {
         return true;
     }
 

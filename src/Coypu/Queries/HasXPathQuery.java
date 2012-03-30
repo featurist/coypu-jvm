@@ -6,7 +6,7 @@ public class HasXPathQuery extends DriverScopeQuery<Boolean> {
     private final Driver driver;
     private final String xpath;
 
-    public Object ExpectedResult() {
+    public Boolean ExpectedResult() {
         return true;
     }
 

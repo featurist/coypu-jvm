@@ -28,7 +28,7 @@ public abstract class DriverScopeQuery<T> implements Query<T> {
 
     public abstract void Run();
 
-    public abstract Object ExpectedResult();
+    public abstract T ExpectedResult();
 
     public T Result() {
         return result;

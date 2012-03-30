@@ -1,4 +1,4 @@
-package Coypu.WebRequests.Cookie;
+package Coypu.WebRequests;
 
 /**
  * Created by IntelliJ IDEA.

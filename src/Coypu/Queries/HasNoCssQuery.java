@@ -12,7 +12,7 @@ public class HasNoCssQuery extends DriverScopeQuery<Boolean> {
         this.cssSelector = cssSelector;
     }
 
-    public Object ExpectedResult() {
+    public Boolean ExpectedResult() {
         return true;
     }
 
