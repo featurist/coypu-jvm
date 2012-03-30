@@ -108,9 +108,9 @@ public class States
 
         try{
             browser.FindState(states,tempOptions);
-            fail("Expected MissingHtmlException");
+            fail("Expected TimeoutException");
         }
-        catch(MissingHtmlException ex) { 
+        catch(TimeoutException ex) {
         }
     }
 }

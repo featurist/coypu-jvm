@@ -19,7 +19,7 @@ public class SpyRobustWrapper implements RobustWrapper
     public static final Object NO_EXPECTED_RESULT = new Object();
     private boolean zeroTimeout;
 
-    public <T> Iterable<Query<T>> QueriesRan(Class<Query<T>> type)
+    public <T> List<Query<T>> QueriesRan(Class<Query<T>> type)
     {
         return ofType(type);
     }

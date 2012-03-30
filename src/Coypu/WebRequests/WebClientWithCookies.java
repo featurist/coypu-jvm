@@ -10,7 +10,7 @@
 //        webRequestCookieInjector = new WebRequestCookieInjector();
 //    }
 //
-//    public void SetCookies(Iterable<Cookie> cookies)
+//    public void SetCookies(List<Cookie> cookies)
 //    {
 //        requestCookies = cookies;
 //    }

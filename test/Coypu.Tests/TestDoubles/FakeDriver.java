@@ -84,7 +84,7 @@ public class FakeDriver implements Driver
         return this.Find(stubbedButtons,locator,scope, ElementFound.class);
     }
 
-    private <T> T Find(Iterable<ScopedStubResult> stubbed, Object locator, DriverScope scope, Class<T> type)
+    private <T> T Find(List<ScopedStubResult> stubbed, Object locator, DriverScope scope, Class<T> type)
     {
         ScopedStubResult scopedStubResult = null;
         for (ScopedStubResult result : stubbed) {
@@ -123,7 +123,7 @@ public class FakeDriver implements Driver
         HoveredElements.add(element);
     }
 
-//    public Iterable<Cookie> GetBrowserCookies()
+//    public List<Cookie> GetBrowserCookies()
 //    {
 //        return stubbedCookies;
 //    }
@@ -187,12 +187,12 @@ public class FakeDriver implements Driver
         stubbedXPathResults.add(new ScopedStubResult(cssSelector, result, scope));
     }
 
-    public void StubAllCss(String cssSelector, Iterable<ElementFound> result, DriverScope scope)
+    public void StubAllCss(String cssSelector, List<ElementFound> result, DriverScope scope)
     {
         stubbedAllCssResults.add(new ScopedStubResult(cssSelector, result, scope));
     }
 
-    public void StubAllXPath(String xpath, Iterable<ElementFound> result, DriverScope scope)
+    public void StubAllXPath(String xpath, List<ElementFound> result, DriverScope scope)
     {
         stubbedAllXPathResults.add(new ScopedStubResult(xpath, result, scope));
     }

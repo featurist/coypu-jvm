@@ -68,6 +68,6 @@ public interface Driver {
 
     void Hover(Element element);
 
-    //Iterable<Cookie> GetBrowserCookies();
+    //List<Cookie> GetBrowserCookies();
     ElementFound FindWindow(String locator, DriverScope scope);
 }

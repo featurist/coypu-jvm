@@ -4,6 +4,7 @@ import Coypu.Actions.BrowserAction;
 import Coypu.Queries.PredicateQuery;
 import Coypu.Queries.Query;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 /// <summary>
@@ -260,9 +261,9 @@ public interface Scope {
     ///
     /// <code>new Options{Timeout = TimeSpan .FromSeconds(60)}</code></param>
     /// <returns>All matching elements</returns>
-    Iterable<ElementFound> FindAllCss(String cssSelector);
+    List<ElementFound> FindAllCss(String cssSelector);
 
-    Iterable<ElementFound> FindAllCss(String cssSelector, Options options);
+    List<ElementFound> FindAllCss(String cssSelector, Options options);
 
     /// <summary>
     /// Find all elements matching an XPath query at the current moment. Does not wait until the <see cref="Configuration.Timeout"/> but returns as soon as the driver does.
@@ -274,9 +275,9 @@ public interface Scope {
     ///
     /// <code>new Options{Timeout = TimeSpan .FromSeconds(60)}</code></param>
     /// <returns>All matching elements</returns>
-    Iterable<ElementFound> FindAllXPath(String xpath);
+    List<ElementFound> FindAllXPath(String xpath);
 
-    Iterable<ElementFound> FindAllXPath(String xpath, Options options);
+    List<ElementFound> FindAllXPath(String xpath, Options options);
 
     /// <summary>
     /// <para>Find the first matching section to appear within the configured timeout.</para>

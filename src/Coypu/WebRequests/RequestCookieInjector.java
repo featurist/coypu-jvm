@@ -1,5 +1,5 @@
 //package Coypu.WebRequests;
 //public interface RequestCookieInjector
 //{
-//    WebRequest InjectCookies(WebRequest httpRequest, Iterable<Cookie> enumerable);
+//    WebRequest InjectCookies(WebRequest httpRequest, List<Cookie> enumerable);
 //}

@@ -1,7 +1,7 @@
 //package Coypu.WebRequests;
 //public class WebRequestCookieInjector
 //{
-//    public WebRequest InjectCookies(WebRequest webRequest, Iterable<Cookie> cookies)
+//    public WebRequest InjectCookies(WebRequest webRequest, List<Cookie> cookies)
 //    {
 //        WebRequest request = webRequest;
 //
@@ -10,7 +10,7 @@
 //                   : request;
 //    }
 //
-//    public static HttpWebRequest AddCookiesToCookieContainer(HttpWebRequest httpRequest, Iterable<Cookie> cookies)
+//    public static HttpWebRequest AddCookiesToCookieContainer(HttpWebRequest httpRequest, List<Cookie> cookies)
 //    {
 //        httpRequest.CookieContainer = new CookieContainer();
 //

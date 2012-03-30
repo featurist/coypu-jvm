@@ -141,7 +141,7 @@ public class SeleniumWebDriver implements Driver {
         return elements;
     }
 
-    private Iterable<WebElement> Find(By by, DriverScope scope) {
+    private List<WebElement> Find(By by, DriverScope scope) {
         return elementFinder.Find(by, scope);
     }
 
@@ -201,7 +201,7 @@ public class SeleniumWebDriver implements Driver {
         mouseControl.Hover(element);
     }
 
-//    public Iterable<Cookie> GetBrowserCookies()
+//    public List<Cookie> GetBrowserCookies()
 //    {
 //        ArrayList<Cookie> elements = new ArrayList<Cookie>();
 //        for (Cookie c : selenium.manage().getCookies()) {

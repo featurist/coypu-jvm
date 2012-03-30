@@ -4,36 +4,37 @@ import com.google.common.base.Predicate;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Iterators {
 
-    public static WebElement FirstOrDefault(Iterable<WebElement> iterable, DriverScope scope) {
-        for (WebElement item : iterable) {
+    public static WebElement FirstOrDefault(List<WebElement> list, DriverScope scope) {
+        for (WebElement item : list) {
             if (IsDisplayed(item, scope))
                 return item;
         }
         return null;
     }
 
-    public static WebElement FirstOrDefault(Iterable<WebElement> iterable, Predicate<WebElement> predicate) {
-        for (WebElement item : iterable) {
+    public static WebElement FirstOrDefault(List<WebElement> list, Predicate<WebElement> predicate) {
+        for (WebElement item : list) {
             if (predicate.apply(item))
                 return item;
         }
         return null;
     }
 
-    public static WebElement FirstOrDefault(Iterable<WebElement> iterable, Predicate<WebElement> predicate, DriverScope scope) {
-        for (WebElement item : iterable) {
+    public static WebElement FirstOrDefault(List<WebElement> list, Predicate<WebElement> predicate, DriverScope scope) {
+        for (WebElement item : list) {
             if (predicate.apply(item) && IsDisplayed(item, scope))
                 return item;
         }
         return null;
     }
 
-    public static ArrayList<WebElement> AllVisible(Iterable<WebElement> iterable, DriverScope scope) {
+    public static ArrayList<WebElement> AllVisible(List<WebElement> list, DriverScope scope) {
         ArrayList<WebElement> allVisible = new ArrayList<WebElement>();
-        for (WebElement item : iterable) {
+        for (WebElement item : list) {
             if (IsDisplayed(item, scope))
                 allVisible.add(item);
         }

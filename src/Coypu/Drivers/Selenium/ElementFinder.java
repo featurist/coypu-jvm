@@ -2,10 +2,11 @@ package Coypu.Drivers.Selenium;
 
 import Coypu.DriverScope;
 import Coypu.Drivers.XPath;
-import Coypu.MissingHtmlException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 class ElementFinder {
     private final XPath xPath;
@@ -14,7 +15,7 @@ class ElementFinder {
         this.xPath = xPath;
     }
 
-    public Iterable<WebElement> Find(By by, DriverScope scope) {
+    public List<WebElement> Find(By by, DriverScope scope) {
         SearchContext context = SeleniumScope(scope);
         return context.findElements(by);
     }

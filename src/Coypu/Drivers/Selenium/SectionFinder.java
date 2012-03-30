@@ -40,7 +40,7 @@ class SectionFinder {
 
     private WebElement FindSectionByHeaderText(String locator, String sectionTag, DriverScope scope) {
         String headersXPath = StringJoiner.join(" or ", headerTags);
-        Iterable<WebElement> withAHeader = elementFinder.Find(By.xpath(String.format(".//%1$s[%2$s]", sectionTag, headersXPath)), scope);
+        List<WebElement> withAHeader = elementFinder.Find(By.xpath(String.format(".//%1$s[%2$s]", sectionTag, headersXPath)), scope);
 
         return Iterators.FirstOrDefault(withAHeader, WhereAHeaderMatches(locator, scope), scope);
     }

@@ -251,7 +251,7 @@ public class DriverScope implements Coypu.Scope {
     }
 
     public ElementScope FindFieldset(String locator) {
-        return FindField(locator,configuration);
+        return FindFieldset(locator,configuration);
     }
 
     public ElementScope FindFieldset(String locator, Options options) {

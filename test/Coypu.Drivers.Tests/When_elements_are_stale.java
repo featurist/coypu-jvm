@@ -14,7 +14,7 @@ public class When_elements_are_stale extends DriverSpecs
     @Test
     public void Stale_element_removed_from_DOM()
     {
-        ElementFound elementWithinScope1 = Driver().FindFieldset("scope 1", Root());
+        ElementFound elementWithinScope1 = Driver().FindFieldset("Scope 1", Root());
         assertThat(elementWithinScope1.Stale(), is(false));
 
         Driver().Click(Driver().FindButton("empty scope1", Root()));
@@ -25,7 +25,7 @@ public class When_elements_are_stale extends DriverSpecs
     @Test
     public void Stale_element_became_invisible()
     {
-        ElementFound elementWithinScope1 = Driver().FindFieldset("scope 1", Root());
+        ElementFound elementWithinScope1 = Driver().FindFieldset("Scope 1", Root());
         assertThat(elementWithinScope1.Stale(), is(false));
 
         Driver().Click(Driver().FindButton("hide scope1", Root()));
