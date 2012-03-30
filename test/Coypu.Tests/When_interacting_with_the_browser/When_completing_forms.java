@@ -1,37 +1,34 @@
-//package Coypu.Tests.When_interacting_with_the_browser;
-//
-//import Coypu.ElementFound;
-//import Coypu.Tests.TestDoubles.StubElement;
-//import org.hamcrest.BaseMatcher;
-//import org.hamcrest.Description;
-//import org.hamcrest.core.Is;
-//import org.junit.Test;
-//
-//import java.util.Arrays;
-//import java.util.Enumeration;
-//
-//import static org.hamcrest.core.Is.is;
-//import static org.junit.Assert.assertThat;
-//
-//public class When_completing_forms extends BrowserInteractionTests
-//{
-//
-//
-//    @Test
-//    public void When_filling_in_a_text_field_It_finds_field_and_sets_value_robustly()
-//    {
-//        ElementFound element = new StubElement();
-//        driver.StubField("Some field locator", element, browserSession);
-//
-//        browserSession.FillIn("Some field locator").With("some value for the field");
-//
-//        assertThat(Arrays.asList(driver.SetFields.elements()).contains(element), is(true));
-//
-//        RunQueryAndCheckTiming();
-//
-//        assertThat(driver.SetFields.Keys(), Has.Member(element));
-//        assertThat(driver.SetFields[element], Is.EqualTo("some value for the field"));
-//    }
+package Coypu.Tests.When_interacting_with_the_browser;
+
+import Coypu.Element;
+import Coypu.Tests.TestDoubles.StubElement;
+import org.junit.Test;
+
+import static Coypu.Tests.When_interacting_with_the_browser.HasMember.hasMember;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNot.not;
+import static org.junit.Assert.assertThat;
+
+public class When_completing_forms extends BrowserInteractionTests
+{
+
+
+    @Test
+    public void When_filling_in_a_text_field_It_finds_field_and_sets_value_robustly()
+    {
+        Element element = new StubElement();
+        driver.StubField("Some field locator", element, browserSession);
+
+        browserSession.FillIn("Some field locator").With("some value for the field");
+
+        assertThat(driver.SetFields.keys(), not(hasMember(element)));
+
+        RunQueryAndCheckTiming();
+
+        assertThat(driver.SetFields.keys(), hasMember(element));
+        assertThat(driver.SetFields.get(element), is(equalTo("some value for the field")));
+    }
 //
 //    @Test
 //    public void When_filling_in_a_field_It_clicks_to_ensure_focus()
@@ -73,7 +70,7 @@
 //        RunQueryAndCheckTiming();
 //
 //        assertThat(driver.SetFields.Keys, Has.Member(element));
-//        assertThat(driver.SetFields[element], Is.EqualTo("some value for the field"));
+//        assertThat(driver.SetFields[element], is(equalTo("some value for the field"));
 //    }
 //
 //    @Test
@@ -89,7 +86,7 @@
 //        RunQueryAndCheckTiming();
 //
 //        assertThat(driver.SelectedOptions.Keys, Has.Member(element));
-//        assertThat(driver.SelectedOptions[element], Is.EqualTo("some option to select"));
+//        assertThat(driver.SelectedOptions[element], is(equalTo("some option to select"));
 //    }
 //
 //    @Test
@@ -136,5 +133,5 @@
 //
 //        assertThat(driver.ChosenElements, Has.Member(element));
 //    }
-//
-//}
+
+}

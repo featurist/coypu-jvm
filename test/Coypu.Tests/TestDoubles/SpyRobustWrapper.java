@@ -1,7 +1,6 @@
 package Coypu.Tests.TestDoubles;
 
 import Coypu.Actions.BrowserAction;
-import Coypu.Actions.DriverAction;
 import Coypu.Queries.PredicateQuery;
 import Coypu.Queries.Query;
 import Coypu.Robustness.RobustWrapper;
@@ -19,34 +18,12 @@ public class SpyRobustWrapper implements RobustWrapper
     public static final Object NO_EXPECTED_RESULT = new Object();
     private boolean zeroTimeout;
 
-    public <T> List<Query<T>> QueriesRan(Class<T> type)
-    {
-        return ofType(type);
-    }
-
-    public List<DriverAction> ActionsRan()
-    {
-        List<DriverAction> queries = new ArrayList<DriverAction>();
-        for (Query query : queriesRan) {
-            if (query instanceof DriverAction)   {
-                queries.add((DriverAction)query);
-            }
-        }
-        return queries;
-    }
-
-    private <T> List<Query<T>> ofType(Class<T> type) {
-        List<Query<T>> queries = new ArrayList<Query<T>>();
-        for (Query query : queriesRan) {
-            if (query.ExpectedResult().getClass().equals(type.getClass()))   {
-                queries.add((Query<T>) query);
-            }
-        }
-        return queries;
-    }
-
     public boolean NoQueriesRan()  {
         return queriesRan.size() == 0;
+    }
+
+    public List<Query> QueriesRan() {
+        return queriesRan;
     }
 
     public <T> T Robustly(Query<T> query)

@@ -13,5 +13,4 @@ public interface Query<TReturn> {
 
     TimeSpan RetryInterval();
 
-
 }

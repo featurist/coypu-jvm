@@ -137,17 +137,17 @@ public class FakeDriver implements Driver
         Visits.add(url);
     }
 
-    public void StubButton(String locator, ElementFound element, DriverScope scope)
+    public void StubButton(String locator, Element element, DriverScope scope)
     {
         stubbedButtons.add(new ScopedStubResult(locator, element, scope));
     }
 
-    public void StubLink(String locator, ElementFound element, DriverScope scope)
+    public void StubLink(String locator, Element element, DriverScope scope)
     {
         stubbedLinks.add(new ScopedStubResult(locator, element, scope));
     }
 
-    public void StubField(String locator, ElementFound element, DriverScope scope)
+    public void StubField(String locator, Element element, DriverScope scope)
     {
         stubbedTextFields.add(new ScopedStubResult(locator, element, scope));
     }
@@ -177,22 +177,22 @@ public class FakeDriver implements Driver
         stubbedHasDialogResults.add(new ScopedStubResult(text, result, scope));
     }
 
-    public void StubCss(String cssSelector, ElementFound result, DriverScope scope)
+    public void StubCss(String cssSelector, Element result, DriverScope scope)
     {
         stubbedCssResults.add(new ScopedStubResult(cssSelector, result, scope));
     }
 
-    public void StubXPath(String cssSelector, ElementFound result, DriverScope scope)
+    public void StubXPath(String cssSelector, Element result, DriverScope scope)
     {
         stubbedXPathResults.add(new ScopedStubResult(cssSelector, result, scope));
     }
 
-    public void StubAllCss(String cssSelector, List<ElementFound> result, DriverScope scope)
+    public void StubAllCss(String cssSelector, List<Element> result, DriverScope scope)
     {
         stubbedAllCssResults.add(new ScopedStubResult(cssSelector, result, scope));
     }
 
-    public void StubAllXPath(String xpath, List<ElementFound> result, DriverScope scope)
+    public void StubAllXPath(String xpath, List<Element> result, DriverScope scope)
     {
         stubbedAllXPathResults.add(new ScopedStubResult(xpath, result, scope));
     }
@@ -306,12 +306,12 @@ public class FakeDriver implements Driver
 
     public List<ElementFound> FindAllCss(String cssSelector, DriverScope scope)
     {
-        return Find(stubbedAllCssResults, cssSelector, scope, new ArrayList<ElementFound>().getClass());
+        return Find(stubbedAllCssResults, cssSelector, scope, new ArrayList<Element>().getClass());
     }
 
     public List<ElementFound> FindAllXPath(String xpath, DriverScope scope)
     {
-        return Find(stubbedAllXPathResults, xpath, scope, new ArrayList<ElementFound>().getClass());
+        return Find(stubbedAllXPathResults, xpath, scope, new ArrayList<Element>().getClass());
     }
 
     public void Check(Element field)
@@ -334,22 +334,22 @@ public class FakeDriver implements Driver
         stubbedExecuteScriptResults.add(new ScopedStubResult(script, scriptReturnValue, scope));
     }
 
-    public void StubFieldset(String locator, ElementFound fieldset, DriverScope scope)
+    public void StubFieldset(String locator, Element fieldset, DriverScope scope)
     {
         stubbedFieldsets.add(new ScopedStubResult(locator, fieldset, scope));
     }
 
-    public void StubSection(String locator, ElementFound section, DriverScope scope)
+    public void StubSection(String locator, Element section, DriverScope scope)
     {
         stubbedSections.add(new ScopedStubResult(locator, section, scope));
     }
 
-    public void StubIFrame(String locator, ElementFound iframe, DriverScope scope)
+    public void StubIFrame(String locator, Element iframe, DriverScope scope)
     {
         stubbedIFrames.add(new ScopedStubResult(locator, iframe,scope));
     }
 
-    public void StubId(String id, ElementFound element, DriverScope scope)
+    public void StubId(String id, Element element, DriverScope scope)
     {
         stubbedIDs.add(new ScopedStubResult(id, element, scope));
     }
@@ -364,7 +364,7 @@ public class FakeDriver implements Driver
         stubbedLocation = location;
     }
 
-    public void StubWindow(String locator, ElementFound window, DriverScope scope)
+    public void StubWindow(String locator, Element window, DriverScope scope)
     {
         stubbedWindows.add(new ScopedStubResult(locator, window, scope));
     }

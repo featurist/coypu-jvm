@@ -3,12 +3,13 @@ package Coypu.Tests.When_interacting_with_the_browser;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Enumeration;
 
 public class HasMember<T> extends BaseMatcher<Enumeration<T>> {
 
     private T expected;
+    private Enumeration<T> actual;
 
     public HasMember(T expected) {
         this.expected = expected;
@@ -20,12 +21,12 @@ public class HasMember<T> extends BaseMatcher<Enumeration<T>> {
 
     @Override
     public boolean matches(Object o) {
-        Enumeration<T> actual = (Enumeration<T>) o;
-        return Arrays.asList(actual).contains(expected);
+        actual = (Enumeration<T>) o;
+        return Collections.list(actual).contains(expected);
     }
 
     @Override
     public void describeTo(Description description) {
-        description.appendText("");
+        description.appendText(expected.toString());
     }
 }

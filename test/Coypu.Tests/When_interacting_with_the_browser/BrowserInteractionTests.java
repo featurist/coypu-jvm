@@ -45,17 +45,17 @@ public abstract class BrowserInteractionTests
 
     protected Object RunQueryAndCheckTiming(TimeSpan timeout)
     {
-        return RunQueryAndCheckTiming(Object.class, timeout);
+        return RunQueryAndCheckTiming(timeout, Object.class);
     }
 
     protected <T> T RunQueryAndCheckTiming(Class<T> type)
     {
-        return RunQueryAndCheckTiming(type, configuration.Timeout);
+        return RunQueryAndCheckTiming(configuration.Timeout, type);
     }
 
-    protected <T> T RunQueryAndCheckTiming(Class<T> type, TimeSpan timeout)
+    protected <T> T RunQueryAndCheckTiming(TimeSpan timeout,Class<T> type)
     {
-        Query<T> query = spyRobustWrapper.QueriesRan(type).get(0);
+        Query<T> query = (Query<T>) spyRobustWrapper.QueriesRan().get(0);
         RunQueryAndCheckTiming(query, timeout);
 
         return query.Result();
@@ -63,7 +63,7 @@ public abstract class BrowserInteractionTests
 
     protected <T> T RunQueryAndCheckTiming(Class<T> type, TimeSpan timeout, int index)
     {
-        Query<T> query = spyRobustWrapper.QueriesRan(type).get(index);
+        Query<T> query = (Query<T>) spyRobustWrapper.QueriesRan().get(index);
         RunQueryAndCheckTiming(query, timeout);
 
         return query.Result();
