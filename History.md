@@ -7,7 +7,7 @@ Release date: 2012-04-01
 Check the README for the latest API
 
 ### Removed
-* Static configuration and static Browser.Session - use new BrowserSession(Configuration) and manage lifetime yourself.
+* Static configuration and static Browser.Session - use new BrowserSession(SessionConfiguration) and manage lifetime yourself.
 
 ### Updated
 * Find methods return ElementScope with deferred execution. This replaces the browser.Within() functionality.

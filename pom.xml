@@ -3,9 +3,29 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>Coypu</groupId>
-    <artifactId>Coypu</artifactId>
-    <version>1.0</version>
+    <groupId>coypu</groupId>
+    <artifactId>coypu</artifactId>
+    <version>0.8.0-SNAPSHOT</version>
+    <name>Coypu</name>
+    <description>Intuitive, robust browser automation</description>
+    <url>https://github.com/coypu/coypu-jvm</url>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <connection>scm:git:git://github.com/coypu/coypu-jvm.git</connection>
+        <developerConnection>scm:git:git@github.com:coypu/coypu-jvm.git</developerConnection>
+        <url>git://github.com/cucumber/cucumber-jvm.git</url>
+    </scm>
     <dependencies>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -17,11 +37,13 @@
             <artifactId>junit</artifactId>
             <version>4.8.1</version>
             <scope>test</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.jmock</groupId>
             <artifactId>jmock-junit4</artifactId>
             <version>2.5.1</version>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 </project>

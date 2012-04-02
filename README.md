@@ -2,10 +2,6 @@
 
 Coypu supports browser automation on the JVM to help make tests readable, robust, fast to write and less tightly coupled to the UI. If your tests are littered with sleeps, retries, complex XPath expressions and IDs dug out of the source with FireBug then Coypu might help.
 
-Coypu is on Nuget:
-
-PM> Install-Package Coypu
-
 Discuss Coypu and get help on the [Google Group](http://groups.google.com/group/coypu)
 
 ## Coypu is
@@ -22,6 +18,8 @@ Check out a [demo of Coypu](http://skillsmatter.com/podcast/open-source-dot-net/
 
 Open a browser session like so:
 
+    import coypu.BrowserSession;
+
 	var browser = new BrowserSession();
 	
 When you are done with the browser session:
@@ -30,40 +28,45 @@ When you are done with the browser session:
 	
 ### Configuration
 
-To configure Coypu pass an instance of `Coypu.Configuration` to the constructor of BrowserSession:
+To configure Coypu pass an instance of `SessionConfiguration` to the constructor of BrowserSession:
 
-    BrowserSession browserSession = new BrowserSession(new Configuration{...});
+    SessionConfiguration sessionConfiguration = new SessionConfiguration();
+    sessionConfiguration.AppHost = "relishapp.com";
+
+    BrowserSession browserSession = new BrowserSession(sessionConfiguration);
 
 #### Website under test
 
 Configure the website you are testing as follows
 
-	Configuration configuration = new Configuration();
-	configuration.AppHost = "autotrader.co.uk";
-	configuration.Port = "5555";
-	configuration.SSL = true|false;
+	SessionConfiguration sessionConfiguration = new SessionConfiguration();
+	sessionConfiguration.AppHost = "autotrader.co.uk";
+	sessionConfiguration.Port = "5555";
+	sessionConfiguration.SSL = true|false;
 
 If you don't specify any of these, Coypu will default to http, localhost and port 80.
 
 #### Driver
 
-Coypu drivers implement the `Coypu.Driver` interface and read the `Configuration.Browser` setting to pick the correct browser.
+Coypu drivers implement the `coypu.Driver` interface and read the `SessionConfiguration.Browser` setting to pick the correct browser.
 
 Choose your driver/browser combination like so:
 
-	configuration.Driver = SeleniumWebDriver.class;
-	configuration.Browser = Drivers.Browser.Firefox;
+	sessionConfiguration.Driver = SeleniumWebDriver.class;
+	sessionConfiguration.Browser = Browser.Firefox;
  
-These settings are the default configuration.
+These settings are the default sessionConfiguration.
 
 ##### Selenium WebDriver
-`Coypu.Drivers.Selenium.SeleniumWebDriver` tracks the latest version of WebDriver and supports Firefox, IE (slowest) and Chrome (Fastest) as the browser. Any other Selenium implementation of RemoteWebDriver can be configured by subclassing `SeleniumWebDriver` and passing an instance of RemoteWebDriver to the base constructor.
+`coypu.Drivers.Selenium.SeleniumWebDriver` tracks the latest version of WebDriver and supports Firefox, IE (slowest) and Chrome (Fastest) as the browser. Any other Selenium implementation of RemoteWebDriver can be configured by subclassing `SeleniumWebDriver` and passing an instance of RemoteWebDriver to the base constructor.
 
 <!--TODO: Maven... -->
 The Selenium Driver is included in the Coypu package.
 
 ###### Firefox
-WebDriver is generally stable with the last but one release of FireFox in my experience
+WebDriver is generally stable with the last but one release of FireFox until they have had time to make a subsequent release, usually 1-2 weeks.
+
+For example, as of 02 Apr 2012 the lastest version of WebDriver was 2.20. Firefox 11 was released after WebDriver 2.20, so you should not upgrade to Firefox 11 until WebDriver 2.21 is released at the earliest.
 
 ###### Internet Explorer
 
@@ -76,9 +79,9 @@ Only IE9 supports CSS & XPath and certain HTML features. The WatiN driver is not
 You will need the chromedriver binary. [Download from google code](http://code.google.com/p/chromedriver/downloads/list)
 
 ###### HtmlUnit
-You can run the headless HtmlUnit driver for Selenium on windows too, you just need to run up HtmlUnit:
+To run the headless HtmlUnit driver for Selenium you just need to run up HtmlUnit:
 
-1. Configure Coypu for HtmlUnit/HtmlUnitWithJavascript: `configuration.Browser = Drivers.Browser.HtmlUnit/HtmlUnitWithJavascript;`
+1. Configure Coypu for HtmlUnit/HtmlUnitWithJavascript: `sessionConfiguration.Browser = Drivers.Browser.HtmlUnit|HtmlUnitWithJavascript;`
 2. Download the Selenium Server (selenium-server-standalone-x.x.x.jar) from [Selenium HQ](http://seleniumhq.org/download)
 3. Run "java -jar selenium-server-standalone-x.x.x.jar"
 
@@ -96,13 +99,13 @@ This driver only supports Internet Explorer as the browser.
 
 You will need to nuget `Install-Package Coypu.Watin` and then configure Coypu like so:
 
-	Configuration.Driver = typeof (Coypu.Drivers.Watin.WatiNDriver);
-	Configuration.Browser = Drivers.Browser.InternetExplorer;
+	sessionConfiguration.Driver = typeof (Coypu.Drivers.Watin.WatiNDriver);
+	sessionConfiguration.Browser = Drivers.Browser.InternetExplorer;
 -->
 
 #### Waits, retries and timeout
 
-Most of the methods in the Coypu DSL are automatically retried on any driver error until a configurable timeout is reached. It just catches exceptions and retries -- mainly the `Coypu.Drivers.MissingHtmlException` that a driver should throw when it cannot find something, but also any internal driver errors that the driver might throw up. 
+Most of the methods in the Coypu DSL are automatically retried on any driver error until a configurable timeout is reached. It just catches exceptions and retries -- mainly the `Drivers.MissingHtmlException` that a driver should throw when it cannot find something, but also any internal driver errors that the driver might throw up.
 
 This is a rather blunt approach that goes well beyond WebDriver's ImplicitWait, for example, but the only truly robust strategy for heavily asynchronous websites, where elements are flying in and out of the DOM constantly, that I have found.
 
@@ -110,12 +113,12 @@ All methods use this wait and retry strategy *except*: `Visit()`, `FindAllCss()`
 
 Setup timeout/retry like so:
 
-	configuration.Timeout = TimeSpan.fromSeconds(1);
-	configuration.RetryInterval = TimeSpan.fromSeconds(0.1);
+	sessionConfiguration.Timeout = TimeSpan.fromSeconds(1);
+	sessionConfiguration.RetryInterval = TimeSpan.fromSeconds(0.1);
 	
-These settings are the default configuration.
+These settings are the default sessionConfiguration.
 
-All methods in the API take an optional final parameter of a `Coypu.Options`. By passing this in you can override these timing settings for just that call.
+All methods in the API take an optional final parameter of a `Options`. By passing this in you can override these timing settings for just that call.
 
 ### Visible elements
 
@@ -127,7 +130,7 @@ What we are really trying to do here is interact with the browser in the way tha
 
 #### However...
 
-If you really need this for some intractable problem where you cannot control the browser without cheating like this, then there is `configuration/options.ConsideringInvisibleElements = true` which overrides this restriction.
+If you really need this for some intractable problem where you cannot control the browser without cheating like this, then there is `sessionConfiguration/options.ConsideringInvisibleElements = true` which overrides this restriction.
 
 ### Missing features
 
@@ -147,7 +150,7 @@ Here are some examples to get you started using Coypu
 	
 	browser.visit("/used-cars")
 	
-If you need to step away and visit a site outside of the `Configuration.AppHost` then you can use a fully qualified Uri:
+If you need to step away and visit a site outside of the `SessionConfiguration.AppHost` then you can use a fully qualified Uri:
 
 	browser.visit("https://gmail.com")
 	browser.visit("file:///C:/users/adiel/localstuff.htm")
@@ -202,7 +205,7 @@ The last way to click is to pass an element you have already found directly to `
 	
 #### Finding single elements
 
-Find methods return a `Coypu.ElementScope` that is scoped to the first matching element. The locator arguments are case sensitive.
+Find methods return a `ElementScope` that is scoped to the first matching element. The locator arguments are case sensitive.
 
 	ElementScope element = browser.findField("Username");
 	ElementScope element = browser.findButton("GO");
@@ -379,7 +382,7 @@ Interact with the current dialog like so:
   
 #### Varying the timeout
 
-When you need an unusually long (or short) timeout for a particular interaction you can override the timeout just for this call by passing in a `Coypu.Options` like this:
+When you need an unusually long (or short) timeout for a particular interaction you can override the timeout just for this call by passing in a `Options` like this:
 
 	browser.fillIn("Attachment").with(@"c:\coypu\bigfile.mp4");
 	browser.clickButton("Upload");
@@ -406,7 +409,7 @@ Sometimes you just can't predict what state the browser will be in. Not ideal fo
 	  browser.clickLink("Sign out");
 	}
 
-It will return as soon as the first from your list of states is found, and throw if none of the states are found within the `Configuration.Timeout`
+It will return as soon as the first from your list of states is found, and throw if none of the states are found within the `SessionConfiguration.Timeout`
 
 Avoid this:
   
@@ -415,7 +418,7 @@ Avoid this:
 	  ...
 	}
   
-otherwise you will have to wait for the full `Configuration.Timeout` in the negitive case.  
+otherwise you will have to wait for the full `SessionConfiguration.Timeout` in the negitive case.
   
 ## More tricks/tips
 
@@ -440,9 +443,9 @@ This is far from ideal as you are coupling the click to the expected result rath
 
 #### Tell Coypu to wait a short time between first finding links/buttons and clicking them:
 
-	configuration.WaitBeforeClick = TimeSpan.FromMilliseconds(0.2);
+	sessionConfiguration.WaitBeforeClick = TimeSpan.FromMilliseconds(0.2);
 		
-WARNING: Setting this in your driver configuration means adding time to *every* click in your tests. You might be better off doing this just when you need it:
+WARNING: Setting this in your driver sessionConfiguration means adding time to *every* click in your tests. You might be better off doing this just when you need it:
 
     Options options = new Options();
     options.WaitBeforeClick = TimeSpan.FromMilliseconds(0.2);
