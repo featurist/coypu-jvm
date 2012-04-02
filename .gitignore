@@ -3,15 +3,7 @@ bin
 deploy
 deploy/*
 temp/
-_ReSharper.*
-<<<<<<< HEAD
-*.ReSharper.user
-*.csproj.user
-*.sln.*.user
-*.resharper.user
-=======
 *.user
->>>>>>> citizenmatt-watin
 *.resharper
 *.suo
 *.cache
@@ -21,14 +13,13 @@ _ReSharper.*
 examples/self_test
 !gem/bin/*
 gem/pkg/*
-gem/dotnet/Cuke4NukeLog.txt*
 *.gem
 TestResult.xml
 .idea
 *.swp
 Coypu*.zip
-Coypu*.nupkg
 chromedriver.log
 Coypu-*.wrap
 src/packages
 out
+target
