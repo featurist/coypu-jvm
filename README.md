@@ -204,14 +204,6 @@ In this example, due to the way Coypu defers execution of finders, the FindCss w
 
 This introduces the idea of `Scope`. The browser.Find methods return a Scope on which you may perform actions, or make further scoped queries. There is more on scope below.
 	
-The last way to click is to pass an element you have already found directly to `click()`:
-
-	var allToClick = browser.findAllCss("span.clickable")
-	foreach(var element in allToClick)
-	{
-		browser.click(element);
-	}
-	
 #### Finding single elements
 
 Find methods return a `ElementScope` that is scoped to the first matching element. The locator arguments are case sensitive.
@@ -439,7 +431,7 @@ If the driver reports it had found and clicked your element successfully but not
 
     PredicateQuery until = new PredicateQuery() {
         public Boolean run() {
-            return browser.HasContent("Search Results:");
+            return browser.hasContent("Search Results:");
         }
     };
     browser.clickButton("asdf", until, waitBetweenRetries);
