@@ -19,6 +19,7 @@ Add the following dependencies in your [POM](http://maven.apache.org/pom.html):
     <version>0.8.0-SNAPSHOT</version>
     <scope>test</scope>
 </dependency>
+```
 
 ## Using Coypu
 
