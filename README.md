@@ -8,6 +8,10 @@ Discuss Coypu and get help on the [Google Group](http://groups.google.com/group/
 * A robust wrapper for browser automation tools on the JVM, such as Selenium WebDriver that eases automating ajax-heavy websites and reduces coupling to the HTML, CSS & JS
 * A more intuitive DSL for interacting with the browser in the way a human being would, inspired by the ruby framework Capybara - http://github.com/jnicklas/capybara
 
+## Maven
+
+Coypu will be on Maven Central very shortly. You can of course compile a jar from source for now if you want to give it a whirl.
+
 ## Demo
 
 Check out a [demo of Coypu](http://skillsmatter.com/podcast/open-source-dot-net/london-dot-net-user-group-may) from a talk given at Skills Matter in May 2011.
