@@ -8,9 +8,9 @@ Discuss Coypu and get help on the [Google Group](http://groups.google.com/group/
 * A robust wrapper for browser automation tools on the JVM, such as Selenium WebDriver that eases automating ajax-heavy websites and reduces coupling to the HTML, CSS & JS
 * A more intuitive DSL for interacting with the browser in the way a human being would, inspired by the ruby framework Capybara - http://github.com/jnicklas/capybara
 
-### Using Maven with JUnit
+### Maven
 
-Add the following dependencies in your [POM](http://maven.apache.org/pom.html):
+To use Coypu from Maven add the following dependencies in your [POM](http://maven.apache.org/pom.html):
 
 ```xml
 <dependency>
