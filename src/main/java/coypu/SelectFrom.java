@@ -18,11 +18,11 @@ public class SelectFrom {
         this.options = options;
     }
 
-    /// <summary>
-    /// Find the first matching select to appear within the SessionConfiguration.Timeout from which to select this option.
-    /// </summary>
-    /// <param name="locator">The text of the associated label element, the id or name, the last part of the id (for asp.net forms testing)</param>
-    /// <exception cref="T:coypu.MissingHtmlException">Thrown if the element cannot be found</exception>
+   /**
+    *  Find the first matching select to appear within the SessionConfiguration.Timeout from which to select this option.
+    *
+    *  @param   locator    The text of the associated label element, the id or name, the last part of the id (for asp.net forms testing)
+    */
     public void from(String locator) {
         robustWrapper.robustly(new Select(driver, scope, locator, option, options));
     }

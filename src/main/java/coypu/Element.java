@@ -1,47 +1,47 @@
 package coypu;
 
-/// <summary>
-/// An HTML element
-/// </summary>
+/**
+* An HTML element
+*/
 public interface Element {
 
-    /// <summary>
-    /// The value of the 'id' Attribute
-    /// </summary>
+   /**
+    *  The value of the 'id' Attribute
+    */
     String getId();
 
-    /// <summary>
-    /// The inner text of the element
-    /// </summary>
+   /**
+    *  The inner text of the element
+    */
     String getText();
 
-    /// <summary>
-    /// The value of the 'value' Attribute
-    /// </summary>
+   /**
+    *  The value of the 'value' Attribute
+    */
     String getValue();
 
-    /// <summary>
-    /// The value of the 'name' Attribute
-    /// </summary>
+   /**
+    *  The value of the 'name' Attribute
+    */
     String getName();
 
-    /// <summary>
-    /// The selected option - applies to select elements only
-    /// </summary>
+   /**
+    *  The selected option - applies to select elements only
+    */
     String getSelectedOption();
 
-    /// <summary>
-    /// Whether the element is selected
-    /// </summary>
+   /**
+    *  Whether the element is selected
+    */
     boolean getSelected();
 
-    /// <summary>
-    /// The native element returned by your chosen driver
-    /// </summary>
+   /**
+    *  The native element returned by your chosen driver
+    */
     Object getNative();
 
-    /// <summary>
-    /// The attributes of the HTML element
-    /// </summary>
+   /**
+    *  The attributes of the HTML element
+    */
     String getAttribute(String attributeName);
 }

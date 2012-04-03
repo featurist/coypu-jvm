@@ -347,11 +347,11 @@ public class DriverScope implements coypu.Scope {
         return stateFinder.findState(setOptions(options), states);
     }
 
-    /// <summary>
-    /// Try and find this scope now
-    /// </summary>
-    /// <returns></returns>
-    /// <exception cref="T:coypu.MissingHtmlException">Thrown if the element cannot be found</exception>
+   /**
+    *  Try and find this scope now
+    *
+    *  @return
+    */
     public ElementFound now() {
         return findElement();
     }

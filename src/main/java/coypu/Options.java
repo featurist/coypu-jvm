@@ -2,14 +2,14 @@ package coypu;
 
 /// <summary>
 /// Options for how coypu interacts with the browser.
-/// </summary>
+///
 public class Options {
     final long DEFAULT_TIMEOUT_MILLISECONDS = 1000;
     final long DEFAULT_INTERVAL_MILLISECONDS = 100;
 
-    /// <summary>
-    /// New default options
-    /// </summary>
+   /**
+    *  New default options
+    */
     public Options() {
         Timeout = TimeSpan.fromMilliseconds(DEFAULT_TIMEOUT_MILLISECONDS);
         RetryInterval = TimeSpan.fromMilliseconds(DEFAULT_INTERVAL_MILLISECONDS);
@@ -17,28 +17,28 @@ public class Options {
     }
 
 
-    /// <summary>
-    /// <para>When retrying, how long to wait for elements to appear or actions to complete without error.</para>
-    /// <para>Default: 1sec</para>
-    /// </summary>
+   /**
+    *  When retrying, how long to wait for elements to appear or actions to complete without error.
+    *  <p>Default: 1sec
+    */
     public TimeSpan Timeout;
 
-    /// <summary>
-    /// <para>How long to wait between retries</para>
-    /// <para>Default: 100ms</para>
-    /// </summary>
+   /**
+    *  How long to wait between retries
+    *  <p>Default: 100ms
+    */
     public TimeSpan RetryInterval;
 
-    /// <summary>
-    /// <para>How long to wait between finding an element and clicking it.</para>
-    /// <para>Default: zero</para>
-    /// </summary>
+   /**
+    *  How long to wait between finding an element and clicking it.
+    *  <p>Default: zero
+    */
     public TimeSpan WaitBeforeClick;
 
-    /// <summary>
-    /// <para>By default Coypu will exclude any invisible elements, this allows you to override that behaviour</para>
-    /// <para>Default: true</para>
-    /// </summary>
+   /**
+    *  By default Coypu will exclude any invisible elements, this allows you to override that behaviour
+    *  <p>Default: true
+    */
     public boolean ConsiderInvisibleElements;
 }
 

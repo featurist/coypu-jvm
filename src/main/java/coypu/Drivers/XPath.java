@@ -4,17 +4,18 @@ import coypu.StringJoiner;
 
 /// <summary>
 /// Helper for formatting XPath queries
-/// </summary>
+///
 public class XPath {
-    /// <summary>
-    /// <para>Format an XPath query that uses String values for comparison that may contain single or TimeSpan quotes</para>
-    /// <para>Wraps the String in the appropriate quotes or uses concat() to separate them if both are present.</para>
-    /// <para>Usage:</para>
-    /// <code>  new XPath().format(".//element[@attribute1 = %1$s and @attribute2 = %2$s]",inputOne,inputTwo) </code>
-    /// </summary>
-    /// <param name="Value"></param>
-    /// <param name="args"></param>
-    /// <returns></returns>
+   /**
+    *  Format an XPath query that uses String values for comparison that may contain single or TimeSpan quotes
+    *  <p>Wraps the String in the appropriate quotes or uses concat() to separate them if both are present.
+    *  <p>Usage:
+    *  <code>  new XPath().format(".//element[@attribute1 = %1$s and @attribute2 = %2$s]",inputOne,inputTwo) </code>
+    *
+    *  @param   value
+    *  @param   args
+    *  @return
+    */
     public String format(String value, Object... args) {
         Object[] literals = new Object[args.length];
         for (int i = 0; i < args.length; i++) {

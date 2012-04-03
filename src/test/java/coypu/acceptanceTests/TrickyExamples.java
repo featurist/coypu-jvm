@@ -1,7 +1,7 @@
 package coypu.acceptanceTests;
 /// <summary>
 /// Simple examples for each API method - to show usage and check everything is wired up properly
-/// </summary>
+///
 
 import coypu.*;
 import coypu.Drivers.Browser;

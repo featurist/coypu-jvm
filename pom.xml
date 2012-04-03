@@ -5,6 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.featurist</groupId>
     <artifactId>coypu</artifactId>
+    <packaging>pom</packaging>
     <version>0.8.0-SNAPSHOT</version>
     <name>Coypu</name>
     <description>Intuitive, robust browser automation</description>
@@ -46,4 +47,13 @@
             <optional>true</optional>
         </dependency>
     </dependencies>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.8.1</version>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>

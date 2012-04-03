@@ -29,11 +29,11 @@ public class FillInWith {
         this.locator = null;
     }
 
-    /// <summary>
-    /// Supply a value for the text field
-    /// </summary>
-    /// <param name="value">The value to fill in</param>
-    /// <exception cref="T:coypu.MissingHtmlException">Thrown if the element cannot be found</exception>
+   /**
+    *  Supply a value for the text field
+    *
+    *  @param   value    The value to fill in
+    */
     public void with(String value) {
         robustWrapper.robustly(new FillIn(driver, scope, locator, element, value, options));
     }

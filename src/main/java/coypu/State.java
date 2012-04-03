@@ -4,7 +4,7 @@ import coypu.Queries.PredicateQuery;
 
 ///<summary>
 /// A possible state for the current page
-///</summary>
+///
 public abstract class State extends PredicateQuery {
     private boolean conditionWasMet;
 

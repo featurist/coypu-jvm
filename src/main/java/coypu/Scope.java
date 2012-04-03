@@ -9,548 +9,811 @@ import java.util.regex.Pattern;
 
 /// <summary>
 /// The scope for any browser interaction: a browser window, frame or element.
-/// </summary>
+///
 public interface Scope {
-    /// <summary>
-    /// Click a button, input of type button|submit|image or div with the css class "button"
-    /// </summary>
-    /// <param name="locator">The text/value, name or id of the button</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <exception cref="T:coypu.MissingHtmlException">Thrown if the element cannot be found</exception>
+   /**
+    *  Click a button, input of type button|submit|image or div with the css class "button"
+    *
+    *  @param   locator    The text/value, name or id of the button
+    */
     void clickButton(String locator);
-
+    /**
+     *  Click a button, input of type button|submit|image or div with the css class "button"
+     *
+     *  @param   locator    The text/value, name or id of the button
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     */
     void clickButton(String locator, Options options);
 
-    /// <summary>
-    /// Click the first matching link
-    /// </summary>
-    /// <param name="locator">The text of the link</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <exception cref="T:coypu.MissingHtmlException">Thrown if the element cannot be found</exception>
+   /**
+    *  Click the first matching link
+    *
+    *  @param   locator    The text of the link
+    */
     void clickLink(String locator);
-
+    /**
+     *  Click the first matching link
+     *
+     *  @param   locator    The text of the link
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     */
     void clickLink(String locator, Options options);
 
-    /// <summary>
-    /// Find the first input of type button|submit|image or div with the css class "button" to appear within the configured getTimeout .
-    /// </summary>
-    /// <param name="locator">The text/value, name or id of the button</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <returns>A button</returns>
+   /**
+    *  Find the first input of type button|submit|image or div with the css class "button" to appear within the configured getTimeout .
+    *
+    *  @param   locator    The text/value, name or id of the button
+    *  @return                    A button
+    */
     ElementScope findButton(String locator);
-
+    /**
+     *  Find the first input of type button|submit|image or div with the css class "button" to appear within the configured getTimeout .
+     *
+     *  @param   locator    The text/value, name or id of the button
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     *  @return                    A button
+     */
     ElementScope findButton(String locator, Options options);
 
-    /// <summary>
-    /// Find the first matching link to appear within the configured getTimeout
-    /// </summary>
-    /// <param name="locator">The text of the link</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <returns>A link</returns>
+   /**
+    *  Find the first matching link to appear within the configured getTimeout
+    *
+    *  @param   locator    The text of the link
+    *  <p>Override the way Coypu is configured to find elements for this call only.
+    *  <p>E.g. A longer wait:
+    *
+    *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+    *  @return                    A link
+    */
     ElementScope findLink(String locator);
-
+    /**
+     *  Find the first matching link to appear within the configured getTimeout
+     *
+     *  @param   locator    The text of the link
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     *  @return                    A link
+     */
     ElementScope findLink(String locator, Options options);
 
-    /// <summary>
-    /// Find the first form field of any type to appear within the configured getTimeout
-    /// </summary>
-    /// <param name="locator">The text of the associated label element, the id or name, the placeholder text, the value of a radio button, the last part of the id (for asp.net forms testing)</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <returns>A form field</returns>
+   /**
+    *  Find the first form field of any type to appear within the configured getTimeout
+    *
+    *  @param   locator    The text of the associated label element, the id or name, the placeholder text, the value of a radio button, the last part of the id (for asp.net forms testing)
+    *  @return                    A form field
+    */
     ElementScope findField(String locator);
-
+    /**
+     *  Find the first form field of any type to appear within the configured getTimeout
+     *
+     *  @param   locator    The text of the associated label element, the id or name, the placeholder text, the value of a radio button, the last part of the id (for asp.net forms testing)
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     *  @return                    A form field
+     */
     ElementScope findField(String locator, Options options);
 
-    /// <summary>
-    /// Find the first matching text field to appear within the configured getTimeout to fill in.
-    /// </summary>
-    /// <param name="locator">The text of the associated label element, the id or name, the placeholder text, the last part of the id (for asp.net forms testing)</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <returns>With</returns>
-    /// <exception cref="T:coypu.MissingHtmlException">Thrown if the element cannot be found</exception>
+   /**
+    *  Find the first matching text field to appear within the configured getTimeout to fill in.
+    *
+    *  @param   locator    The text of the associated label element, the id or name, the placeholder text, the last part of the id (for asp.net forms testing)
+    *  @return                    With
+    */
     FillInWith fillIn(String locator);
-
+    /**
+     *  Find the first matching text field to appear within the configured getTimeout to fill in.
+     *
+     *  @param   locator    The text of the associated label element, the id or name, the placeholder text, the last part of the id (for asp.net forms testing)
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     *  @return                    With
+     */
     FillInWith fillIn(String locator, Options options);
 
-    /// <summary>
-    /// Select an option from a select element
-    /// </summary>
-    /// <param name="option">The text or value of the option to select</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <returns>From</returns>
-    /// <exception cref="T:coypu.MissingHtmlException">Thrown if the element cannot be found</exception>
+   /**
+    *  Select an option from a select element
+    *
+    *  @param   option    The text or value of the option to select
+    *  @return                    From
+    */
     SelectFrom select(String option);
-
+    /**
+     *  Select an option from a select element
+     *
+     *  @param   option    The text or value of the option to select
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     *  @return                    From
+     */
     SelectFrom select(String option, Options options);
 
-    /// <summary>
-    /// Query whether text appears on the page within the configured getTimeout
-    /// </summary>
-    /// <param name="text">The exact text to find</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <returns>Whether the text appears</returns>
+   /**
+    *  Query whether text appears on the page within the configured getTimeout
+    *
+    *  @param   text    The exact text to find
+    *  @return                    Whether the text appears
+    */
     boolean hasContent(String text);
-
+    /**
+     *  Query whether text appears on the page within the configured getTimeout
+     *
+     *  @param   text    The exact text to find
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     *  @return                    Whether the text appears
+     */
     boolean hasContent(String text, Options options);
 
-    /// <summary>
-    /// Query whether text appears on the page using a regular expression within the configured getTimeout
-    /// </summary>
-    /// <param name="pattern">The regular expression to match</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <returns>Whether the page text matches</returns>
+   /**
+    *  Query whether text appears on the page using a regular expression within the configured getTimeout
+    *
+    *  @param   pattern    The regular expression to match
+    *  @return                    Whether the page text matches
+    */
     boolean hasContentMatch(Pattern pattern);
-
+    /**
+     *  Query whether text appears on the page using a regular expression within the configured getTimeout
+     *
+     *  @param   pattern    The regular expression to match
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     *  @return                    Whether the page text matches
+     */
     boolean hasContentMatch(Pattern pattern, Options options);
 
-    /// <summary>
-    /// Query whether text does not appear on the page. Returns as soon as the text does not appear, or when the <see cref="SessionConfiguration.Timeout"/> is reached.
-    /// </summary>
-    /// <param name="text">The exact text expected not to be found</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <returns>Whether the text does not appear</returns>
+   /**
+    *  Query whether text does not appear on the page. Returns as soon as the text does not appear, or when the <see cref="SessionConfiguration.Timeout"/> is reached.
+    *
+    *  @param   text    The exact text expected not to be found
+    *  @return                    Whether the text does not appear
+    */
     boolean hasNoContent(String text);
-
+    /**
+     *  Query whether text does not appear on the page. Returns as soon as the text does not appear, or when the <see cref="SessionConfiguration.Timeout"/> is reached.
+     *
+     *  @param   text    The exact text expected not to be found
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     *  @return                    Whether the text does not appear
+     */
     boolean hasNoContent(String text, Options options);
 
-    /// <summary>
-    /// Query whether text does not appear on the page using a regular expression. Returns as soon as the text does not appear, or when the <see cref="SessionConfiguration.Timeout"/> is reached.
-    /// </summary>
-    /// <param name="pattern">The regular expression expected not to match</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <returns>Whether the text does not appear</returns>
+   /**
+    *  Query whether text does not appear on the page using a regular expression. Returns as soon as the text does not appear, or when the <see cref="SessionConfiguration.Timeout"/> is reached.
+    *
+    *  @param   pattern    The regular expression expected not to match
+    *  @return                    Whether the text does not appear
+    */
     boolean hasNoContentMatch(Pattern pattern);
-
+    /**
+     *  Query whether text does not appear on the page using a regular expression. Returns as soon as the text does not appear, or when the <see cref="SessionConfiguration.Timeout"/> is reached.
+     *
+     *  @param   pattern    The regular expression expected not to match
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     *  @return                    Whether the text does not appear
+     */
     boolean hasNoContentMatch(Pattern pattern, Options options);
 
-    /// <summary>
-    /// Query whether an element matching a CSS selector appears on the page within the configured getTimeout
-    /// </summary>
-    /// <param name="cssSelector">CSS selector</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <returns>Whether an element appears</returns>
+   /**
+    *  Query whether an element matching a CSS selector appears on the page within the configured getTimeout
+    *
+    *  @param   cssSelector    CSS selector
+    *  @return                    Whether an element appears
+    */
     boolean hasCss(String cssSelector);
-
+    /**
+     *  Query whether an element matching a CSS selector appears on the page within the configured getTimeout
+     *
+     *  @param   cssSelector    CSS selector
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     *  @return                    Whether an element appears
+     */
     boolean hasCss(String cssSelector, Options options);
 
-    /// <summary>
-    /// Query whether an element matching a CSS selector does not appear on the page. Returns as soon as the element does not appear, or when the <see cref="SessionConfiguration.Timeout"/> is reached.
-    /// </summary>
-    /// <param name="cssSelector">CSS selector</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <returns>Whether an element does not appear</returns>
+   /**
+    *  Query whether an element matching a CSS selector does not appear on the page. Returns as soon as the element does not appear, or when the <see cref="SessionConfiguration.Timeout"/> is reached.
+    *
+    *  @param   cssSelector    CSS selector
+    *  @return                    Whether an element does not appear
+    */
     boolean hasNoCss(String cssSelector);
-
+    /**
+     *  Query whether an element matching a CSS selector does not appear on the page. Returns as soon as the element does not appear, or when the <see cref="SessionConfiguration.Timeout"/> is reached.
+     *
+     *  @param   cssSelector    CSS selector
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     *  @return                    Whether an element does not appear
+     */
     boolean hasNoCss(String cssSelector, Options options);
 
-    /// <summary>
-    /// Query whether an element matching an XPath query appears on the page within the configured getTimeout
-    /// </summary>
-    /// <param name="xpath">XPath query</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <returns>Whether an element appears</returns>
+   /**
+    *  Query whether an element matching an XPath query appears on the page within the configured getTimeout
+    *
+    *  @param   xpath    XPath query
+    *  @return                    Whether an element appears
+    */
     boolean hasXPath(String xpath);
-
+    /**
+     *  Query whether an element matching an XPath query appears on the page within the configured getTimeout
+     *
+     *  @param   xpath    XPath query
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     *  @return                    Whether an element appears
+     */
     boolean hasXPath(String xpath, Options options);
 
-    /// <summary>
-    /// Query whether an element matching an XPath query appears on the page. Returns as soon as the element appears, or when the <see cref="SessionConfiguration.Timeout"/> is reached.
-    /// </summary>
-    /// <param name="xpath">XPath query</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <returns>Whether an element appears</returns>
+   /**
+    *  Query whether an element matching an XPath query appears on the page. Returns as soon as the element appears, or when the <see cref="SessionConfiguration.Timeout"/> is reached.
+    *
+    *  @param   xpath    XPath query
+    *  @return                    Whether an element appears
+    */
     boolean hasNoXPath(String xpath);
-
+    /**
+     *  Query whether an element matching an XPath query appears on the page. Returns as soon as the element appears, or when the <see cref="SessionConfiguration.Timeout"/> is reached.
+     *
+     *  @param   xpath    XPath query
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     *  @return                    Whether an element appears
+     */
     boolean hasNoXPath(String xpath, Options options);
 
-    /// <summary>
-    /// Find an element matching a CSS selector
-    /// </summary>
-    /// <param name="cssSelector">CSS selector</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <returns>The first matching element</returns>
+   /**
+    *  Find an element matching a CSS selector
+    *
+    *  @param   cssSelector    CSS selector
+    *  @return                    The first matching element
+    */
     ElementScope findCss(String cssSelector);
-
+    /**
+     *  Find an element matching a CSS selector
+     *
+     *  @param   cssSelector    CSS selector
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     *  @return                    The first matching element
+     */
     ElementScope findCss(String cssSelector, Options options);
 
-    /// <summary>
-    /// Find an element matching an XPath query
-    /// </summary>
-    /// <param name="xpath">XPath query</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <returns>The first matching element</returns>
-    ElementScope findXPath(String xpath);
+   /**
+    *  Find an element matching an XPath query
+    *
+    *  @param   xpath    XPath query
+    *  @return                    The first matching element
+    */
 
+    ElementScope findXPath(String xpath);
+    /**
+     *  Find an element matching an XPath query
+     *
+     *  @param   xpath    XPath query
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     *  @return                    The first matching element
+     */
     ElementScope findXPath(String xpath, Options options);
 
-    /// <summary>
-    /// Find all elements matching a CSS selector at the current moment. Does not wait until the <see cref="SessionConfiguration.Timeout"/> but returns as soon as the driver does.
-    /// </summary>
-    /// <param name="cssSelector">CSS selector</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <returns>All matching elements</returns>
+   /**
+    *  Find all elements matching a CSS selector at the current moment. Does not wait until the <see cref="SessionConfiguration.Timeout"/> but returns as soon as the driver does.
+    *
+    *  @param   cssSelector    CSS selector
+    *  @return                    All matching elements
+    */
     List<ElementFound> findAllCss(String cssSelector);
-
+    /**
+     *  Find all elements matching a CSS selector at the current moment. Does not wait until the <see cref="SessionConfiguration.Timeout"/> but returns as soon as the driver does.
+     *
+     *  @param   cssSelector    CSS selector
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     *  @return                    All matching elements
+     */
     List<ElementFound> findAllCss(String cssSelector, Options options);
 
-    /// <summary>
-    /// Find all elements matching an XPath query at the current moment. Does not wait until the <see cref="SessionConfiguration.Timeout"/> but returns as soon as the driver does.
-    /// </summary>
-    /// <param name="xpath">XPath query</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <returns>All matching elements</returns>
+   /**
+    *  Find all elements matching an XPath query at the current moment. Does not wait until the <see cref="SessionConfiguration.Timeout"/> but returns as soon as the driver does.
+    *
+    *  @param   xpath    XPath query
+    *  @return                    All matching elements
+    */
     List<ElementFound> findAllXPath(String xpath);
-
+    /**
+     *  Find all elements matching an XPath query at the current moment. Does not wait until the <see cref="SessionConfiguration.Timeout"/> but returns as soon as the driver does.
+     *
+     *  @param   xpath    XPath query
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     *  @return                    All matching elements
+     */
     List<ElementFound> findAllXPath(String xpath, Options options);
 
-    /// <summary>
-    /// <para>Find the first matching section to appear within the configured getTimeout.</para>
-    /// <para>Sections are identified by the text of their child heading element, or by id.</para>
-    /// <para>E.g. to find this:
-    ///
-    /// <code>
-    ///     &lt;div&gt;
-    ///         &lt;h2&gt;Search results&lt;/h2&gt;
-    ///         ...
-    ///     &lt;/div&gt;</code>
-    ///
-    /// or this:
-    ///
-    /// <code>
-    ///     &lt;section&gt;
-    ///         &lt;h3&gt;Search results&lt;/h3&gt;
-    ///         ...
-    ///     &lt;/section&gt;</code>
-    /// </para>
-    /// <para>use this:</para>
-    /// <para>
-    /// <code>    findSection("Search results")</code>
-    /// </para>
-    /// </summary>
-    /// <param name="locator">The text of a child heading element or section id</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <returns>An element</returns>
+   /**
+    *  Find the first matching section to appear within the configured getTimeout.
+    *  <p>Sections are identified by the text of their child heading element, or by id.
+    *  <p>E.g. to find this:
+    *
+    *  <code>
+    *      &lt;div&gt;
+    *          &lt;h2&gt;Search results&lt;/h2&gt;
+    *          ...
+    *      &lt;/div&gt;</code>
+    *
+    *  or this:
+    *
+    *  <code>
+    *      &lt;section&gt;
+    *          &lt;h3&gt;Search results&lt;/h3&gt;
+    *          ...
+    *      &lt;/section&gt;</code>
+    *
+    *  <p>use this:
+    *  <p>
+    *  <code>    findSection("Search results")</code>
+    *
+    *
+    *  @param   locator    The text of a child heading element or section id
+    *  @return                    An element
+    */
     ElementScope findSection(String locator);
-
+    /**
+     *  Find the first matching section to appear within the configured getTimeout.
+     *  <p>Sections are identified by the text of their child heading element, or by id.
+     *  <p>E.g. to find this:
+     *
+     *  <code>
+     *      &lt;div&gt;
+     *          &lt;h2&gt;Search results&lt;/h2&gt;
+     *          ...
+     *      &lt;/div&gt;</code>
+     *
+     *  or this:
+     *
+     *  <code>
+     *      &lt;section&gt;
+     *          &lt;h3&gt;Search results&lt;/h3&gt;
+     *          ...
+     *      &lt;/section&gt;</code>
+     *
+     *  <p>use this:
+     *  <p>
+     *  <code>    findSection("Search results")</code>
+     *
+     *
+     *  @param   locator    The text of a child heading element or section id
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     *  @return                    An element
+     */
     ElementScope findSection(String locator, Options options);
 
-    /// <summary>
-    /// <para>Find the first matching fieldset to appear within the configured getTimeout.</para>
-    /// <para>Fieldsets are identified by the text of their child legend element, or by id.</para>
-    /// <para>E.g. to find this:
-    ///
-    /// <code>
-    ///     &lt;fieldset&gt;
-    ///         &lt;legend&gt;Advanced search&lt;/legend&gt;
-    ///         ...
-    ///     &lt;/fieldset&gt;</code>
-    /// </para>
-    /// <para>use this:</para>
-    /// <para>
-    /// <code>    findFieldset("Advanced search")</code>
-    /// </para>
-    /// </summary>
-    /// <param name="locator">The text of a child legend element or fieldset id</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <returns>An element</returns>
+   /**
+    *  Find the first matching fieldset to appear within the configured getTimeout.
+    *  <p>Fieldsets are identified by the text of their child legend element, or by id.
+    *  <p>E.g. to find this:
+    *
+    *  <code>
+    *      &lt;fieldset&gt;
+    *          &lt;legend&gt;Advanced search&lt;/legend&gt;
+    *          ...
+    *      &lt;/fieldset&gt;</code>
+    *
+    *  <p>use this:
+    *  <p>
+    *  <code>    findFieldset("Advanced search")</code>
+    *
+    *
+    *  @param   locator    The text of a child legend element or fieldset id
+    *  @return                    An element
+    */
     ElementScope findFieldset(String locator);
-
+    /**
+     *  Find the first matching fieldset to appear within the configured getTimeout.
+     *  <p>Fieldsets are identified by the text of their child legend element, or by id.
+     *  <p>E.g. to find this:
+     *
+     *  <code>
+     *      &lt;fieldset&gt;
+     *          &lt;legend&gt;Advanced search&lt;/legend&gt;
+     *          ...
+     *      &lt;/fieldset&gt;</code>
+     *
+     *  <p>use this:
+     *  <p>
+     *  <code>    findFieldset("Advanced search")</code>
+     *
+     *
+     *  @param   locator    The text of a child legend element or fieldset id
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     *  @return                    An element
+     */
     ElementScope findFieldset(String locator, Options options);
 
-    /// <summary>
-    /// <para>Find the first matching IFrame to appear within the configured getTimeout.</para>
-    /// <para>IFrames are identified by the their id or title attributes, or by the text of the &lt;h1&gt; element in their content.</para>
-    /// <para>E.g. to find this:
-    ///
-    /// <code>
-    ///     &lt;iframe id="myFrame" title="My I Frame" src="..."&gt;
-    ///         &lt;h1&gt;My Frame Header&lt;/h1&gt;
-    ///         ...
-    ///     &lt;/iframe&gt;
-    /// </code>
-    /// </para>
-    /// <para>use one of these:
-    ///
-    /// <code>
-    ///         findIframe("myFrame")
-    ///         findIframe("My I Frame")
-    ///         findIframe("My Frame Header")
-    /// </code>
-    /// </para>
-    /// </summary>
-    /// <param name="locator">The text of a child legend element or fieldset id</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <returns>An element</returns>
+   /**
+    *  Find the first matching IFrame to appear within the configured getTimeout.
+    *  <p>IFrames are identified by the their id or title attributes, or by the text of the &lt;h1&gt; element in their content.
+    *  <p>E.g. to find this:
+    *
+    *  <code>
+    *      &lt;iframe id="myFrame" title="My I Frame" src="..."&gt;
+    *          &lt;h1&gt;My Frame Header&lt;/h1&gt;
+    *          ...
+    *      &lt;/iframe&gt;
+    *  </code>
+    *
+    *  <p>use one of these:
+    *
+    *  <code>
+    *          findIframe("myFrame")
+    *          findIframe("My I Frame")
+    *          findIframe("My Frame Header")
+    *  </code>
+    *
+    *
+    *  @param   locator    The text of a child legend element or fieldset id
+    *  @return                    An element
+    */
     IFrameElementScope findIFrame(String locator);
-
+    /**
+     *  Find the first matching IFrame to appear within the configured getTimeout.
+     *  <p>IFrames are identified by the their id or title attributes, or by the text of the &lt;h1&gt; element in their content.
+     *  <p>E.g. to find this:
+     *
+     *  <code>
+     *      &lt;iframe id="myFrame" title="My I Frame" src="..."&gt;
+     *          &lt;h1&gt;My Frame Header&lt;/h1&gt;
+     *          ...
+     *      &lt;/iframe&gt;
+     *  </code>
+     *
+     *  <p>use one of these:
+     *
+     *  <code>
+     *          findIframe("myFrame")
+     *          findIframe("My I Frame")
+     *          findIframe("My Frame Header")
+     *  </code>
+     *
+     *
+     *  @param   locator    The text of a child legend element or fieldset id
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     *  @return                    An element
+     */
     IFrameElementScope findIFrame(String locator, Options options);
 
-    /// <summary>
-    /// Find the first matching element with specified id to appear within the configured getTimeout
-    /// </summary>
-    /// <param name="id">Element id</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <returns>An element</returns>
+   /**
+    *  Find the first matching element with specified id to appear within the configured getTimeout
+    *
+    *  @param   id    Element id
+    *  @return                    An element
+    */
     ElementScope findId(String id);
-
+    /**
+     *  Find the first matching element with specified id to appear within the configured getTimeout
+     *
+     *  @param   id    Element id
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     *  @return                    An element
+     */
     ElementScope findId(String id, Options options);
 
-    /// <summary>
-    /// Check the first checkbox to appear within the configured getTimeout matching the text of the associated label element, the id, name or the last part of the id (for asp.net forms testing).
-    /// </summary>
-    /// <param name="locator">The text of the associated label element, the id or name, the last part of the id (for asp.net forms testing)</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <exception cref="T:coypu.MissingHtmlException">Thrown if the element cannot be found</exception>
+   /**
+    *  Check the first checkbox to appear within the configured getTimeout matching the text of the associated label element, the id, name or the last part of the id (for asp.net forms testing).
+    *
+    *  @param   locator    The text of the associated label element, the id or name, the last part of the id (for asp.net forms testing)
+    */
     void check(String locator);
-
+    /**
+     *  Check the first checkbox to appear within the configured getTimeout matching the text of the associated label element, the id, name or the last part of the id (for asp.net forms testing).
+     *
+     *  @param   locator    The text of the associated label element, the id or name, the last part of the id (for asp.net forms testing)
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     */
     void check(String locator, Options options);
 
-    /// <summary>
-    /// Uncheck the first checkbox to appear within the configured getTimeout matching the text of the associated label element, the id, name or the last part of the id (for asp.net forms testing).
-    /// </summary>
-    /// <param name="locator">The text of the associated label element, the id or name, the last part of the id (for asp.net forms testing)</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <exception cref="T:coypu.MissingHtmlException">Thrown if the element cannot be found</exception>
+   /**
+    *  Uncheck the first checkbox to appear within the configured getTimeout matching the text of the associated label element, the id, name or the last part of the id (for asp.net forms testing).
+    *
+    *  @param   locator    The text of the associated label element, the id or name, the last part of the id (for asp.net forms testing)
+    */
     void uncheck(String locator);
-
+    /**
+     *  Uncheck the first checkbox to appear within the configured getTimeout matching the text of the associated label element, the id, name or the last part of the id (for asp.net forms testing).
+     *
+     *  @param   locator    The text of the associated label element, the id or name, the last part of the id (for asp.net forms testing)
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     */
     void uncheck(String locator, Options options);
 
-    /// <summary>
-    /// Choose the first radio button to appear within the configured getTimeout matching the text of the associated label element, the id, the name, the value or the last part of the id (for asp.net forms testing).
-    /// </summary>
-    /// <param name="locator">The text of the associated label element, the id or name, the last part of the id (for asp.net forms testing)</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <exception cref="T:coypu.MissingHtmlException">Thrown if the element cannot be found</exception>
+   /**
+    *  Choose the first radio button to appear within the configured getTimeout matching the text of the associated label element, the id, the name, the value or the last part of the id (for asp.net forms testing).
+    *
+    *  @param   locator    The text of the associated label element, the id or name, the last part of the id (for asp.net forms testing)
+    */
     void choose(String locator);
-
+    /**
+     *  Choose the first radio button to appear within the configured getTimeout matching the text of the associated label element, the id, the name, the value or the last part of the id (for asp.net forms testing).
+     *
+     *  @param   locator    The text of the associated label element, the id or name, the last part of the id (for asp.net forms testing)
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     */
     void choose(String locator, Options options);
 
-    /// <summary>
-    /// Executes custom javascript in the browser
-    /// </summary>
-    /// <param name="javascript">JavaScript to execute</param>
-    /// <returns>Anything returned from the script</returns>
+   /**
+    *  Executes custom javascript in the browser
+    *
+    *  @param   javascript    JavaScript to execute
+    *  @return                    Anything returned from the script
+    */
     String executeScript(String javascript);
 
-    /// <summary>
-    /// Query whether an element appears within the configured getTimeout
-    /// </summary>
-    /// <param name="findElement">A function to find an element</param>
+   /**
+    *  Query whether an element appears within the configured getTimeout
+    *
+    *  @param   findElement    A function to find an element
+    */
     boolean has(ElementScope findElement);
 
+    /**
+     *  Query whether an element appears within the configured getTimeout
+     *
+     *  @param   findElement    A function to find an element
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     */
     boolean has(ElementScope findElement, Options options);
 
-    /// <summary>
-    /// Query whether an element does not appear. Returns as soon as the element does not appear or after the <see cref="SessionConfiguration.Timeout"/>
-    /// </summary>
-    /// <param name="findElement">A function to find an element</param>
+   /**
+    *  Query whether an element does not appear. Returns as soon as the element does not appear or after the <see cref="SessionConfiguration.Timeout"/>
+    *
+    *  @param   findElement    A function to find an element
+    */
     boolean hasNo(ElementScope findElement);
-
+    /**
+     *  Query whether an element does not appear. Returns as soon as the element does not appear or after the <see cref="SessionConfiguration.Timeout"/>
+     *
+     *  @param   findElement    A function to find an element
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     */
     boolean hasNo(ElementScope findElement, Options options);
 
-    /// <summary>
-    /// <para>Retry an action on any exception until it succeeds. Once the <see cref="SessionConfiguration.Timeout"/> is passed any exception will be rethrown.</para>
-    /// <para>Waits for the <see cref="SessionConfiguration.RetryInterval"/> between retries</para>
-    /// </summary>
-    /// <param name="action">An action</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
+   /**
+    *  Retry an action on any exception until it succeeds. Once the <see cref="SessionConfiguration.Timeout"/> is passed any exception will be rethrown.
+    *  <p>Waits for the <see cref="SessionConfiguration.RetryInterval"/> between retries
+    *
+    *  @param   action    An action
+    */
     void retryUntilTimeout(BrowserAction action);
 
-    /// <summary>
-    /// <para>Execute a query repeatedly until either the expected result is returned or the <see cref="SessionConfiguration.Timeout"/> is passed.</para>
-    /// <para>Once the <see cref="SessionConfiguration.Timeout"/> is passed any result will be returned or any exception will be rethrown.</para>
-    /// <para>Waits for the <see cref="SessionConfiguration.RetryInterval"/> between retries.</para>
-    /// </summary>
-    /// <param name="query">A query</param>
+   /**
+    *  Execute a query repeatedly until either the expected result is returned or the <see cref="SessionConfiguration.Timeout"/> is passed.
+    *  <p>Once the <see cref="SessionConfiguration.Timeout"/> is passed any result will be returned or any exception will be rethrown.
+    *  <p>Waits for the <see cref="SessionConfiguration.RetryInterval"/> between retries.
+    *
+    *  @param   query    A query
+    */
     <T> T query(Query<T> query);
 
-    /// <summary>
-    /// <para>Execute an action repeatedly until a condition is met.</para>
-    /// <para>Allows the time specified in <paramref name="waitBeforeRetry"/> for the <paramref name="until"/> query to return the expected value before each retry.</para>
-    /// <para>Once the <see cref="SessionConfiguration.Timeout"/> is passed a coypu.MissingHtmlException will be thrown.</para>
-    /// </summary>
-    /// <param name="tryThis">The action to try</param>
-    /// <param name="until">The condition to be met</param>
-    /// <param name="waitBeforeRetry">How long to wait for the condition to be met before retrying</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <exception cref="T:coypu.MissingHtmlException">Thrown if the until condition is never met</exception>
+   /**
+    *  Execute an action repeatedly until a condition is met.
+    *  <p>Allows the time specified in <paramref name="waitBeforeRetry"/> for the <paramref name="until"/> query to return the expected value before each retry.
+    *  <p>Once the <see cref="SessionConfiguration.Timeout"/> is passed a coypu.MissingHtmlException will be thrown.
+    *
+    *  @param   tryThis    The action to try
+    *  @param   until    The condition to be met
+    *  @param   waitBeforeRetry    How long to wait for the condition to be met before retrying
+    */
     void tryUntil(BrowserAction tryThis, PredicateQuery until, TimeSpan waitBeforeRetry);
+    /**
+     *  Execute an action repeatedly until a condition is met.
+     *  <p>Allows the time specified in <paramref name="waitBeforeRetry"/> for the <paramref name="until"/> query to return the expected value before each retry.
+     *  <p>Once the <see cref="SessionConfiguration.Timeout"/> is passed a coypu.MissingHtmlException will be thrown.
+     *
+     *  @param   tryThis    The action to try
+     *  @param   until    The condition to be met
+     *  @param   waitBeforeRetry    How long to wait for the condition to be met before retrying
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     */
     void tryUntil(BrowserAction tryThis, PredicateQuery until, TimeSpan waitBeforeRetry, Options options);
 
-    /// <summary>
-    /// <para>Find the first from a list of possible states that your page may arrive at.</para>
-    /// <para>Returns as soon as any of the possible states is found.</para>
-    /// <para>E.g.:</para>
-    ///
-    /// <code>
-    ///  var signedIn = new State(browser.hasContent("Signed in as:"));
-    ///  var signedOut = new State(browser.hasContent("Please sign in"));
-    ///
-    ///  if (browser.findState(signedIn,signedOut) == signedIn)
-    ///  {
-    ///    browser.clickLink("Sign out");
-    ///  }
-    ///  </code>
-    ///  </summary>
-    /// <param name="states">The possible states you are expecting</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <returns></returns>
-    /// <exception cref="T:coypu.MissingHtmlException">Thrown if the none of the states are reached within the getTimeout</exception>
+   /**
+    *  Find the first from a list of possible states that your page may arrive at.
+    *  <p>Returns as soon as any of the possible states is found.
+    *  <p>E.g.:
+    *
+    *  <code>
+    *   var signedIn = new State(browser.hasContent("Signed in as:"));
+    *   var signedOut = new State(browser.hasContent("Please sign in"));
+    *
+    *   if (browser.findState(signedIn,signedOut) == signedIn)
+    *   {
+    *     browser.clickLink("Sign out");
+    *   }
+    *   </code>
+    *
+    *  @param   states    The possible states you are expecting
+    *  @return            The first matching state found
+    */
     State findState(State... states);
-
+    /**
+     *  Find the first from a list of possible states that your page may arrive at.
+     *  <p>Returns as soon as any of the possible states is found.
+     *  <p>E.g.:
+     *
+     *  <code>
+     *   var signedIn = new State(browser.hasContent("Signed in as:"));
+     *   var signedOut = new State(browser.hasContent("Please sign in"));
+     *
+     *   if (browser.findState(signedIn,signedOut) == signedIn)
+     *   {
+     *     browser.clickLink("Sign out");
+     *   }
+     *   </code>
+     *
+     *  @param   states    The possible states you are expecting
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     *  @return            The first matching state found
+     */
     State findState(State[] states, Options options);
 
-    /// <summary>
-    /// <para>Click a button, input of type button|submit|image or div with the css class "button".</para>
-    /// <para>Wait for a condition to be satisfied for a specified time otherwise click and wait again.</para>
-    /// <para>Continues until the expected condition is satisfied or the <see cref="SessionConfiguration.Timeout"/> is reached.</para>
-    /// </summary>
-    /// <param name="locator">The text/value, name or id of the button</param>
-    /// <param name="until">The condition to be satisfied</param>
-    /// <param name="waitBeforeRetry">How long to wait for the condition to be met before retrying</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <returns>The first matching button</returns>
-    /// <exception cref="T:coypu.MissingHtmlException">Thrown if the element cannot be found</exception>
+   /**
+    *  Click a button, input of type button|submit|image or div with the css class "button".
+    *  <p>Wait for a condition to be satisfied for a specified time otherwise click and wait again.
+    *  <p>Continues until the expected condition is satisfied or the <see cref="SessionConfiguration.Timeout"/> is reached.
+    *
+    *  @param   locator    The text/value, name or id of the button
+    *  @param   until    The condition to be satisfied
+    *  @param   waitBeforeRetry    How long to wait for the condition to be met before retrying
+    *  @return                    The first matching button
+    */
     DriverScope clickButton(String locator, PredicateQuery until, TimeSpan waitBeforeRetry);
-
+    /**
+     *  Click a button, input of type button|submit|image or div with the css class "button".
+     *  <p>Wait for a condition to be satisfied for a specified time otherwise click and wait again.
+     *  <p>Continues until the expected condition is satisfied or the <see cref="SessionConfiguration.Timeout"/> is reached.
+     *
+     *  @param   locator    The text/value, name or id of the button
+     *  @param   until    The condition to be satisfied
+     *  @param   waitBeforeRetry    How long to wait for the condition to be met before retrying
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     *  @return                    The first matching button
+     */
     DriverScope clickButton(String locator, PredicateQuery until, TimeSpan waitBeforeRetry, Options options);
 
-    /// <summary>
-    /// <para>Click a link and wait for a condition to be satisfied for a specified time otherwise click and wait again.</para>
-    /// <para>Continues until the expected condition is satisfied or the <see cref="SessionConfiguration.Timeout"/> is reached.</para>
-    /// </summary>
-    /// <param name="locator">The text of the link</param>
-    /// <param name="until">The condition to be satisfied</param>
-    /// <param name="waitBeforeRetry">How long to wait for the condition to be met before retrying</param>
-    /// <param name="options">
-    /// <para>Override the way Coypu is configured to find elements for this call only.</para>
-    /// <para>E.g. A longer wait:</para>
-    ///
-    /// <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code></param>
-    /// <returns>The first matching button</returns>
-    /// <exception cref="T:coypu.MissingHtmlException">Thrown if the element cannot be found</exception>
+   /**
+    *  Click a link and wait for a condition to be satisfied for a specified time otherwise click and wait again.
+    *  <p>Continues until the expected condition is satisfied or the <see cref="SessionConfiguration.Timeout"/> is reached.
+    *
+    *  @param   locator    The text of the link
+    *  @param   until    The condition to be satisfied
+    *  @param   waitBeforeRetry    How long to wait for the condition to be met before retrying
+    *  @return                    The first matching button
+    */
     DriverScope clickLink(String locator, PredicateQuery until, TimeSpan waitBeforeRetry);
-
+    /**
+     *  Click a link and wait for a condition to be satisfied for a specified time otherwise click and wait again.
+     *  <p>Continues until the expected condition is satisfied or the <see cref="SessionConfiguration.Timeout"/> is reached.
+     *
+     *  @param   locator    The text of the link
+     *  @param   until    The condition to be satisfied
+     *  @param   waitBeforeRetry    How long to wait for the condition to be met before retrying
+     *  @param   options
+     *  <p>Override the way Coypu is configured to find elements for this call only.
+     *  <p>E.g. A longer wait:
+     *
+     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
+     *  @return                    The first matching button
+     */
     DriverScope clickLink(String locator, PredicateQuery until, TimeSpan waitBeforeRetry, Options options);
 
 }

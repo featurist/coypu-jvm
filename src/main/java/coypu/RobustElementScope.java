@@ -2,9 +2,6 @@ package coypu;
 
 import coypu.Finders.ElementFinder;
 import coypu.Queries.ElementQuery;
-import coypu.Robustness.RobustWrapper;
-
-import java.util.concurrent.*;
 
 public class RobustElementScope extends ElementScope {
     protected final Options options;

@@ -9,35 +9,37 @@ import coypu.WebRequests.RestrictedResourceDownloader;
 //import coypu.WebRequests.RestrictedResourceDownloader;
 //import coypu.WebRequests.WebClientWithCookies;
 
-/// <summary>
-/// A browser session
-/// </summary>
+/**
+* A browser session
+*/
 public class BrowserSession extends BrowserWindow {
 
     private boolean wasDisposed;
     private RestrictedResourceDownloader restrictedResourceDownloader;
     //private final RestrictedResourceDownloader restrictedResourceDownloader;
 
-    /// <summary>
-    /// A new Browser session. Control the lifecycle of this session with using{} / session.dispose()
-    /// </summary>
-    /// <returns>The new Session with default configuration </returns>
+   /**
+    *  A new Browser session. Control the lifecycle of this session with using{} / session.dispose()
+    *
+    *  @return                    The new Session with default configuration
+    */
     public BrowserSession() {
         this(new SessionConfiguration());
     }
 
-    /// <summary>
-    /// The native driver for the coypu.Driver / browser combination you supplied. E.g. for SeleniumWebDriver + Firefox it will currently be a OpenQA.Selenium.Firefox.FirefoxDriver.
-    /// </summary>
+   /**
+    *  The native driver for the coypu.Driver / browser combination you supplied. E.g. for SeleniumWebDriver + Firefox it will currently be a OpenQA.Selenium.Firefox.FirefoxDriver.
+    */
     public Object getNative() {
         return driver.getNative();
     }
 
-    /// <summary>
-    /// A new Browser session. Control the lifecycle of this session with using{} / session.dispose()
-    /// </summary>
-    /// <param name="sessionConfiguration">Your configuration for this session</param>
-    /// <returns>The new Session</returns>
+   /**
+    *  A new Browser session. Control the lifecycle of this session with using{} / session.dispose()
+    *
+    *  @param   sessionConfiguration    Your configuration for this session
+    *  @return                    The new Session
+    */
     public BrowserSession(SessionConfiguration sessionConfiguration) {
         this(new ActivatorDriverFactory(),
                 sessionConfiguration,
@@ -63,9 +65,9 @@ public class BrowserSession extends BrowserWindow {
         return wasDisposed;
     }
 
-    /// <summary>
-    /// Disposes the current session, closing any open browser.
-    /// </summary>
+   /**
+    *  Disposes the current session, closing any open browser.
+    */
     public void dispose() {
         if (wasDisposed)
             return;
@@ -76,12 +78,13 @@ public class BrowserSession extends BrowserWindow {
         wasDisposed = true;
     }
 
-    /// <summary>
-    /// Saves a resource from the web to a local file using the cookies from the current browser session.
-    /// Allows you to sign in through the browser and then directly download a resource restricted to signed-in users.
-    /// </summary>
-    /// <param name="resource"> The location of the resource to download</param>
-    /// <param name="saveAs">Path to save the file to</param>
+   /**
+    *  Saves a resource from the web to a local file using the cookies from the current browser session.
+    *  Allows you to sign in through the browser and then directly download a resource restricted to signed-in users.
+    *
+    *  @param   resource     The location of the resource to download
+    *  @param   saveAs    Path to save the file to
+    */
     public void saveWebResource(String resource, String saveAs) {
         //restrictedResourceDownloader.setCookies(driver.getBrowserCookies());
         //restrictedResourceDownloader.downloadFile(urlBuilder.getFullyQualifiedUrl(resource, configuration), saveAs);

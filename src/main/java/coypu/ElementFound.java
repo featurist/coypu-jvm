@@ -1,11 +1,11 @@
 package coypu;
 
-/// <summary>
-/// An element found by a coypu Driver
-/// </summary>
+/**
+* An element found by a coypu Driver
+*/
 public interface ElementFound extends Element {
-    /// <summary>
-    /// The native element is no longer attached to the DOM
-    /// </summary>
+   /**
+    *  The native element is no longer attached to the DOM
+    */
     public boolean stale();
 }
