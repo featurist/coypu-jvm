@@ -2,7 +2,7 @@ package coypu.Finders;
 
 import coypu.*;
 
-public class SectionFinder extends ElementFinder {
+public class SectionFinder extends FindByLocatorElementFinder {
     public SectionFinder(Driver driver, String locator, DriverScope scope) {
         super(driver, locator, scope);
     }

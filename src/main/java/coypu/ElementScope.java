@@ -1,69 +1,38 @@
 package coypu;
 
-import coypu.Actions.Click;
-import coypu.Finders.ElementFinder;
-import coypu.Queries.ElementExistsQuery;
-import coypu.Queries.ElementMissingQuery;
+/**
+ * Created with IntelliJ IDEA.
+ * User: adrian
+ * Date: 04/04/2012
+ * Time: 08:36
+ * To change this template use File | Settings | File Templates.
+ */
+public interface ElementScope extends Scope, Element {
+    String getId();
 
-public class  ElementScope extends DriverScope implements Element {
-    public ElementScope(ElementFinder elementFinder, DriverScope outer) {
-        super(elementFinder, outer);
-    }
+    String getText();
 
-    public String getId() {
-        return now().getId();
-    }
+    String getValue();
 
-    public String getText() {
-        return now().getText();
-    }
+    String getName();
 
-    public String getValue() {
-        return now().getValue();
-    }
+    String getSelectedOption();
 
-    public String getName() {
-        return now().getName();
-    }
+    boolean getSelected();
 
-    public String getSelectedOption() {
-        return now().getSelectedOption();
-    }
+    Object getNative();
 
-    public boolean getSelected() {
-        return now().getSelected();
-    }
+    String getAttribute(String attributeName);
 
-    public Object getNative() {
-        return now().getNative();
-    }
+    DeferredElementScope click();
 
-    public String getAttribute(String attributeName) {
-        return now().getAttribute(attributeName);
-    }
+    DeferredElementScope click(Options options);
 
-    public ElementScope click() {
-        return click(sessionConfiguration);
-    }
+    boolean exists();
 
-    public ElementScope click(Options options) {
-        retryUntilTimeout(new Click(this, driver, setOptions(options)));
-        return this;
-    }
+    boolean exists(Options options);
 
-    public boolean exists() {
-        return exists(sessionConfiguration);
-    }
+    boolean missing();
 
-    public boolean exists(Options options) {
-        return robustWrapper.robustly(new ElementExistsQuery(this, setOptions(options)));
-    }
-
-    public boolean missing() {
-        return missing(sessionConfiguration);
-    }
-
-    public boolean missing(Options options) {
-        return robustWrapper.robustly(new ElementMissingQuery(this, setOptions(options)));
-    }
+    boolean missing(Options options);
 }

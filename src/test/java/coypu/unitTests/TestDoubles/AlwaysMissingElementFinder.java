@@ -1,10 +1,10 @@
 package coypu.unitTests.TestDoubles;
 
 import coypu.ElementFound;
-import coypu.Finders.ElementFinder;
+import coypu.Finders.FindByLocatorElementFinder;
 import coypu.MissingHtmlException;
 
-public class AlwaysMissingElementFinder extends ElementFinder
+public class AlwaysMissingElementFinder extends FindByLocatorElementFinder
 {
     public AlwaysMissingElementFinder()
     {

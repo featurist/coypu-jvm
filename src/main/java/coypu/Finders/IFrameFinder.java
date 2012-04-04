@@ -2,7 +2,7 @@ package coypu.Finders;
 
 import coypu.*;
 
-public class IFrameFinder extends ElementFinder {
+public class IFrameFinder extends FindByLocatorElementFinder {
     public IFrameFinder(Driver driver, String locator, DriverScope scope) {
         super(driver, locator, scope);
     }

@@ -6,6 +6,7 @@ import coypu.Queries.*;
 import coypu.Robustness.RobustWrapper;
 import coypu.Robustness.Waiter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -104,28 +105,28 @@ public class DriverScope implements coypu.Scope {
         return this;
     }
 
-    public ElementScope findButton(String locator) {
+    public DeferredElementScope findButton(String locator) {
         return findButton(locator, sessionConfiguration);
     }
 
-    public ElementScope findButton(String locator, Options options) {
-        return new RobustElementScope(new ButtonFinder(driver, locator, this), this, setOptions(options));
+    public DeferredElementScope findButton(String locator, Options options) {
+        return new RobustDeferredElementScope(new ButtonFinder(driver, locator, this), this, setOptions(options));
     }
 
-    public ElementScope findLink(String locator) {
+    public DeferredElementScope findLink(String locator) {
         return findLink(locator, sessionConfiguration);
     }
 
-    public ElementScope findLink(String locator, Options options) {
-        return new RobustElementScope(new LinkFinder(driver, locator, this), this, setOptions(options));
+    public DeferredElementScope findLink(String locator, Options options) {
+        return new RobustDeferredElementScope(new LinkFinder(driver, locator, this), this, setOptions(options));
     }
 
-    public ElementScope findField(String locator) {
+    public DeferredElementScope findField(String locator) {
         return findField(locator, sessionConfiguration);
     }
 
-    public ElementScope findField(String locator, Options options) {
-        return new RobustElementScope(new FieldFinder(driver, locator, this), this, setOptions(options));
+    public DeferredElementScope findField(String locator, Options options) {
+        return new RobustDeferredElementScope(new FieldFinder(driver, locator, this), this, setOptions(options));
     }
 
     public FillInWith fillIn(String locator) {
@@ -208,62 +209,70 @@ public class DriverScope implements coypu.Scope {
         return query(new HasNoXPathQuery(driver, this, xpath, setOptions(options)));
     }
 
-    public ElementScope findCss(String cssSelector, Options options) {
-        return new RobustElementScope(new CssFinder(driver, cssSelector, this), this, setOptions(options));
+    public DeferredElementScope findCss(String cssSelector, Options options) {
+        return new RobustDeferredElementScope(new CssFinder(driver, cssSelector, this), this, setOptions(options));
     }
 
-    public ElementScope findCss(String cssSelector) {
+    public DeferredElementScope findCss(String cssSelector) {
         return findCss(cssSelector, sessionConfiguration);
     }
 
-    public ElementScope findXPath(String xpath) {
+    public DeferredElementScope findXPath(String xpath) {
         return findXPath(xpath, sessionConfiguration);
     }
     
-    public ElementScope findXPath(String xpath, Options options) {
-        return new RobustElementScope(new XPathFinder(driver, xpath, this), this, setOptions(options));
+    public DeferredElementScope findXPath(String xpath, Options options) {
+        return new RobustDeferredElementScope(new XPathFinder(driver, xpath, this), this, setOptions(options));
     }
 
-    public List<ElementFound> findAllCss(String cssSelector) {
+    public List<ElementScope> findAllCss(String cssSelector) {
         return findAllCss(cssSelector, sessionConfiguration);
     }
     
-    public List<ElementFound> findAllCss(String cssSelector, Options options) {
+    public List<ElementScope> findAllCss(String cssSelector, Options options) {
         setOptions(options);
-        return driver.findAllCss(cssSelector, this);
+        return AlreadyFound(driver.findAllCss(cssSelector, this));
     }
 
-    public List<ElementFound> findAllXPath(String xpath) {
+    private List<ElementScope> AlreadyFound(List<ElementFound> elements) {
+        List<ElementScope> scopes = new ArrayList<ElementScope>();
+        for (ElementFound element : elements) {
+            scopes.add(new DeferredElementScope(new AlreadyFoundElementFinder(element),this));
+        }
+        return scopes;
+    }
+
+    public List<ElementScope> findAllXPath(String xpath) {
         return findAllXPath(xpath, sessionConfiguration);
     }
     
-    public List<ElementFound> findAllXPath(String xpath, Options options) {
+    public List<ElementScope> findAllXPath(String xpath, Options options) {
         setOptions(options);
-        return driver.findAllXPath(xpath, this);
+        return AlreadyFound(driver.findAllXPath(xpath, this));
     }
 
-    public ElementScope findSection(String locator) {
+    public DeferredElementScope findSection(String locator) {
         return findSection(locator, sessionConfiguration);
     }
     
-    public ElementScope findSection(String locator, Options options) {
-        return new RobustElementScope(new SectionFinder(driver, locator, this), this, setOptions(options));
+    public DeferredElementScope findSection(String locator, Options options) {
+        return new RobustDeferredElementScope(new SectionFinder(driver, locator, this), this, setOptions(options));
     }
 
-    public ElementScope findFieldset(String locator) {
+    public DeferredElementScope findFieldset(String locator) {
         return findFieldset(locator, sessionConfiguration);
     }
 
-    public ElementScope findFieldset(String locator, Options options) {
-        return new RobustElementScope(new FieldsetFinder(driver, locator, this), this, setOptions(options));
+    public DeferredElementScope findFieldset(String locator, Options options) {
+        return new RobustDeferredElementScope(new FieldsetFinder(driver, locator, this), this, setOptions(options));
     }
 
-    public ElementScope findId(String id) {
+    public DeferredElementScope findId(String id) {
         return findId(id, sessionConfiguration);
     }
 
-    public ElementScope findId(String id, Options options) {
-        return new RobustElementScope(new IdFinder(driver, id, this), this, setOptions(options));
+    public DeferredElementScope findId(String id, Options options) {
+        return new RobustDeferredElementScope(new IdFinder(driver, id, this), this, setOptions(options));
     }
 
     public void check(String locator) {
@@ -303,19 +312,19 @@ public class DriverScope implements coypu.Scope {
         return hover(sessionConfiguration);
     }
 
-    public boolean has(ElementScope findElement) {
+    public boolean has(DeferredElementScope findElement) {
         return has(findElement, sessionConfiguration);
     }
 
-    public boolean has(ElementScope findElement, Options options) {
+    public boolean has(DeferredElementScope findElement, Options options) {
         return findElement.exists(options);
     }
 
-    public boolean hasNo(ElementScope findElement) {
+    public boolean hasNo(DeferredElementScope findElement) {
         return hasNo(findElement, sessionConfiguration);
     }
 
-    public boolean hasNo(ElementScope findElement, Options options) {
+    public boolean hasNo(DeferredElementScope findElement, Options options) {
         return findElement.missing(options);
     }
 
@@ -323,12 +332,12 @@ public class DriverScope implements coypu.Scope {
         query(action);
     }
 
-    public IFrameElementScope findIFrame(String locator) {
+    public IFrameDeferredElementScope findIFrame(String locator) {
         return findIFrame(locator, sessionConfiguration);
     }
 
-    public IFrameElementScope findIFrame(String locator, Options options) {
-        return new IFrameElementScope(new IFrameFinder(driver, locator, this), this, setOptions(options));
+    public IFrameDeferredElementScope findIFrame(String locator, Options options) {
+        return new IFrameDeferredElementScope(new IFrameFinder(driver, locator, this), this, setOptions(options));
     }
 
     public void tryUntil(BrowserAction tryThis, PredicateQuery until, TimeSpan waitBeforeRetry) {
@@ -352,6 +361,7 @@ public class DriverScope implements coypu.Scope {
     *
     *  @return
     */
+    @Override
     public ElementFound now() {
         return findElement();
     }

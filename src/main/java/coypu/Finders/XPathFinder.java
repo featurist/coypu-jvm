@@ -2,7 +2,7 @@ package coypu.Finders;
 
 import coypu.*;
 
-public class XPathFinder extends ElementFinder {
+public class XPathFinder extends FindByLocatorElementFinder {
     public XPathFinder(Driver driver, String locator, DriverScope scope) {
         super(driver, locator, scope);
     }

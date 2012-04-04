@@ -2,8 +2,8 @@ package coypu;
 
 import coypu.Finders.ElementFinder;
 
-public class IFrameElementScope extends RobustElementScope {
-    public IFrameElementScope(ElementFinder elementFinder, DriverScope outerScope, Options options) {
+public class IFrameDeferredElementScope extends RobustDeferredElementScope {
+    public IFrameDeferredElementScope(ElementFinder elementFinder, DriverScope outerScope, Options options) {
         super(elementFinder, outerScope, options);
     }
 

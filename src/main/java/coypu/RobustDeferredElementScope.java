@@ -3,10 +3,10 @@ package coypu;
 import coypu.Finders.ElementFinder;
 import coypu.Queries.ElementQuery;
 
-public class RobustElementScope extends ElementScope {
+public class RobustDeferredElementScope extends DeferredElementScope {
     protected final Options options;
 
-    public RobustElementScope(ElementFinder elementFinder, DriverScope outerScope, Options options) {
+    public RobustDeferredElementScope(ElementFinder elementFinder, DriverScope outerScope, Options options) {
         super(elementFinder, outerScope);
         this.options = options;
     }

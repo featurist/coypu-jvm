@@ -2,7 +2,7 @@ package coypu.Finders;
 
 import coypu.*;
 
-public class FieldFinder extends ElementFinder {
+public class FieldFinder extends FindByLocatorElementFinder {
     public FieldFinder(Driver driver, String locator, DriverScope scope) {
         super(driver, locator, scope);
     }

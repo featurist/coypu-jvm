@@ -1,10 +1,10 @@
 package coypu.unitTests.TestDoubles;
 
 import coypu.ElementFound;
-import coypu.Finders.ElementFinder;
+import coypu.Finders.FindByLocatorElementFinder;
 import coypu.unitTests.TestException;
 
-public class AlwaysExceptionsErrorFinder extends ElementFinder
+public class AlwaysExceptionsErrorFinder extends FindByLocatorElementFinder
 {
     public AlwaysExceptionsErrorFinder()
     {

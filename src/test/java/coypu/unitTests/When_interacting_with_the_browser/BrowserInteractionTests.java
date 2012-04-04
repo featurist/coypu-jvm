@@ -1,8 +1,8 @@
 package coypu.unitTests.When_interacting_with_the_browser;
 
 import coypu.BrowserSession;
+import coypu.DeferredElementScope;
 import coypu.SessionConfiguration;
-import coypu.ElementScope;
 import coypu.Queries.Query;
 import coypu.unitTests.TestBuilders.TestSessionBuilder;
 import coypu.unitTests.TestDoubles.*;
@@ -21,7 +21,7 @@ public abstract class BrowserInteractionTests
     protected SpyRobustWrapper spyRobustWrapper;
     protected StubUrlBuilder stubUrlBuilder;
     protected SessionConfiguration sessionConfiguration;
-    protected ElementScope elementScope;
+    protected DeferredElementScope elementScope;
 
     @Before
     public void baseSetUp()

@@ -1,8 +1,8 @@
 package coypu.unitTests.When_interacting_with_the_browser;
 
+import coypu.DeferredElementScope;
 import coypu.SessionConfiguration;
 import coypu.Element;
-import coypu.ElementScope;
 import coypu.unitTests.TestBuilders.TestSessionBuilder;
 import coypu.unitTests.TestDoubles.ImmediateSingleExecutionFakeRobustWrapper;
 import coypu.unitTests.TestDoubles.StubElement;
@@ -22,7 +22,7 @@ public class When_scoping_interactions extends BrowserInteractionTests
         Element expectedLink = new StubElement();
         driver.stubSection("some section", section, browserSession);
 
-        ElementScope innerScope = browserSession.findSection("some section");
+        DeferredElementScope innerScope = browserSession.findSection("some section");
 
         driver.stubLink("some link", expectedLink, innerScope);
 

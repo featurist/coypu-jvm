@@ -90,3 +90,4 @@ public class StubElement implements ElementFound
         attributes.put(attributeName,value); 
     }
 }
+

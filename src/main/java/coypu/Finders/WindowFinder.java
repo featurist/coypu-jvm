@@ -3,9 +3,8 @@ package coypu.Finders;
 import coypu.Driver;
 import coypu.DriverScope;
 import coypu.ElementFound;
-import coypu.MissingHtmlException;
 
-public class WindowFinder extends ElementFinder {
+public class WindowFinder extends FindByLocatorElementFinder {
     public WindowFinder(Driver driver, String locator, DriverScope scope) {
         super(driver, locator, scope);
     }

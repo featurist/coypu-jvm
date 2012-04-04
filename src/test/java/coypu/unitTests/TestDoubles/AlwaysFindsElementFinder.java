@@ -1,9 +1,9 @@
 package coypu.unitTests.TestDoubles;
 
 import coypu.ElementFound;
-import coypu.Finders.ElementFinder;
+import coypu.Finders.FindByLocatorElementFinder;
 
-public class AlwaysFindsElementFinder extends ElementFinder
+public class AlwaysFindsElementFinder extends FindByLocatorElementFinder
 {
     private final ElementFound element;
 
