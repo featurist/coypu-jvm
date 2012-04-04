@@ -283,8 +283,8 @@ When you want to perform operations only within a particular part of the page, f
 
     advancedSearch.click("Find");
 
-    Assert.That(searchResults.hasContent("1 friend found"));
-    Assert.That(searchResults.hasContent("Philip J Fry"));
+    assertTrue(searchResults.hasContent("1 friend found"));
+    AssertTrue(searchResults.hasContent("Philip J Fry"));
 
 The actual finding of the scope is deferred until the driver needs to interact with or find any element inside the Scope. If the scope becomes stale at any time it will be re-found.
 
@@ -298,7 +298,7 @@ To restrict the scope to an iframe, locate the iframe by its id, title or the te
 
 	var twitterFrame = browser.findIFrame("@coypu_news on Twitter");
 
-	Assert.That(twitterFrame.hasContent("Coypu 0.8.0 released"));	
+	assertTrue(twitterFrame.hasContent("Coypu 0.8.0 released"));	
 
 
 #### Scoping within windows
