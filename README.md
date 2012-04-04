@@ -387,7 +387,9 @@ When you need an unusually long (or short) timeout for a particular interaction 
 
 	browser.fillIn("Attachment").with(@"c:\coypu\bigfile.mp4");
 	browser.clickButton("Upload");
-	browser.hasContent("File bigfile.mp4 (10.5mb) uploaded successfully", new Options { Timeout = TimeSpan.FromSeconds(60) } );
+	Options soon = new Options();
+	soon.Timeout = TimeSpan.fromSeconds(60);
+	browser.hasContent("File bigfile.mp4 (10.5mb) uploaded successfully", soon);
 	
 #### Finding states (nondeterministic testing)
 
@@ -449,7 +451,7 @@ This is far from ideal as you are coupling the click to the expected result rath
 WARNING: Setting this in your driver sessionConfiguration means adding time to *every* click in your tests. You might be better off doing this just when you need it:
 
     Options options = new Options();
-    options.WaitBeforeClick = TimeSpan.FromMilliseconds(0.2);
+    options.WaitBeforeClick = TimeSpan.fromMilliseconds(0.2);
     
     browser.clickButton("Search", options);
 
