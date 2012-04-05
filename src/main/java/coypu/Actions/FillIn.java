@@ -17,7 +17,10 @@ public class FillIn extends DriverAction {
     }
 
     public Element field() {
-        return element == null ? Driver.findField(locator, scope) : element;
+        if (element == null)
+            element = Driver.findField(locator, scope);
+
+        return element;
     }
 
     private void bringIntoFocus() {
