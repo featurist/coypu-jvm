@@ -21,9 +21,9 @@
         </license>
     </licenses>
     <scm>
-        <connection>scm:git:git@github.com/featurist/coypu-jvm.git</connection>
-        <developerConnection>scm:git:git@github.com/featurist/coypu-jvm.git</developerConnection>
-        <url>scm:git:git@github.com/featurist/coypu-jvm.git</url>
+        <connection>scm:git:git@github.com:featurist/coypu-jvm.git</connection>
+        <developerConnection>scm:git:git@github.com:featurist/coypu-jvm.git</developerConnection>
+        <url>scm:git:git@github.com:featurist/coypu-jvm.git</url>
     </scm>
     <dependencies>
         <dependency>
