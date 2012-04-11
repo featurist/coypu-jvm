@@ -27,9 +27,9 @@ To use Coypu from Maven add the following dependencies in your [POM](http://mave
 
 Open a browser session like so:
 
-    import coypu.BrowserSession;
+	import coypu.BrowserSession;
 
-	var browser = new BrowserSession();
+	BrowserSession browser = new BrowserSession();
 	
 When you are done with the browser session:
 
@@ -118,7 +118,7 @@ Most of the methods in the Coypu DSL are automatically retried on any driver err
 
 This is a rather blunt approach that goes well beyond WebDriver's ImplicitWait, for example, but the only truly robust strategy for heavily asynchronous websites, where elements are flying in and out of the DOM constantly, that I have found.
 
-All methods use this wait and retry strategy *except*: `Visit()`, `FindAllCss()` and `FindAllXPath()` which call the driver once immediately.
+All methods use this wait and retry strategy *except*: `visit()`, `findAllCss()` and `findAllXPath()` which call the driver once immediately.
 
 Setup timeout/retry like so:
 
@@ -223,7 +223,7 @@ You can read attributes of these elements like so:
 
 #### Finding multiple elements	
 	
-FindAll methods return all matching elements:
+findAll methods return all matching elements:
 
 	for(ElementFound link : browser.findAllCss("a")) 
 	{
@@ -248,7 +248,7 @@ To find this:
 
 use this:	
 	
-	var element = browser.findFieldset("Advanced search");
+	ElementFound element = browser.findFieldset("Advanced search");
 	
 To find this:
 
@@ -266,7 +266,7 @@ or this:
 
 use this:
 	
-	var element = browser.findSection("Search results");
+	ElementFound element = browser.findSection("Search results");
 
 **These work particularly well when used as scopes:**
 
@@ -283,12 +283,12 @@ When you want to perform operations only within a particular part of the page, f
 
     advancedSearch.click("Find");
 
-    Assert.That(searchResults.hasContent("1 friend found"));
-    Assert.That(searchResults.hasContent("Philip J Fry"));
+    assertTrue(searchResults.hasContent("1 friend found"));
+    AssertTrue(searchResults.hasContent("Philip J Fry"));
 
 The actual finding of the scope is deferred until the driver needs to interact with or find any element inside the Scope. If the scope becomes stale at any time it will be re-found.
 
-**So in the above example, it doesn't matter what happens between clicking 'Find' and the search results loading. The search results area could be ripped out of the DOM and refreshed, there could be a full page refresh, or even a pop up window closed and reopened, so long as the session remains active.**
+**So in the above example, it doesn't matter what happens between clicking 'find' and the search results loading. The search results area could be ripped out of the DOM and refreshed, there could be a full page refresh, or even a pop up window closed and reopened, so long as the session remains active.**
 
 This means you have tests much more loosely coupled to the implementation of your website. Consider the search example above and the possible permutations of HTML and JS that would satisfy that test.
 
@@ -298,7 +298,7 @@ To restrict the scope to an iframe, locate the iframe by its id, title or the te
 
 	var twitterFrame = browser.findIFrame("@coypu_news on Twitter");
 
-	Assert.That(twitterFrame.hasContent("Coypu 0.8.0 released"));	
+	assertTrue(twitterFrame.hasContent("Coypu 0.8.0 released"));	
 
 
 #### Scoping within windows
@@ -387,11 +387,13 @@ When you need an unusually long (or short) timeout for a particular interaction 
 
 	browser.fillIn("Attachment").with(@"c:\coypu\bigfile.mp4");
 	browser.clickButton("Upload");
-	browser.hasContent("File bigfile.mp4 (10.5mb) uploaded successfully", new Options { Timeout = TimeSpan.FromSeconds(60) } );
+	Options soon = new Options();
+	soon.Timeout = TimeSpan.fromSeconds(60);
+	browser.hasContent("File bigfile.mp4 (10.5mb) uploaded successfully", soon);
 	
 #### Finding states (nondeterministic testing)
 
-Sometimes you just can't predict what state the browser will be in. Not ideal for a reliable test, but if it's unavoidable then you can use the `Session.FindState` like this:
+Sometimes you just can't predict what state the browser will be in. Not ideal for a reliable test, but if it's unavoidable then you can use the `Session.findState` like this:
 
     State signedIn = new State() {
         public Boolean predicate() {
@@ -449,7 +451,7 @@ This is far from ideal as you are coupling the click to the expected result rath
 WARNING: Setting this in your driver sessionConfiguration means adding time to *every* click in your tests. You might be better off doing this just when you need it:
 
     Options options = new Options();
-    options.WaitBeforeClick = TimeSpan.FromMilliseconds(0.2);
+    options.WaitBeforeClick = TimeSpan.fromMilliseconds(0.2);
     
     browser.clickButton("Search", options);
 
