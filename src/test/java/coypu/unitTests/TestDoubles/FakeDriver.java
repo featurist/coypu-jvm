@@ -251,7 +251,7 @@ public class FakeDriver implements Driver
         return find(stubbedIFrames, locator, scope, ElementFound.class);
     }
 
-    public void set(Element element, String value)
+    public void set(Element element, String value, boolean forceAllEvents)
     {
         SetFields.put(element, value);
     }

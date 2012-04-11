@@ -29,12 +29,22 @@ public class FillInWith {
         this.locator = null;
     }
 
-   /**
-    *  Supply a value for the text field
-    *
-    *  @param   value    The value to fill in
-    */
+    /**
+     *  Supply a value for the text field
+     *
+     *  @param   value    The value to fill in
+     */
     public void with(String value) {
-        robustWrapper.robustly(new FillIn(driver, scope, locator, element, value, options));
+        with(value,false);
+    }
+
+    /**
+     *  Supply a value for the text field
+     *
+     *  @param   value          The value to fill in
+     *  @param   forceAllEvents Use native driver implementation to ensure all keyboard events are fired, rather than the default of setting with JavaScript
+     */
+    public void with(String value, boolean forceAllEvents) {
+        robustWrapper.robustly(new FillIn(driver, scope, locator, element, value, forceAllEvents, options));
     }
 }

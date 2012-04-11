@@ -160,8 +160,14 @@ public class ApiExamples
     }
 
     @Test
-    public void fillInWith_example()  {
-        browser.fillIn("containerLabeledTextInputFieldName").with("New text input value");
+    public void fillInWith_example_js()  {
+        browser.fillIn("containerLabeledTextInputFieldName").with("New text input's value");
+        assertThat(browser.findField("containerLabeledTextInputFieldName").getValue(), is(equalTo("New text input's value")));
+    }
+
+    @Test
+    public void fillInWith_example_nojs()  {
+        browser.fillIn("containerLabeledTextInputFieldName").with("New text input value",true);
         assertThat(browser.findField("containerLabeledTextInputFieldName").getValue(), is(equalTo("New text input value")));
     }
 

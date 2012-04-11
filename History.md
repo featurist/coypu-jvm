@@ -167,7 +167,7 @@ Release date: 2011-07-04
 
 ### Added
 * Enabled AndroidDriver for Selenium
-* SeleniumWebDriver now exposes a constructor overload that takes in an instance of RemoteWebDriver. This allows you to create your own derived drivers that can make use of the RemoteWebDriver (e.g. using HtmlUnitDriver) (citizenmatt)
+* SeleniumWebDriver now exposes a constructor overload that takes in an instance of WebDriver. This allows you to create your own derived drivers that can make use of the WebDriver (e.g. using HtmlUnitDriver) (citizenmatt)
 
 # Version 0.2.5
 

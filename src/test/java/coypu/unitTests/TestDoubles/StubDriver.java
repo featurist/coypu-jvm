@@ -43,7 +43,7 @@ public class StubDriver implements Driver
     {
     }
 
-    public void set(Element element, String value)
+    public void set(Element element, String value, boolean forceAllEvents)
     {
     }
 

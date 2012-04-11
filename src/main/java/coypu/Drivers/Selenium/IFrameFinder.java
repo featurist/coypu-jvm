@@ -1,14 +1,12 @@
 package coypu.Drivers.Selenium;
 
+import com.google.common.base.Predicate;
 import coypu.DriverScope;
 import coypu.Drivers.XPath;
 import coypu.Iterators;
-import coypu.MissingHtmlException;
-import com.google.common.base.Predicate;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebDriver;
 
 import javax.annotation.Nullable;
 
@@ -17,7 +15,7 @@ class IFrameFinder {
     private final ElementFinder elementFinder;
     private final XPath xPath;
 
-    public IFrameFinder(RemoteWebDriver selenium, ElementFinder elementFinder, XPath xPath) {
+    public IFrameFinder(WebDriver selenium, ElementFinder elementFinder, XPath xPath) {
         this.selenium = selenium;
         this.elementFinder = elementFinder;
         this.xPath = xPath;

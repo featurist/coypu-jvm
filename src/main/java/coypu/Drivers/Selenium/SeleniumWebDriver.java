@@ -1,18 +1,18 @@
 package coypu.Drivers.Selenium;
 
+import com.google.common.base.Predicate;
+import com.google.gson.Gson;
 import coypu.*;
 import coypu.Drivers.Browser;
 import coypu.Drivers.BrowserNotSupportedException;
 import coypu.Drivers.XPath;
-import com.google.common.base.Predicate;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.*;
+import java.util.regex.Pattern;
 
 public class SeleniumWebDriver implements Driver {
     private Browser browser;
@@ -23,14 +23,14 @@ public class SeleniumWebDriver implements Driver {
     }
 
     public String location() {
-        return selenium.getCurrentUrl();
+        return webDriver.getCurrentUrl();
     }
 
     public ElementFound window() {
-        return new WindowHandle(selenium, selenium.getWindowHandle());
+        return new WindowHandle(webDriver, webDriver.getWindowHandle());
     }
 
-    private RemoteWebDriver selenium;
+    private WebDriver webDriver;
     private final ElementFinder elementFinder;
     private final FieldFinder fieldFinder;
     private final IFrameFinder iframeFinder;
@@ -47,20 +47,31 @@ public class SeleniumWebDriver implements Driver {
         this.browser = browser;
     }
 
-    protected SeleniumWebDriver(RemoteWebDriver webDriver) {
-        selenium = webDriver;
+    protected SeleniumWebDriver(WebDriver webDriver) {
+        this.webDriver = webDriver;
         xPath = new XPath();
         elementFinder = new ElementFinder(xPath);
         fieldFinder = new FieldFinder(elementFinder, xPath);
-        iframeFinder = new IFrameFinder(selenium, elementFinder, xPath);
+        iframeFinder = new IFrameFinder(this.webDriver, elementFinder, xPath);
         textMatcher = new TextMatcher();
         buttonFinder = new ButtonFinder(elementFinder, textMatcher, xPath);
         sectionFinder = new SectionFinder(elementFinder, textMatcher);
-        dialogs = new Dialogs(selenium);
-        mouseControl = new MouseControl(selenium);
+        dialogs = new Dialogs(this.webDriver);
+        mouseControl = new MouseControl(this.webDriver);
         optionSelector = new OptionSelector();
     }
 
+    private boolean javascript() {
+        return browser.javascript();
+    }
+    private boolean noJavascript() {
+        return !javascript();
+    }
+
+    private JavascriptExecutor javaScriptExecutor()
+    {
+        return (JavascriptExecutor) webDriver;
+    }
     public Object getNative() {
         return window().getNative();
     }
@@ -79,7 +90,7 @@ public class SeleniumWebDriver implements Driver {
         if (element == null)
             throw new MissingHtmlException("Failed to find frame: " + locator);
 
-        return new SeleniumFrame(element, selenium);
+        return new SeleniumFrame(element, webDriver);
     }
 
     public ElementFound findLink(String linkText, DriverScope scope) {
@@ -166,7 +177,7 @@ public class SeleniumWebDriver implements Driver {
 
     private String getContent(DriverScope scope) {
         SearchContext seleniumScope = elementFinder.seleniumScope(scope);
-        return seleniumScope instanceof RemoteWebDriver
+        return seleniumScope instanceof WebDriver
                 ? getText(By.cssSelector("body"), seleniumScope)
                 : getText(By.xpath("."), seleniumScope);
     }
@@ -190,7 +201,7 @@ public class SeleniumWebDriver implements Driver {
     }
 
     public void visit(String url) {
-        selenium.navigate().to(url);
+        webDriver.navigate().to(url);
     }
 
     public void click(Element element) {
@@ -204,13 +215,13 @@ public class SeleniumWebDriver implements Driver {
 //    public List<Cookie> getBrowserCookies()
 //    {
 //        ArrayList<Cookie> elements = new ArrayList<Cookie>();
-//        for (Cookie c : selenium.manage().getCookies()) {
+//        for (Cookie c : webDriver.manage().getCookies()) {
 //            elements.add(new Cookie(c.Name(), c.Value(), c.getPath(), c.getDomain()));
 //        }
 //    }
 
     public ElementFound findWindow(String titleOrName, DriverScope scope) {
-        return new WindowHandle(selenium, findWindowHandle(titleOrName));
+        return new WindowHandle(webDriver, findWindowHandle(titleOrName));
     }
 
     private String findWindowHandle(String titleOrName) {
@@ -218,12 +229,12 @@ public class SeleniumWebDriver implements Driver {
         String matchingWindowHandle = null;
 
         try {
-            selenium.switchTo().window(titleOrName);
-            matchingWindowHandle = selenium.getWindowHandle();
+            webDriver.switchTo().window(titleOrName);
+            matchingWindowHandle = webDriver.getWindowHandle();
         } catch (NoSuchWindowException ex) {
-            for (String windowHandle : selenium.getWindowHandles()) {
-                selenium.switchTo().window(windowHandle);
-                if (windowHandle.equals(titleOrName) || selenium.getTitle().equals(titleOrName)) {
+            for (String windowHandle : webDriver.getWindowHandles()) {
+                webDriver.switchTo().window(windowHandle);
+                if (windowHandle.equals(titleOrName) || webDriver.getTitle().equals(titleOrName)) {
                     matchingWindowHandle = windowHandle;
                     break;
                 }
@@ -233,13 +244,13 @@ public class SeleniumWebDriver implements Driver {
         if (matchingWindowHandle == null)
             throw new MissingHtmlException("No such window found: " + titleOrName);
 
-        selenium.switchTo().window(currentHandle);
+        webDriver.switchTo().window(currentHandle);
         return matchingWindowHandle;
     }
 
     private String getCurrentWindowHandle() {
         try {
-            return selenium.getWindowHandle();
+            return webDriver.getWindowHandle();
         } catch (Exception ex) // was InvalidOperationException in c#
 
         {
@@ -247,17 +258,36 @@ public class SeleniumWebDriver implements Driver {
         }
     }
 
-    public void set(Element element, String value) {
+    public void set(Element element, String value, boolean forceAllEvents) {
         WebElement seleniumElement = seleniumElement(element);
 
         try {
             seleniumElement.clear();
-        } catch (InvalidElementStateException ex) // Non user-editable elements (file inputs) - chrome/IE
-        {
-        } catch (WebDriverException ex)  // Non user-editable elements (file inputs) - firefox
-        {
         }
-        seleniumElement.sendKeys(value);
+        catch (InvalidElementStateException ex) // Non user-editable elements (file inputs) - chrome/IE
+        {
+            seleniumElement.sendKeys(value);
+            return;
+        }
+        catch (WebDriverException ex)  // Non user-editable elements (file inputs) - firefox
+        {
+            seleniumElement.sendKeys(value);
+            return;
+        }
+        SetByIdOrSendKeys(value, seleniumElement, forceAllEvents);
+    }
+
+    private void SetByIdOrSendKeys(String value, WebElement seleniumElement, boolean forceAllEvents)
+    {
+        String id = seleniumElement.getAttribute("id");
+        if (id.isEmpty() || forceAllEvents || !noJavascript())
+            seleniumElement.sendKeys(value);
+        else
+            javaScriptExecutor().executeScript(String.format("document.getElementById('%1$s').value = {%2$s}", id, toJson(value)));
+    }
+
+    private String toJson(Object value) {
+        return new Gson().toJson(value);
     }
 
     public void select(Element element, String option) {
@@ -293,13 +323,16 @@ public class SeleniumWebDriver implements Driver {
     }
 
     public String executeScript(String javascript, DriverScope scope) {
+        if (noJavascript())
+            throw new UnsupportedOperationException("Javascript is not supported by " + browser);
+
         elementFinder.seleniumScope(scope);
-        Object result = selenium.executeScript(javascript);
+        Object result = javaScriptExecutor().executeScript(javascript);
         return result == null ? null : result.toString();
     }
 
     private String normalizeCRLFBetweenBrowserImplementations(String text) {
-        if (selenium instanceof ChromeDriver) // Which adds extra whitespace around CRLF
+        if (webDriver instanceof ChromeDriver) // Which adds extra whitespace around CRLF
             text = stripWhitespaceAroundCRLFs(text);
 
         return Pattern.compile("(\r\n)+").matcher(text).replaceAll("\r\n");
@@ -314,19 +347,19 @@ public class SeleniumWebDriver implements Driver {
     }
 
     public void dispose() {
-        if (selenium == null)
+        if (webDriver == null)
             return;
 
         acceptAnyAlert();
 
-        selenium.quit();
-        selenium = null;
+        webDriver.quit();
+        webDriver = null;
         disposed = true;
     }
 
     private void acceptAnyAlert() {
         try {
-            selenium.switchTo().alert().accept();
+            webDriver.switchTo().alert().accept();
         } catch (WebDriverException ex) {
         }
 //        catch (KeyNotFoundException){} // Chrome

@@ -5,12 +5,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.RemoteWebDriver;
 
 class MouseControl {
     private final WebDriver selenium;
 
-    public MouseControl(RemoteWebDriver selenium) {
+    public MouseControl(WebDriver selenium) {
         this.selenium = selenium;
     }
 

@@ -7,13 +7,15 @@ public class FillIn extends DriverAction {
     private DriverScope scope;
     private String value;
     private Element element;
+    private boolean forceAllEvents;
 
-    public FillIn(Driver driver, DriverScope scope, String locator, Element elementScope, String value, Options options) {
+    public FillIn(Driver driver, DriverScope scope, String locator, Element elementScope, String value, boolean forceAllEvents, Options options) {
         super(driver, options);
         this.locator = locator;
         this.element = elementScope;
         this.scope = scope;
         this.value = value;
+        this.forceAllEvents = forceAllEvents;
     }
 
     public Element field() {
@@ -28,7 +30,7 @@ public class FillIn extends DriverAction {
     }
 
     public void set() {
-        Driver.set(field(), value);
+        Driver.set(field(), value, forceAllEvents);
     }
 
     public void focus() {

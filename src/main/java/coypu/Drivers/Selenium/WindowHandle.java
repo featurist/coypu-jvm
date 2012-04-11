@@ -3,13 +3,13 @@ package coypu.Drivers.Selenium;
 import coypu.ElementFound;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.WebDriver;
 
 class WindowHandle implements ElementFound {
-    private final RemoteWebDriver selenium;
+    private final WebDriver selenium;
     private final String windowHandle;
 
-    public WindowHandle(RemoteWebDriver selenium, String windowHandle) {
+    public WindowHandle(WebDriver selenium, String windowHandle) {
         this.selenium = selenium;
         this.windowHandle = windowHandle;
     }

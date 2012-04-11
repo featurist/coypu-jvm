@@ -23,11 +23,14 @@ class FieldFinder {
     }
 
     public WebElement findField(String locator, DriverScope scope) {
+        WebElement byId = findFieldById(locator, scope);
+        if (byId != null) return byId;
+
         WebElement fromLabel = findFieldFromLabel(locator, scope);
         if (fromLabel != null) return fromLabel;
 
-        WebElement byIdOrName = findFieldByIdOrName(locator, scope);
-        if (byIdOrName != null) return byIdOrName;
+        WebElement byName = findFieldByName(locator, scope);
+        if (byName != null) return byName;
 
         WebElement byPlaceholder = findFieldByPlaceholder(locator, scope);
         if (byPlaceholder != null) return byPlaceholder;
@@ -73,9 +76,8 @@ class FieldFinder {
         return Iterators.firstOrDefault(elementFinder.find(By.xpath(xPath.format(".//input[@placeholder = %1$s]", placeholder)), scope), isField(scope), scope);
     }
 
-    private WebElement findFieldByIdOrName(String locator, DriverScope scope) {
-        String xpathToFind = xPath.format(".//*[@id = %1$s or @name = %1$s]", locator);
-        return Iterators.firstOrDefault(elementFinder.find(By.xpath(xpathToFind), scope), isField(scope), scope);
+    private WebElement findFieldByName(String locator, DriverScope scope) {
+        return Iterators.firstOrDefault(elementFinder.find(By.name(locator), scope), isField(scope), scope);
     }
 
     private WebElement findFieldById(String id, DriverScope scope) {

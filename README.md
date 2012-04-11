@@ -67,7 +67,7 @@ Choose your driver/browser combination like so:
 These settings are the default sessionConfiguration.
 
 ##### Selenium WebDriver
-`coypu.Drivers.Selenium.SeleniumWebDriver` tracks the latest version of WebDriver and supports Firefox, IE (slowest) and Chrome (Fastest) as the browser. Any other Selenium implementation of RemoteWebDriver can be configured by subclassing `SeleniumWebDriver` and passing an instance of RemoteWebDriver to the base constructor.
+`coypu.Drivers.Selenium.SeleniumWebDriver` tracks the latest version of WebDriver and supports Firefox, IE (slowest) and Chrome (Fastest) as the browser. Any other Selenium implementation of WebDriver can be configured by subclassing `SeleniumWebDriver` and passing an instance of WebDriver to the base constructor.
 
 <!--TODO: Maven... -->
 The Selenium Driver is included in the Coypu package.
@@ -147,7 +147,7 @@ There is plenty Coypu doesn't cover yet, what there is is pretty well tested how
 
 If there's something you need that's not part of the DSL then please you may need to dive into the native driver which you can always do by casting the native driver to whatever underlying driver you know you are using:
 
-	RemoteWebDriver selenium = (RemoteWebDriver) browserSession.getNative();
+	WebDriver selenium = (WebDriver) browserSession.getNative();
 	
 But if you need to do this, please consider forking Coypu, adding what you need and sending a pull request. Thanks!
 

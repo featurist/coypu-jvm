@@ -18,7 +18,7 @@ public class When_uploading_files extends DriverSpecs
         try
         {
             ElementFound textField = driver().findField("forLabeledFileFieldId", root());
-            driver().set(textField, someLocalFile.getAbsolutePath());
+            driver().set(textField, someLocalFile.getAbsolutePath(), false);
 
             ElementFound findAgain = driver().findField("forLabeledFileFieldId", root());
             assertThat(findAgain.getValue().endsWith("/local.file"), is(true));

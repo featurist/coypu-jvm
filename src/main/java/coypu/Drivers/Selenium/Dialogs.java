@@ -1,12 +1,12 @@
 package coypu.Drivers.Selenium;
 
 import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.WebDriver;
 
 class Dialogs {
-    private final RemoteWebDriver selenium;
+    private final WebDriver selenium;
 
-    public Dialogs(RemoteWebDriver selenium) {
+    public Dialogs(WebDriver selenium) {
         this.selenium = selenium;
     }
 

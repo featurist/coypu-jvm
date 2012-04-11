@@ -47,7 +47,7 @@ public class When_using_iframes_as_scope extends DriverSpecs
     public void can_fill_in_a_text_input_within_an_iframe()
     {
         DriverScope iframeOne = new DriverScope(new SessionConfiguration(), new IFrameFinder(driver(), "I am iframe one", root()), driver(), null, null, null);
-        driver().set(driver().findField("text input in iframe", iframeOne), "filled in");
+        driver().set(driver().findField("text input in iframe", iframeOne), "filled in", true);
 
         assertThat(driver().findField("text input in iframe", iframeOne).getValue(), is(equalTo("filled in")));
     }

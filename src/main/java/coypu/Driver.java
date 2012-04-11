@@ -16,7 +16,7 @@ public interface Driver {
 
     void visit(String url);
 
-    void set(Element element, String value);
+    void set(Element element, String value, boolean forceAllEvents);
 
     void select(Element element, String option);
 

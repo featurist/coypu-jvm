@@ -10,10 +10,10 @@ import static org.junit.Assert.assertThat;
 public class When_setting_fields extends DriverSpecs
 {
     @Test
-    public void sets_value_of_text_input_field()
+    public void sets_value_of_text_input_field_forceAllEvents()
     {
         ElementFound textField = driver().findField("containerLabeledTextInputFieldName", root());
-        driver().set(textField, "New text input value");
+        driver().set(textField, "New text input value", true);
 
         assertThat(textField.getValue(), is(equalTo("New text input value")));
 
@@ -22,10 +22,22 @@ public class When_setting_fields extends DriverSpecs
     }
 
     @Test
+    public void sets_value_of_text_input_field()
+    {
+        ElementFound textField = driver().findField("containerLabeledTextInputFieldName", root());
+        driver().set(textField, "New text input value - it's set with JS in webdriver", false);
+
+        assertThat(textField.getValue(), is(equalTo("New text input value - it's set with JS in webdriver")));
+
+        ElementFound findAgain = driver().findField("containerLabeledTextInputFieldName", root());
+        assertThat(findAgain.getValue(), is(equalTo("New text input value - it's set with JS in webdriver")));
+    }
+
+    @Test
     public void sets_value_of_textarea_field()
     {
         ElementFound textField = driver().findField("containerLabeledTextareaFieldName", root());
-        driver().set(textField, "New textarea value");
+        driver().set(textField, "New textarea value", false);
 
         assertThat(textField.getValue(), is(equalTo("New textarea value")));
 
