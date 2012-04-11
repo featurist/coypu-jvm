@@ -16,7 +16,7 @@ To use Coypu from Maven add the following dependencies in your [POM](http://mave
 <dependency>
     <groupId>net.featurist</groupId>
     <artifactId>coypu</artifactId>
-    <version>0.8.0-SNAPSHOT</version>
+    <version>0.8.3-SNAPSHOT</version>
     <scope>test</scope>
 </dependency>
 ```
