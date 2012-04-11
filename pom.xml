@@ -4,7 +4,7 @@
     <groupId>net.featurist</groupId>
     <artifactId>coypu</artifactId>
     <packaging>pom</packaging>
-    <version>0.8.2</version>
+    <version>0.8.3-SNAPSHOT</version>
     <name>Coypu</name>
     <description>Intuitive, robust browser automation</description>
     <url>https://github.com/coypu/coypu-jvm</url>
