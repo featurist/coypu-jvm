@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 class FieldFinder {
-    private static final String[] FieldInputTypes = new String[]{"text", "password", "radio", "checkbox", "file"};
+    private static final String[] FieldInputTypes = new String[]{"text", "password", "radio", "checkbox", "file", "email"};
     public static final String[] InputButtonTypes = new String[]{"button", "submit", "image"};
     private final ElementFinder elementFinder;
     private final XPath xPath;

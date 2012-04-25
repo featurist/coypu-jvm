@@ -49,4 +49,10 @@ public class When_finding_fields_id extends DriverSpecs
     {
         assertThat(driver().findField("containerLabeledFileFieldId", root()).getName(), is(equalTo("containerLabeledFileFieldName")));
     }
+
+    @Test
+    public void finds_email()
+    {
+        assertThat(driver().findField("containerLabeledEmailInputFieldId", root()).getName(), is(equalTo("containerLabeledEmailInputFieldName")));
+    }
 }
