@@ -61,10 +61,10 @@ public class ApiExamples
     }
 
     public static String InteractionTestsPage() {
-        return TestPage("InteractionTestsPage.htm");
+        return testPage("InteractionTestsPage.htm");
     }
 
-    public static String TestPage(String page) {
+    public static String testPage(String page) {
         String directory = new File(".").getAbsolutePath().replace("/.","");
         return "file:///" + directory + "/src/test/java/coypu/acceptanceTests/html/" + page;
     }
@@ -126,7 +126,7 @@ public class ApiExamples
 
     @Test
     public void click_example()  {
-        DeferredElementScope element = browser.findButton("clickMeTest",null);
+        ElementScope element = browser.findButton("clickMeTest",null);
         assertThat(browser.findButton("clickMeTest").getValue(), is(equalTo("Click me")));
 
         element.click(null);
@@ -218,13 +218,13 @@ public class ApiExamples
 
     @Test
     public void findCss_example()  {
-        DeferredElementScope first = browser.findCss("#inspectingContent ul#cssTest li");
+        ElementScope first = browser.findCss("#inspectingContent ul#cssTest li");
         assertThat(first.getText(), is(equalTo("one")));
     }
 
     @Test
     public void findXPath_example()  {
-        DeferredElementScope first = browser.findXPath("//*[@id='inspectingContent']//ul[@id='cssTest']/li");
+        ElementScope first = browser.findXPath("//*[@id='inspectingContent']//ul[@id='cssTest']/li");
         assertThat(first.getText(), is(equalTo("one")));
     }
 
@@ -259,7 +259,7 @@ public class ApiExamples
 
     @Test
     public void selectFrom_example()  {
-        DeferredElementScope textField = browser.findField("containerLabeledSelectFieldId");
+        ElementScope textField = browser.findField("containerLabeledSelectFieldId");
         assertThat(textField.getSelectedOption(), is(equalTo("select two option one")));
 
         browser.select("select2value2").from("containerLabeledSelectFieldId");
@@ -360,13 +360,18 @@ public class ApiExamples
         assertThat(browser.findButton("clickMeTest").getValue(), is(equalTo("Click me - clicked")));
     }
 
+    @Test
+    public void getTitle_example()
+    {
+        assertThat(browser.getTitle(), is(equalTo("Coypu interaction tests page")));
+    }
 
     @Test
     public void within_example()  {
         String locatorThatAppearsInMultipleScopes = "scoped text input field linked by for";
 
-        DeferredElementScope expectingScope1 = browser.findId("scope1").findField(locatorThatAppearsInMultipleScopes);
-        DeferredElementScope expectingScope2 = browser.findId("scope2").findField(locatorThatAppearsInMultipleScopes);
+        ElementScope expectingScope1 = browser.findId("scope1").findField(locatorThatAppearsInMultipleScopes);
+        ElementScope expectingScope2 = browser.findId("scope2").findField(locatorThatAppearsInMultipleScopes);
 
         assertThat(expectingScope1.getId(), is(equalTo("scope1TextInputFieldId")));
         assertThat(expectingScope2.getId(), is(equalTo("scope2TextInputFieldId")));
@@ -376,10 +381,10 @@ public class ApiExamples
     public void withinFieldset_example()  {
         String locatorThatAppearsInMultipleScopes = "scoped text input field linked by for";
 
-        DeferredElementScope expectingScope1 = browser.findFieldset("Scope 1")
+        ElementScope expectingScope1 = browser.findFieldset("Scope 1")
                                      .findField(locatorThatAppearsInMultipleScopes);
 
-        DeferredElementScope expectingScope2 = browser.findFieldset("Scope 2")
+        ElementScope expectingScope2 = browser.findFieldset("Scope 2")
                                      .findField(locatorThatAppearsInMultipleScopes);
 
         assertThat(expectingScope1.getId(), is(equalTo("scope1TextInputFieldId")));
@@ -390,8 +395,8 @@ public class ApiExamples
     public void withinSection_example()  {
         String selectorThatAppearsInMultipleScopes = "h2";
 
-        DeferredElementScope expectingScope1 = browser.findSection("Section One h1").findCss(selectorThatAppearsInMultipleScopes);
-        DeferredElementScope expectingScope2 = browser.findSection("Div Section Two h1").findCss(selectorThatAppearsInMultipleScopes);
+        ElementScope expectingScope1 = browser.findSection("Section One h1").findCss(selectorThatAppearsInMultipleScopes);
+        ElementScope expectingScope2 = browser.findSection("Div Section Two h1").findCss(selectorThatAppearsInMultipleScopes);
 
         assertThat(expectingScope1.getText(), is(equalTo("Section One h2")));
         assertThat(expectingScope2.getText(), is(equalTo("Div Section Two h2")));
@@ -401,16 +406,30 @@ public class ApiExamples
     public void withinIFrame_example()  {
         String selectorThatAppearsInMultipleScopes = "scoped button";
 
-        DeferredElementScope expectingScope1 = browser.findIFrame("iframe1").findButton(selectorThatAppearsInMultipleScopes);
-        DeferredElementScope expectingScope2 = browser.findIFrame("iframe2").findButton(selectorThatAppearsInMultipleScopes);
+        ElementScope expectingScope1 = browser.findFrame("iframe1").findButton(selectorThatAppearsInMultipleScopes);
+        ElementScope expectingScope2 = browser.findFrame("iframe2").findButton(selectorThatAppearsInMultipleScopes);
 
         assertThat(expectingScope1.getId(), is(equalTo("iframe1ButtonId")));
         assertThat(expectingScope2.getId(), is(equalTo("iframe2ButtonId")));
     }
 
     @Test
+    public void withinFrame_example()
+    {
+        browser.visit(testPage("frameset.htm"));
+
+        String selectorThatAppearsInMultipleScopes = "scoped button";
+
+        ElementScope expectingScope1 = browser.findFrame("frame1").findButton(selectorThatAppearsInMultipleScopes);
+        ElementScope expectingScope2 = browser.findFrame("frame2").findButton(selectorThatAppearsInMultipleScopes);
+
+        assertThat(expectingScope1.getId(), is(equalTo("frame1ButtonId")));
+        assertThat(expectingScope2.getId(), is(equalTo("frame2ButtonId")));
+    }
+
+    @Test
     public void multiple_interactions_within_iframe_example()  {
-        IFrameDeferredElementScope iframe = browser.findIFrame("I am iframe one");
+        ElementScope iframe = browser.findFrame("I am iframe one");
         iframe.fillIn("text input in iframe").with("filled in");
         assertThat(iframe.findField("text input in iframe").getValue(), is(equalTo("filled in")));
     }
@@ -423,7 +442,7 @@ public class ApiExamples
         {
             browser.fillIn("forLabeledFileFieldId").with(someLocalFile.getAbsolutePath());
 
-            DeferredElementScope findAgain = browser.findField("forLabeledFileFieldId");
+            ElementScope findAgain = browser.findField("forLabeledFileFieldId");
             assertThat(findAgain.getValue().endsWith("/local.file"), is(true));
         }
         finally

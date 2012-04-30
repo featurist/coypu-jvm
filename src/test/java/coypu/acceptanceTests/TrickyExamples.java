@@ -36,17 +36,17 @@ public class TrickyExamples
 
     private void visitTestPage(String page)
     {
-        browser.visit(ApiExamples.TestPage(page));
+        browser.visit(ApiExamples.testPage(page));
     }
 
     @Test
     public void scope_becomes_stale()  {
         visitTestPage("tricky.htm");
 
-        DeferredElementScope section1 = browser.findSection("section 1");
+        ElementScope section1 = browser.findSection("section 1");
         assertThat(section1.findLink("the link").exists(), is(true));
 
-        String originalLocation = browser.location();
+        String originalLocation = browser.getLocation();
 
         visitTestPage("iFrame1.htm");
 
@@ -61,10 +61,10 @@ public class TrickyExamples
     public void scope_becomes_stale_iframe()  {
         visitTestPage("InteractionTestsPage.htm");
 
-        String originalLocation = browser.location();
+        String originalLocation = browser.getLocation();
 
-        DeferredElementScope iframe = browser.findIFrame("iframe1");
-        DeferredElementScope button = iframe.findButton("scoped button");
+        ElementScope iframe = browser.findFrame("iframe1");
+        ElementScope button = iframe.findButton("scoped button");
 
         assertThat(iframe.hasContent("I am iframe one"), is(true));
 
@@ -86,7 +86,7 @@ public class TrickyExamples
         browser.clickLink("Open pop up window");
 
         BrowserWindow popUp = browser.findWindow("Pop Up Window");
-        DeferredElementScope button = popUp.findButton("scoped button");
+        ElementScope button = popUp.findButton("scoped button");
 
         assertThat(button.exists(),is(true));
         assertThat(popUp.hasContent("I am a pop up window"),is(true));

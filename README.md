@@ -16,7 +16,7 @@ To use Coypu from Maven add the following dependencies in your [POM](http://mave
 <dependency>
     <groupId>net.featurist</groupId>
     <artifactId>coypu</artifactId>
-    <version>0.8.0-SNAPSHOT</version>
+    <version>0.9.0-SNAPSHOT</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -163,6 +163,12 @@ If you need to step away and visit a site outside of the `SessionConfiguration.A
 
 	browser.visit("https://gmail.com")
 	browser.visit("file:///C:/users/adiel/localstuff.htm")
+
+#### Getting the current page url
+	browser.getLocation()
+
+#### Getting the page title
+	browser.getTitle()
 
 #### Completing forms
 

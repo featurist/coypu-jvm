@@ -1,12 +1,12 @@
 package coypu.unitTests.When_interacting_with_the_browser;
 
 import coypu.BrowserSession;
-import coypu.DeferredElementScope;
-import coypu.SessionConfiguration;
+import coypu.ElementScope;
 import coypu.Queries.Query;
+import coypu.SessionConfiguration;
+import coypu.TimeSpan;
 import coypu.unitTests.TestBuilders.TestSessionBuilder;
 import coypu.unitTests.TestDoubles.*;
-import coypu.TimeSpan;
 import org.junit.Before;
 
 import static org.hamcrest.core.Is.is;
@@ -21,7 +21,7 @@ public abstract class BrowserInteractionTests
     protected SpyRobustWrapper spyRobustWrapper;
     protected StubUrlBuilder stubUrlBuilder;
     protected SessionConfiguration sessionConfiguration;
-    protected DeferredElementScope elementScope;
+    protected ElementScope elementScope;
 
     @Before
     public void baseSetUp()

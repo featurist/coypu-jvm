@@ -1,6 +1,7 @@
 package coypu;
 
 import coypu.Actions.Click;
+import coypu.Actions.Hover;
 import coypu.Finders.ElementFinder;
 import coypu.Queries.ElementExistsQuery;
 import coypu.Queries.ElementMissingQuery;
@@ -59,6 +60,15 @@ public class DeferredElementScope extends DriverScope implements ElementScope {
     public DeferredElementScope click(Options options) {
         retryUntilTimeout(new Click(this, driver, setOptions(options)));
         return this;
+    }
+
+    public DeferredElementScope hover(Options options) {
+        retryUntilTimeout(new Hover(this, driver, setOptions(options)));
+        return this;
+    }
+
+    public DeferredElementScope hover() {
+        return hover(sessionConfiguration);
     }
 
     @Override

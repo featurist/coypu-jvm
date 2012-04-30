@@ -1,10 +1,10 @@
 package coypu.unitTests.TestDoubles;
 
 import coypu.Driver;
-import coypu.DriverScope;
 import coypu.Drivers.Browser;
 import coypu.Element;
 import coypu.ElementFound;
+import coypu.Scope;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,17 +20,17 @@ public class StubDriver implements Driver
     {
     }
 
-    public ElementFound findButton(String locator,DriverScope scope)
+    public ElementFound findButton(String locator,Scope scope)
     {
         return null;
     }
 
-    public ElementFound findLink(String linkText, DriverScope scope)
+    public ElementFound findLink(String linkText, Scope scope)
     {
         return null;
     }
 
-    public ElementFound findField(String locator, DriverScope scope)
+    public ElementFound findField(String locator, Scope scope)
     {
         return null;
     }
@@ -56,47 +56,47 @@ public class StubDriver implements Driver
         return "Native driver on stub driver";
     }
 
-    public boolean hasContent(String text, DriverScope scope)
+    public boolean hasContent(String text, Scope scope)
     {
         return false;
     }
 
-    public boolean hasContentMatch(Pattern pattern, DriverScope scope)
+    public boolean hasContentMatch(Pattern pattern, Scope scope)
     {
         return false;
     }
 
-    public boolean hasCss(String cssSelector, DriverScope scope)
+    public boolean hasCss(String cssSelector, Scope scope)
     {
         return false;
     }
 
-    public boolean hasXPath(String xpath, DriverScope scope)
+    public boolean hasXPath(String xpath, Scope scope)
     {
         return false;
     }
 
-    public boolean hasDialog(String withText, DriverScope scope)
+    public boolean hasDialog(String withText, Scope scope)
     {
         return false;
     }
 
-    public ElementFound findCss(String cssSelector, DriverScope scope)
+    public ElementFound findCss(String cssSelector, Scope scope)
     {
         return null;
     }
 
-    public ElementFound findXPath(String xpath, DriverScope scope)
+    public ElementFound findXPath(String xpath, Scope scope)
     {
         return null;
     }
 
-    public List<ElementFound> findAllCss(String cssSelector, DriverScope scope)
+    public List<ElementFound> findAllCss(String cssSelector, Scope scope)
     {
         return new ArrayList<ElementFound>();
     }
 
-    public List<ElementFound> findAllXPath(String xpath, DriverScope scope)
+    public List<ElementFound> findAllXPath(String xpath, Scope scope)
     {
         return new ArrayList<ElementFound>();
     }
@@ -121,7 +121,7 @@ public class StubDriver implements Driver
         return false;
     }
 
-    public String location()
+    public String getLocation(Scope scope)
     {
         return null;
     }
@@ -131,11 +131,11 @@ public class StubDriver implements Driver
         return null;
     }
 
-    public void acceptModalDialog(DriverScope scope)
+    public void acceptModalDialog(Scope scope)
     {
     }
 
-    public void cancelModalDialog(DriverScope scope)
+    public void cancelModalDialog(Scope scope)
     {
     }
 
@@ -149,27 +149,27 @@ public class StubDriver implements Driver
         
     }
 
-    public String executeScript(String javascript, DriverScope scope)
+    public String executeScript(String javascript, Scope scope)
     {
         return null;
     }
 
-    public ElementFound findFieldset(String locator, DriverScope scope)
+    public ElementFound findFieldset(String locator, Scope scope)
     {
         return null;
     }
 
-    public ElementFound findSection(String locator, DriverScope scope)
+    public ElementFound findSection(String locator, Scope scope)
     {
         return null;
     }
 
-    public ElementFound findId(String id, DriverScope scope)
+    public ElementFound findId(String id, Scope scope)
     {
         return null;
     }
 
-    public ElementFound findIFrame(String locator, DriverScope scope)
+    public ElementFound findFrame(String locator, Scope scope)
     {
         return null;
     }
@@ -183,8 +183,13 @@ public class StubDriver implements Driver
 //        return new List<Cookie>();
 //    }
 
-    public ElementFound findWindow(String locator, DriverScope scope)
+    public ElementFound findWindow(String locator, Scope scope)
     {
+        return null;
+    }
+
+    @Override
+    public String getTitle(Scope scope) {
         return null;
     }
 

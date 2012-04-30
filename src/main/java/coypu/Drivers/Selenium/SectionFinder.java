@@ -1,14 +1,13 @@
 package coypu.Drivers.Selenium;
 
-import coypu.*;
 import com.google.common.base.Predicate;
+import coypu.Iterators;
+import coypu.Scope;
+import coypu.StringJoiner;
 import org.openqa.selenium.By;
-import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
 
 import javax.annotation.Nullable;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,28 +23,28 @@ class SectionFinder {
         this.textMatcher = textMatcher;
     }
 
-    public WebElement findSection(String locator, DriverScope scope) {
+    public WebElement findSection(String locator, Scope scope) {
         WebElement byHeaderText = findSectionByHeaderText(locator, scope);
         if (byHeaderText != null) return byHeaderText;
 
         return Iterators.firstOrDefault(elementFinder.find(By.id(locator), scope), isSection(), scope);
     }
 
-    private WebElement findSectionByHeaderText(String locator, DriverScope scope) {
+    private WebElement findSectionByHeaderText(String locator, Scope scope) {
         WebElement byHeaderText = findSectionByHeaderText(locator, "section", scope);
         if (byHeaderText != null) return byHeaderText;
 
         return findSectionByHeaderText(locator, "div", scope);
     }
 
-    private WebElement findSectionByHeaderText(String locator, String sectionTag, DriverScope scope) {
+    private WebElement findSectionByHeaderText(String locator, String sectionTag, Scope scope) {
         String headersXPath = StringJoiner.join(" or ", headerTags);
         List<WebElement> withAHeader = elementFinder.find(By.xpath(String.format(".//%1$s[%2$s]", sectionTag, headersXPath)), scope);
 
         return Iterators.firstOrDefault(withAHeader, whereAHeaderMatches(locator, scope), scope);
     }
 
-    private Predicate<WebElement> whereAHeaderMatches(final String locator, final DriverScope scope) {
+    private Predicate<WebElement> whereAHeaderMatches(final String locator, final Scope scope) {
         return new Predicate<WebElement>() {
             @Override
             public boolean apply(@Nullable WebElement container) {

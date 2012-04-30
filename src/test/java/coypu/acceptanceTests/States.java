@@ -45,7 +45,7 @@ public class States
 
     private void reloadTestPage()
     {
-        browser.visit(ApiExamples.TestPage("states.htm"));
+        browser.visit(ApiExamples.testPage("states.htm"));
     }
 
     //

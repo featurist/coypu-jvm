@@ -25,7 +25,11 @@ public class DriverSpecs
     @Before
     public void setUp()
     {
-        driver().visit(ApiExamples.InteractionTestsPage());
+        driver().visit(testPage());
+    }
+
+    protected String testPage() {
+        return ApiExamples.InteractionTestsPage();
     }
 
     @BeforeClass

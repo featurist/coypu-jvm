@@ -1,7 +1,7 @@
 package coypu.Drivers.Selenium;
 
-import coypu.DriverScope;
 import coypu.Drivers.XPath;
+import coypu.Scope;
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
@@ -15,12 +15,12 @@ class ElementFinder {
         this.xPath = xPath;
     }
 
-    public List<WebElement> find(By by, DriverScope scope) {
+    public List<WebElement> find(By by, Scope scope) {
         SearchContext context = seleniumScope(scope);
         return context.findElements(by);
     }
 
-    public SearchContext seleniumScope(DriverScope scope) {
+    public SearchContext seleniumScope(Scope scope) {
         return (SearchContext) scope.now().getNative();
     }
 }

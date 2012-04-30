@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Iterators {
 
-    public static WebElement firstOrDefault(List<WebElement> list, DriverScope scope) {
+    public static WebElement firstOrDefault(List<WebElement> list, Scope scope) {
         for (WebElement item : list) {
             if (isDisplayed(item, scope))
                 return item;
@@ -24,7 +24,7 @@ public class Iterators {
         return null;
     }
 
-    public static WebElement firstOrDefault(List<WebElement> list, Predicate<WebElement> predicate, DriverScope scope) {
+    public static WebElement firstOrDefault(List<WebElement> list, Predicate<WebElement> predicate, Scope scope) {
         for (WebElement item : list) {
             if (predicate.apply(item) && isDisplayed(item, scope))
                 return item;
@@ -32,7 +32,7 @@ public class Iterators {
         return null;
     }
 
-    public static ArrayList<WebElement> allVisible(List<WebElement> list, DriverScope scope) {
+    public static ArrayList<WebElement> allVisible(List<WebElement> list, Scope scope) {
         ArrayList<WebElement> allVisible = new ArrayList<WebElement>();
         for (WebElement item : list) {
             if (isDisplayed(item, scope))
@@ -41,7 +41,7 @@ public class Iterators {
         return allVisible;
     }
 
-    public static boolean isDisplayed(WebElement e, DriverScope scope) {
+    public static boolean isDisplayed(WebElement e, Scope scope) {
         return scope.considerInvisibleElements() || e.isDisplayed();
     }
 }

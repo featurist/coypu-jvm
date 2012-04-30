@@ -28,6 +28,10 @@ public interface ElementScope extends Scope, Element {
 
     DeferredElementScope click(Options options);
 
+    DeferredElementScope hover();
+
+    DeferredElementScope hover(Options options);
+
     boolean exists();
 
     boolean exists(Options options);
@@ -35,4 +39,6 @@ public interface ElementScope extends Scope, Element {
     boolean missing();
 
     boolean missing(Options options);
+
 }
+

@@ -82,7 +82,7 @@ public class BrowserSession extends BrowserWindow {
     *  Saves a resource from the web to a local file using the cookies from the current browser session.
     *  Allows you to sign in through the browser and then directly download a resource restricted to signed-in users.
     *
-    *  @param   resource     The location of the resource to download
+    *  @param   resource     The getLocation of the resource to download
     *  @param   saveAs    Path to save the file to
     */
     public void saveWebResource(String resource, String saveAs) {

@@ -22,7 +22,8 @@ public class SeleniumWebDriver implements Driver {
         return disposed;
     }
 
-    public String location() {
+    public String getLocation(Scope scope) {
+        elementFinder.seleniumScope(scope);
         return webDriver.getCurrentUrl();
     }
 
@@ -33,7 +34,7 @@ public class SeleniumWebDriver implements Driver {
     private WebDriver webDriver;
     private final ElementFinder elementFinder;
     private final FieldFinder fieldFinder;
-    private final IFrameFinder iframeFinder;
+    private final FrameFinder frameFinder;
     private final ButtonFinder buttonFinder;
     private final SectionFinder sectionFinder;
     private final TextMatcher textMatcher;
@@ -52,7 +53,7 @@ public class SeleniumWebDriver implements Driver {
         xPath = new XPath();
         elementFinder = new ElementFinder(xPath);
         fieldFinder = new FieldFinder(elementFinder, xPath);
-        iframeFinder = new IFrameFinder(this.webDriver, elementFinder, xPath);
+        frameFinder = new FrameFinder(this.webDriver, elementFinder, xPath);
         textMatcher = new TextMatcher();
         buttonFinder = new ButtonFinder(elementFinder, textMatcher, xPath);
         sectionFinder = new SectionFinder(elementFinder, textMatcher);
@@ -76,16 +77,16 @@ public class SeleniumWebDriver implements Driver {
         return window().getNative();
     }
 
-    public ElementFound findField(String locator, DriverScope scope) {
+    public ElementFound findField(String locator, Scope scope) {
         return buildElement(fieldFinder.findField(locator, scope), "No such field: " + locator);
     }
 
-    public ElementFound findButton(String locator, DriverScope scope) {
+    public ElementFound findButton(String locator, Scope scope) {
         return buildElement(buttonFinder.findButton(locator, scope), "No such button: " + locator);
     }
 
-    public ElementFound findIFrame(String locator, DriverScope scope) {
-        WebElement element = iframeFinder.findIFrame(locator, scope);
+    public ElementFound findFrame(String locator, Scope scope) {
+        WebElement element = frameFinder.findFrame(locator, scope);
 
         if (element == null)
             throw new MissingHtmlException("Failed to find frame: " + locator);
@@ -93,15 +94,15 @@ public class SeleniumWebDriver implements Driver {
         return new SeleniumFrame(element, webDriver);
     }
 
-    public ElementFound findLink(String linkText, DriverScope scope) {
+    public ElementFound findLink(String linkText, Scope scope) {
         return buildElement(Iterators.firstOrDefault(find(By.linkText(linkText), scope), scope), "No such link: " + linkText);
     }
 
-    public ElementFound findId(String id, DriverScope scope) {
+    public ElementFound findId(String id, Scope scope) {
         return buildElement(Iterators.firstOrDefault(find(By.id(id), scope), scope), "Failed to find id: " + id);
     }
 
-    public ElementFound findFieldset(String locator, DriverScope scope) {
+    public ElementFound findFieldset(String locator, Scope scope) {
 
         WebElement fieldset = Iterators.firstOrDefault(find(By.xpath(xPath.format(".//fieldset[legend[text() = %1$s]]", locator)), scope), scope);
 
@@ -120,25 +121,25 @@ public class SeleniumWebDriver implements Driver {
         };
     }
 
-    public ElementFound findSection(String locator, DriverScope scope) {
+    public ElementFound findSection(String locator, Scope scope) {
         return buildElement(sectionFinder.findSection(locator, scope), "Failed to find section: " + locator);
     }
 
-    public ElementFound findCss(String cssSelector, DriverScope scope) {
+    public ElementFound findCss(String cssSelector, Scope scope) {
         return buildElement(Iterators.firstOrDefault(find(By.cssSelector(cssSelector), scope), scope), "No element found by css: " + cssSelector);
     }
 
-    public ElementFound findXPath(String xpath, DriverScope scope) {
+    public ElementFound findXPath(String xpath, Scope scope) {
         return buildElement(Iterators.firstOrDefault(find(By.xpath(xpath), scope), scope), "No element found by xpath: " + xpath);
     }
 
-    public List<ElementFound> findAllCss(String cssSelector, DriverScope scope) {
+    public List<ElementFound> findAllCss(String cssSelector, Scope scope) {
         ArrayList<WebElement> allVisible = Iterators.allVisible(find(By.cssSelector(cssSelector), scope), scope);
 
         return asElementsFound(allVisible);
     }
 
-    public List<ElementFound> findAllXPath(String xpath, DriverScope scope) {
+    public List<ElementFound> findAllXPath(String xpath, Scope scope) {
         ArrayList<WebElement> allVisible = Iterators.allVisible(find(By.xpath(xpath), scope), scope);
 
         return asElementsFound(allVisible);
@@ -152,7 +153,7 @@ public class SeleniumWebDriver implements Driver {
         return elements;
     }
 
-    private List<WebElement> find(By by, DriverScope scope) {
+    private List<WebElement> find(By by, Scope scope) {
         return elementFinder.find(by, scope);
     }
 
@@ -167,15 +168,15 @@ public class SeleniumWebDriver implements Driver {
         return new SeleniumElement(element);
     }
 
-    public boolean hasContent(String text, DriverScope scope) {
+    public boolean hasContent(String text, Scope scope) {
         return getContent(scope).contains(text);
     }
 
-    public boolean hasContentMatch(Pattern pattern, DriverScope scope) {
+    public boolean hasContentMatch(Pattern pattern, Scope scope) {
         return pattern.matcher(getContent(scope)).find();
     }
 
-    private String getContent(DriverScope scope) {
+    private String getContent(Scope scope) {
         SearchContext seleniumScope = elementFinder.seleniumScope(scope);
         return seleniumScope instanceof WebDriver
                 ? getText(By.cssSelector("body"), seleniumScope)
@@ -187,15 +188,15 @@ public class SeleniumWebDriver implements Driver {
         return normalizeCRLFBetweenBrowserImplementations(pageText);
     }
 
-    public boolean hasCss(String cssSelector, DriverScope scope) {
+    public boolean hasCss(String cssSelector, Scope scope) {
         return Iterators.allVisible(find(By.cssSelector(cssSelector), scope), scope).size() > 0;
     }
 
-    public boolean hasXPath(String xpath, DriverScope scope) {
+    public boolean hasXPath(String xpath, Scope scope) {
         return Iterators.allVisible(find(By.xpath(xpath), scope), scope).size() > 0;
     }
 
-    public boolean hasDialog(String withText, DriverScope scope) {
+    public boolean hasDialog(String withText, Scope scope) {
         elementFinder.seleniumScope(scope);
         return dialogs.hasDialog(withText);
     }
@@ -220,8 +221,12 @@ public class SeleniumWebDriver implements Driver {
 //        }
 //    }
 
-    public ElementFound findWindow(String titleOrName, DriverScope scope) {
+    public ElementFound findWindow(String titleOrName, Scope scope) {
         return new WindowHandle(webDriver, findWindowHandle(titleOrName));
+    }
+
+    public String getTitle(Scope scope) {
+        return  webDriver.getTitle();
     }
 
     private String findWindowHandle(String titleOrName) {
@@ -294,12 +299,12 @@ public class SeleniumWebDriver implements Driver {
         optionSelector.select(element, option);
     }
 
-    public void acceptModalDialog(DriverScope scope) {
+    public void acceptModalDialog(Scope scope) {
         elementFinder.seleniumScope(scope);
         dialogs.acceptModalDialog();
     }
 
-    public void cancelModalDialog(DriverScope scope) {
+    public void cancelModalDialog(Scope scope) {
         elementFinder.seleniumScope(scope);
         dialogs.cancelModalDialog();
     }
@@ -322,7 +327,7 @@ public class SeleniumWebDriver implements Driver {
         seleniumElement(field).click();
     }
 
-    public String executeScript(String javascript, DriverScope scope) {
+    public String executeScript(String javascript, Scope scope) {
         if (noJavascript())
             throw new UnsupportedOperationException("Javascript is not supported by " + browser);
 

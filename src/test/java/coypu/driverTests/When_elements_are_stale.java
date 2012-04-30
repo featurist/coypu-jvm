@@ -36,7 +36,7 @@ public class When_elements_are_stale extends DriverSpecs
     @Test
     public void stale_iframe()
     {
-        ElementFound frame = driver().findIFrame("iframe1", root());
+        ElementFound frame = driver().findFrame("iframe1", root());
         assertThat(frame.stale(), is(false));
 
         driver().click(driver().findButton("destroy frames",root()));
@@ -47,7 +47,7 @@ public class When_elements_are_stale extends DriverSpecs
     @Test
     public void stale_iframe_becomes_invisible()
     {
-        ElementFound frame = driver().findIFrame("iframe1", root());
+        ElementFound frame = driver().findFrame("iframe1", root());
         assertThat(frame.stale(), is(false));
 
         driver().click(driver().findButton("hide frames", root()));

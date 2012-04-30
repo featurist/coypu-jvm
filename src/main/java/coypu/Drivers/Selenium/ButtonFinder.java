@@ -1,9 +1,9 @@
 package coypu.Drivers.Selenium;
 
-import coypu.DriverScope;
+import com.google.common.base.Predicate;
 import coypu.Drivers.XPath;
 import coypu.Iterators;
-import com.google.common.base.Predicate;
+import coypu.Scope;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -40,19 +40,19 @@ class ButtonFinder {
         };
     }
 
-    public WebElement findButton(String locator, DriverScope scope) {
+    public WebElement findButton(String locator, Scope scope) {
         WebElement byText = findButtonByText(locator, scope);
         if (byText != null) return byText;
 
         return findButtonByIdNameOrValue(locator, scope);
     }
 
-    private WebElement findButtonByIdNameOrValue(String locator, DriverScope scope) {
+    private WebElement findButtonByIdNameOrValue(String locator, Scope scope) {
         String xpathToFind = xPath.format(".//*[@id = %1$s or @name = %1$s or @value = %1$s or @alt = %1$s]", locator);
         return Iterators.firstOrDefault(elementFinder.find(By.xpath(xpathToFind), scope), isButton, scope);
     }
 
-    private WebElement findButtonByText(String locator, DriverScope scope) {
+    private WebElement findButtonByText(String locator, Scope scope) {
         WebElement byTagName = Iterators.firstOrDefault(elementFinder.find(By.tagName("button"), scope), textMatches(locator), scope);
         if (byTagName != null) return byTagName;
 

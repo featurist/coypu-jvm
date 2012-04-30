@@ -53,7 +53,7 @@ public interface Scope {
     *  @param   locator    The text/value, name or id of the button
     *  @return                    A button
     */
-    DeferredElementScope findButton(String locator);
+    ElementScope findButton(String locator);
     /**
      *  Find the first input of type button|submit|image or div with the css class "button" to appear within the configured getTimeout .
      *
@@ -65,7 +65,7 @@ public interface Scope {
      *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
      *  @return                    A button
      */
-    DeferredElementScope findButton(String locator, Options options);
+    ElementScope findButton(String locator, Options options);
 
    /**
     *  Find the first matching link to appear within the configured getTimeout
@@ -77,7 +77,7 @@ public interface Scope {
     *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
     *  @return                    A link
     */
-    DeferredElementScope findLink(String locator);
+    ElementScope findLink(String locator);
     /**
      *  Find the first matching link to appear within the configured getTimeout
      *
@@ -89,7 +89,7 @@ public interface Scope {
      *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
      *  @return                    A link
      */
-    DeferredElementScope findLink(String locator, Options options);
+    ElementScope findLink(String locator, Options options);
 
    /**
     *  Find the first form field of any type to appear within the configured getTimeout
@@ -97,7 +97,7 @@ public interface Scope {
     *  @param   locator    The text of the associated label element, the id or name, the placeholder text, the value of a radio button, the last part of the id (for asp.net forms testing)
     *  @return                    A form field
     */
-    DeferredElementScope findField(String locator);
+    ElementScope findField(String locator);
     /**
      *  Find the first form field of any type to appear within the configured getTimeout
      *
@@ -109,7 +109,7 @@ public interface Scope {
      *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
      *  @return                    A form field
      */
-    DeferredElementScope findField(String locator, Options options);
+    ElementScope findField(String locator, Options options);
 
    /**
     *  Find the first matching text field to appear within the configured getTimeout to fill in.
@@ -317,7 +317,7 @@ public interface Scope {
     *  @param   cssSelector    CSS selector
     *  @return                    The first matching element
     */
-    DeferredElementScope findCss(String cssSelector);
+    ElementScope findCss(String cssSelector);
     /**
      *  Find an element matching a CSS selector
      *
@@ -329,7 +329,7 @@ public interface Scope {
      *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
      *  @return                    The first matching element
      */
-    DeferredElementScope findCss(String cssSelector, Options options);
+    ElementScope findCss(String cssSelector, Options options);
 
    /**
     *  Find an element matching an XPath query
@@ -338,7 +338,7 @@ public interface Scope {
     *  @return                    The first matching element
     */
 
-    DeferredElementScope findXPath(String xpath);
+    ElementScope findXPath(String xpath);
     /**
      *  Find an element matching an XPath query
      *
@@ -350,7 +350,7 @@ public interface Scope {
      *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
      *  @return                    The first matching element
      */
-    DeferredElementScope findXPath(String xpath, Options options);
+    ElementScope findXPath(String xpath, Options options);
 
    /**
     *  Find all elements matching a CSS selector at the current moment. Does not wait until the <see cref="SessionConfiguration.Timeout"/> but returns as soon as the driver does.
@@ -423,7 +423,7 @@ public interface Scope {
     *  @param   locator    The text of a child heading element or section id
     *  @return                    An element
     */
-    DeferredElementScope findSection(String locator);
+    ElementScope findSection(String locator);
     /**
      *  Find the first matching section to appear within the configured getTimeout.
      *  <p>Sections are identified by the text of their child heading element, or by id.
@@ -456,7 +456,7 @@ public interface Scope {
      *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
      *  @return                    An element
      */
-    DeferredElementScope findSection(String locator, Options options);
+    ElementScope findSection(String locator, Options options);
 
    /**
     *  Find the first matching fieldset to appear within the configured getTimeout.
@@ -477,7 +477,7 @@ public interface Scope {
     *  @param   locator    The text of a child legend element or fieldset id
     *  @return                    An element
     */
-    DeferredElementScope findFieldset(String locator);
+    ElementScope findFieldset(String locator);
     /**
      *  Find the first matching fieldset to appear within the configured getTimeout.
      *  <p>Fieldsets are identified by the text of their child legend element, or by id.
@@ -502,7 +502,7 @@ public interface Scope {
      *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
      *  @return                    An element
      */
-    DeferredElementScope findFieldset(String locator, Options options);
+    ElementScope findFieldset(String locator, Options options);
 
    /**
     *  Find the first matching IFrame to appear within the configured getTimeout.
@@ -528,7 +528,7 @@ public interface Scope {
     *  @param   locator    The text of a child legend element or fieldset id
     *  @return                    An element
     */
-    IFrameDeferredElementScope findIFrame(String locator);
+    ElementScope findFrame(String locator);
     /**
      *  Find the first matching IFrame to appear within the configured getTimeout.
      *  <p>IFrames are identified by the their id or title attributes, or by the text of the &lt;h1&gt; element in their content.
@@ -558,7 +558,7 @@ public interface Scope {
      *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
      *  @return                    An element
      */
-    IFrameDeferredElementScope findIFrame(String locator, Options options);
+    ElementScope findFrame(String locator, Options options);
 
    /**
     *  Find the first matching element with specified id to appear within the configured getTimeout
@@ -566,7 +566,7 @@ public interface Scope {
     *  @param   id    Element id
     *  @return                    An element
     */
-    DeferredElementScope findId(String id);
+    ElementScope findId(String id);
     /**
      *  Find the first matching element with specified id to appear within the configured getTimeout
      *
@@ -578,7 +578,7 @@ public interface Scope {
      *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
      *  @return                    An element
      */
-    DeferredElementScope findId(String id, Options options);
+    ElementScope findId(String id, Options options);
 
    /**
     *  Check the first checkbox to appear within the configured getTimeout matching the text of the associated label element, the id, name or the last part of the id (for asp.net forms testing).
@@ -647,7 +647,7 @@ public interface Scope {
     *
     *  @param   findElement    A function to find an element
     */
-    boolean has(DeferredElementScope findElement);
+    boolean has (ElementScope findElement);
 
     /**
      *  Query whether an element appears within the configured getTimeout
@@ -659,14 +659,14 @@ public interface Scope {
      *
      *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
      */
-    boolean has(DeferredElementScope findElement, Options options);
+    boolean has (ElementScope findElement, Options options);
 
    /**
     *  Query whether an element does not appear. Returns as soon as the element does not appear or after the <see cref="SessionConfiguration.Timeout"/>
     *
     *  @param   findElement    A function to find an element
     */
-    boolean hasNo(DeferredElementScope findElement);
+    boolean hasNo (ElementScope findElement);
     /**
      *  Query whether an element does not appear. Returns as soon as the element does not appear or after the <see cref="SessionConfiguration.Timeout"/>
      *
@@ -677,7 +677,7 @@ public interface Scope {
      *
      *  <code>new Options{Timeout = TimeSpan .fromSeconds(60)}</code>
      */
-    boolean hasNo(DeferredElementScope findElement, Options options);
+    boolean hasNo (ElementScope findElement, Options options);
 
    /**
     *  Retry an action on any exception until it succeeds. Once the <see cref="SessionConfiguration.Timeout"/> is passed any exception will be rethrown.
@@ -821,4 +821,8 @@ public interface Scope {
     DriverScope clickLink(String locator, PredicateQuery until, TimeSpan waitBeforeRetry, Options options);
 
     ElementFound now();
+
+    boolean considerInvisibleElements();
+
+    String getLocation();
 }

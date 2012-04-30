@@ -86,4 +86,8 @@ public class BrowserWindow extends DriverScope {
     public FillInWith fillIn(Element element, Options options) {
         return new FillInWith(element, driver, robustWrapper, this, setOptions(options));
     }
+
+    public String getTitle() {
+        return driver.getTitle(this);
+    }
 }

@@ -1,8 +1,8 @@
 package coypu.acceptanceTests;
 
 import coypu.BrowserSession;
-import coypu.SessionConfiguration;
 import coypu.MissingHtmlException;
+import coypu.SessionConfiguration;
 import coypu.TimeSpan;
 import org.junit.After;
 import org.junit.Before;
@@ -11,6 +11,7 @@ import org.junit.Test;
 import java.net.URISyntaxException;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -43,10 +44,10 @@ public class Location
     @Test
     public void it_exposes_the_current_page_location() throws URISyntaxException, MissingHtmlException {
         browser.visit("/");
-        assertThat(browser.location(), is(equalTo("http://localhost:4567/")));
+        assertThat(browser.getLocation(), is(equalTo("http://localhost:4567/")));
 
         browser.visit("/auto_login");
-        assertThat(browser.location(), is(equalTo("http://localhost:4567/auto_login")));
+        assertThat(browser.getLocation(), is(equalTo("http://localhost:4567/auto_login")));
     }
 
     private void reloadTestPage()
@@ -57,6 +58,6 @@ public class Location
     @Test
     public void it_exposes_the_location_of_an_iframe_scope()  {
         reloadTestPage();
-        assertThat(browser.findIFrame("iframe1",null).location().endsWith("iFrame1.htm"), is(true));
+        assertThat(browser.findFrame("iframe1", null).getLocation(), endsWith("iFrame1.htm"));
     }
 }

@@ -44,8 +44,8 @@ public class DriverScope implements coypu.Scope {
         sessionConfiguration = outer.sessionConfiguration;
     }
 
-    public String location() {
-        return driver.location();
+    public String getLocation() {
+        return driver.getLocation(this);
     }
 
     public boolean considerInvisibleElements() {
@@ -105,27 +105,27 @@ public class DriverScope implements coypu.Scope {
         return this;
     }
 
-    public DeferredElementScope findButton(String locator) {
+    public ElementScope findButton(String locator) {
         return findButton(locator, sessionConfiguration);
     }
 
-    public DeferredElementScope findButton(String locator, Options options) {
+    public ElementScope findButton(String locator, Options options) {
         return new RobustDeferredElementScope(new ButtonFinder(driver, locator, this), this, setOptions(options));
     }
 
-    public DeferredElementScope findLink(String locator) {
+    public ElementScope findLink(String locator) {
         return findLink(locator, sessionConfiguration);
     }
 
-    public DeferredElementScope findLink(String locator, Options options) {
+    public ElementScope findLink(String locator, Options options) {
         return new RobustDeferredElementScope(new LinkFinder(driver, locator, this), this, setOptions(options));
     }
 
-    public DeferredElementScope findField(String locator) {
+    public ElementScope findField(String locator) {
         return findField(locator, sessionConfiguration);
     }
 
-    public DeferredElementScope findField(String locator, Options options) {
+    public ElementScope findField(String locator, Options options) {
         return new RobustDeferredElementScope(new FieldFinder(driver, locator, this), this, setOptions(options));
     }
 
@@ -209,19 +209,19 @@ public class DriverScope implements coypu.Scope {
         return query(new HasNoXPathQuery(driver, this, xpath, setOptions(options)));
     }
 
-    public DeferredElementScope findCss(String cssSelector, Options options) {
+    public ElementScope findCss(String cssSelector, Options options) {
         return new RobustDeferredElementScope(new CssFinder(driver, cssSelector, this), this, setOptions(options));
     }
 
-    public DeferredElementScope findCss(String cssSelector) {
+    public ElementScope findCss(String cssSelector) {
         return findCss(cssSelector, sessionConfiguration);
     }
 
-    public DeferredElementScope findXPath(String xpath) {
+    public ElementScope findXPath(String xpath) {
         return findXPath(xpath, sessionConfiguration);
     }
     
-    public DeferredElementScope findXPath(String xpath, Options options) {
+    public ElementScope findXPath(String xpath, Options options) {
         return new RobustDeferredElementScope(new XPathFinder(driver, xpath, this), this, setOptions(options));
     }
 
@@ -251,27 +251,27 @@ public class DriverScope implements coypu.Scope {
         return AlreadyFound(driver.findAllXPath(xpath, this));
     }
 
-    public DeferredElementScope findSection(String locator) {
+    public ElementScope findSection(String locator) {
         return findSection(locator, sessionConfiguration);
     }
     
-    public DeferredElementScope findSection(String locator, Options options) {
+    public ElementScope findSection(String locator, Options options) {
         return new RobustDeferredElementScope(new SectionFinder(driver, locator, this), this, setOptions(options));
     }
 
-    public DeferredElementScope findFieldset(String locator) {
+    public ElementScope findFieldset(String locator) {
         return findFieldset(locator, sessionConfiguration);
     }
 
-    public DeferredElementScope findFieldset(String locator, Options options) {
+    public ElementScope findFieldset(String locator, Options options) {
         return new RobustDeferredElementScope(new FieldsetFinder(driver, locator, this), this, setOptions(options));
     }
 
-    public DeferredElementScope findId(String id) {
+    public ElementScope findId(String id) {
         return findId(id, sessionConfiguration);
     }
 
-    public DeferredElementScope findId(String id, Options options) {
+    public ElementScope findId(String id, Options options) {
         return new RobustDeferredElementScope(new IdFinder(driver, id, this), this, setOptions(options));
     }
 
@@ -303,28 +303,19 @@ public class DriverScope implements coypu.Scope {
         return driver.executeScript(javascript, this);
     }
 
-    public DriverScope hover(Options options) {
-        retryUntilTimeout(new Hover(this, driver, setOptions(options)));
-        return this;
-    }
-
-    public DriverScope hover() {
-        return hover(sessionConfiguration);
-    }
-
-    public boolean has(DeferredElementScope findElement) {
+    public boolean has(ElementScope findElement) {
         return has(findElement, sessionConfiguration);
     }
 
-    public boolean has(DeferredElementScope findElement, Options options) {
+    public boolean has(ElementScope findElement, Options options) {
         return findElement.exists(options);
     }
 
-    public boolean hasNo(DeferredElementScope findElement) {
+    public boolean hasNo(ElementScope findElement) {
         return hasNo(findElement, sessionConfiguration);
     }
 
-    public boolean hasNo(DeferredElementScope findElement, Options options) {
+    public boolean hasNo(ElementScope findElement, Options options) {
         return findElement.missing(options);
     }
 
@@ -332,12 +323,12 @@ public class DriverScope implements coypu.Scope {
         query(action);
     }
 
-    public IFrameDeferredElementScope findIFrame(String locator) {
-        return findIFrame(locator, sessionConfiguration);
+    public ElementScope findFrame(String locator) {
+        return findFrame(locator, sessionConfiguration);
     }
 
-    public IFrameDeferredElementScope findIFrame(String locator, Options options) {
-        return new IFrameDeferredElementScope(new IFrameFinder(driver, locator, this), this, setOptions(options));
+    public DeferredElementScope findFrame(String locator, Options options) {
+        return new RobustDeferredElementScope(new FrameFinder(driver, locator, this), this, setOptions(options));
     }
 
     public void tryUntil(BrowserAction tryThis, PredicateQuery until, TimeSpan waitBeforeRetry) {

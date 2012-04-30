@@ -104,11 +104,11 @@ public class When_finding_single_elements extends BrowserInteractionTests
     @Test
     public void findIFrame_should_make_robust_call_to_underlying_driver()
     {
-        driver.stubIFrame(locator, expectedDeferredResult, browserSession);
-        driver.stubIFrame(locator, expectedDeferredResult, elementScope);
+        driver.stubFrame(locator, expectedDeferredResult, browserSession);
+        driver.stubFrame(locator, expectedDeferredResult, elementScope);
 
-        verifyFoundRobustly(browserSession.findIFrame(locator, options).now(), 0);
-        verifyFoundRobustly(elementScope.findIFrame(locator, options).now(), 1);
+        verifyFoundRobustly(browserSession.findFrame(locator, options).now(), 0);
+        verifyFoundRobustly(elementScope.findFrame(locator, options).now(), 1);
     }
 
     @Test

@@ -1,6 +1,6 @@
 package coypu.unitTests.When_interacting_with_the_browser;
 
-import coypu.DriverScope;
+import coypu.Scope;
 import org.junit.Test;
 
 import static coypu.unitTests.When_interacting_with_the_browser.IsEmpty.empty;
@@ -17,7 +17,7 @@ public class When_interacting_with_modal_dialogs extends BrowserInteractionTests
 
         assertThat(driver.ModalDialogsAccepted, is(empty()));
         runQueryAndCheckTiming();
-        assertThat(driver.ModalDialogsAccepted.get(0), is(sameInstance((DriverScope)browserSession)));
+        assertThat(driver.ModalDialogsAccepted.get(0), is(sameInstance((Scope)browserSession)));
     }
 
     @Test
@@ -27,7 +27,7 @@ public class When_interacting_with_modal_dialogs extends BrowserInteractionTests
 
         assertThat(driver.ModalDialogsCancelled, is(empty()));
         runQueryAndCheckTiming();
-        assertThat(driver.ModalDialogsCancelled.get(0), is(sameInstance((DriverScope)browserSession)));
+        assertThat(driver.ModalDialogsCancelled.get(0), is(sameInstance((Scope)browserSession)));
     }
 
 }

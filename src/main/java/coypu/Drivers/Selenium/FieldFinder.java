@@ -1,9 +1,9 @@
 package coypu.Drivers.Selenium;
 
-import coypu.DriverScope;
+import com.google.common.base.Predicate;
 import coypu.Drivers.XPath;
 import coypu.Iterators;
-import com.google.common.base.Predicate;
+import coypu.Scope;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -22,7 +22,7 @@ class FieldFinder {
         this.xPath = xPath;
     }
 
-    public WebElement findField(String locator, DriverScope scope) {
+    public WebElement findField(String locator, Scope scope) {
         WebElement byId = findFieldById(locator, scope);
         if (byId != null) return byId;
 
@@ -38,7 +38,7 @@ class FieldFinder {
         return findRadioButtonFromValue(locator, scope);
     }
 
-    private WebElement findRadioButtonFromValue(String locator, DriverScope scope) {
+    private WebElement findRadioButtonFromValue(String locator, Scope scope) {
         return Iterators.firstOrDefault(elementFinder.find(By.xpath(".//input[@type = 'radio']"), scope), attributeMatches("value", locator), scope);
     }
 
@@ -51,7 +51,7 @@ class FieldFinder {
         };
     }
 
-    private WebElement findFieldFromLabel(String locator, DriverScope scope) {
+    private WebElement findFieldFromLabel(String locator, Scope scope) {
         WebElement label = findLabelByText(locator, scope);
         if (label == null)
             return null;
@@ -65,26 +65,26 @@ class FieldFinder {
         return field;
     }
 
-    private WebElement findLabelByText(String locator, DriverScope scope) {
+    private WebElement findLabelByText(String locator, Scope scope) {
         WebElement byExactText = Iterators.firstOrDefault(elementFinder.find(By.xpath(xPath.format(".//label[text() = %1$s]", locator)), scope), scope);
         if (byExactText != null) return byExactText;
 
         return Iterators.firstOrDefault(elementFinder.find(By.xpath(xPath.format(".//label[contains(text(),%1$s)]", locator)), scope), scope);
     }
 
-    private WebElement findFieldByPlaceholder(String placeholder, DriverScope scope) {
+    private WebElement findFieldByPlaceholder(String placeholder, Scope scope) {
         return Iterators.firstOrDefault(elementFinder.find(By.xpath(xPath.format(".//input[@placeholder = %1$s]", placeholder)), scope), isField(scope), scope);
     }
 
-    private WebElement findFieldByName(String locator, DriverScope scope) {
+    private WebElement findFieldByName(String locator, Scope scope) {
         return Iterators.firstOrDefault(elementFinder.find(By.name(locator), scope), isField(scope), scope);
     }
 
-    private WebElement findFieldById(String id, DriverScope scope) {
+    private WebElement findFieldById(String id, Scope scope) {
         return Iterators.firstOrDefault(elementFinder.find(By.id(id), scope), isField(scope), scope);
     }
 
-    private Predicate<WebElement> isField(final DriverScope scope) {
+    private Predicate<WebElement> isField(final Scope scope) {
         return new Predicate<WebElement>() {
             @Override
             public boolean apply(@Nullable WebElement e) {
@@ -94,7 +94,7 @@ class FieldFinder {
         };
     }
 
-    private boolean isInputField(WebElement e, DriverScope scope) {
+    private boolean isInputField(WebElement e, Scope scope) {
         new ArrayList<String>();
 
         return e.getTagName().equals("input") && (Arrays.asList(FieldInputTypes).contains(e.getAttribute("type")) ||
