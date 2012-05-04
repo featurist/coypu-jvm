@@ -16,7 +16,7 @@ To use Coypu from Maven add the following dependencies in your [POM](http://mave
 <dependency>
     <groupId>net.featurist</groupId>
     <artifactId>coypu</artifactId>
-    <version>0.9.0-SNAPSHOT</version>
+    <version>0.9.1</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -69,7 +69,6 @@ These settings are the default sessionConfiguration.
 ##### Selenium WebDriver
 `coypu.Drivers.Selenium.SeleniumWebDriver` tracks the latest version of WebDriver and supports Firefox, IE (slowest) and Chrome (Fastest) as the browser. Any other Selenium implementation of WebDriver can be configured by subclassing `SeleniumWebDriver` and passing an instance of WebDriver to the base constructor.
 
-<!--TODO: Maven... -->
 The Selenium Driver is included in the Coypu package.
 
 ###### Firefox
