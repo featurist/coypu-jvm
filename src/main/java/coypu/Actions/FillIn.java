@@ -1,45 +1,44 @@
+//
+// Translated by CS2J (http://www.cs2j.com): 03/02/2014 09:15:12
+//
+
 package coypu.Actions;
 
-import coypu.*;
+import coypu.Actions.DriverAction;
+import coypu.Driver;
+import coypu.ElementScope;
+import coypu.Options;
+import CS2JNet.System.StringSupport;
 
-public class FillIn extends DriverAction {
-    private String locator;
-    private DriverScope scope;
-    private String value;
-    private Element element;
-    private boolean forceAllEvents;
-
-    public FillIn(Driver driver, DriverScope scope, String locator, Element elementScope, String value, boolean forceAllEvents, Options options) {
+public class FillIn  extends DriverAction 
+{
+    private final String value;
+    private final ElementScope element;
+    public FillIn(Driver driver, ElementScope element, String value, Options options) throws Exception {
         super(driver, options);
-        this.locator = locator;
-        this.element = elementScope;
-        this.scope = scope;
+        this.element = element;
         this.value = value;
-        this.forceAllEvents = forceAllEvents;
     }
 
-    public Element field() {
-        if (element == null)
-            element = Driver.findField(locator, scope);
-
-        return element;
+    private void bringIntoFocus() throws Exception {
+        Driver.Click(element);
     }
 
-    private void bringIntoFocus() {
-        Driver.click(field());
+    public void set() throws Exception {
+        Driver.Set(element, value);
     }
 
-    public void set() {
-        Driver.set(field(), value, forceAllEvents);
-    }
-
-    public void focus() {
-        if (field().getAttribute("type") != "file")
+    public void focus() throws Exception {
+        if (!StringSupport.equals(element["type"], "file"))
             bringIntoFocus();
+         
     }
 
-    public void act() {
+    public void act() throws Exception {
         focus();
         set();
     }
+
 }
+
+

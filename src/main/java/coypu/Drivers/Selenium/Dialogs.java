@@ -1,30 +1,38 @@
+//
+// Translated by CS2J (http://www.cs2j.com): 03/02/2014 09:15:13
+//
+
 package coypu.Drivers.Selenium;
 
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.WebDriver;
+import CS2JNet.System.StringSupport;
 
-class Dialogs {
-    private final WebDriver selenium;
-
-    public Dialogs(WebDriver selenium) {
+public class Dialogs   
+{
+    private final IWebDriver selenium = new IWebDriver();
+    public Dialogs(IWebDriver selenium) throws Exception {
         this.selenium = selenium;
     }
 
-    public boolean hasDialog(String withText) {
-        try {
-            return selenium.switchTo() != null &&
-                    selenium.switchTo().alert() != null &&
-                    selenium.switchTo().alert().getText().equals(withText);
-        } catch (NoAlertPresentException ex) {
+    public boolean hasDialog(String withText) throws Exception {
+        try
+        {
+            return selenium.SwitchTo() != null && selenium.SwitchTo().Alert() != null && StringSupport.equals(selenium.SwitchTo().Alert().Text, withText);
+        }
+        catch (NoAlertPresentException __dummyCatchVar0)
+        {
             return false;
         }
+    
     }
 
-    public void acceptModalDialog() {
-        selenium.switchTo().alert().accept();
+    public void acceptModalDialog() throws Exception {
+        selenium.SwitchTo().Alert().Accept();
     }
 
-    public void cancelModalDialog() {
-        selenium.switchTo().alert().dismiss();
+    public void cancelModalDialog() throws Exception {
+        selenium.SwitchTo().Alert().Dismiss();
     }
+
 }
+
+

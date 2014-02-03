@@ -1,5 +1,15 @@
+//
+// Translated by CS2J (http://www.cs2j.com): 03/02/2014 09:15:19
+//
+
 package coypu;
 
-public interface UrlBuilder {
-    String getFullyQualifiedUrl(String virtualPath, SessionConfiguration sessionConfiguration);
+import coypu.SessionConfiguration;
+
+public interface UrlBuilder   
+{
+    String getFullyQualifiedUrl(String virtualPath, SessionConfiguration SessionConfiguration) throws Exception ;
+
 }
+
+

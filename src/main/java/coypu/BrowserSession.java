@@ -1,100 +1,115 @@
+//
+// Translated by CS2J (http://www.cs2j.com): 03/02/2014 09:15:13
+//
+
 package coypu;
 
+import coypu.ActivatorDriverFactory;
+import coypu.BrowserWindow;
+import coypu.Driver;
+import coypu.DriverFactory;
+import coypu.Finders.DisambiguationStrategy;
+import coypu.Finders.FinderOptionsDisambiguationStrategy;
 import coypu.Finders.WindowFinder;
-import coypu.Robustness.RetryUntilTimeoutRobustWrapper;
-import coypu.Robustness.RobustWrapper;
-import coypu.Robustness.StopwatchWaiter;
-import coypu.Robustness.Waiter;
+import coypu.FullyQualifiedUrlBuilder;
+import coypu.Options;
+import coypu.RobustWindowScope;
+import coypu.SessionConfiguration;
+import coypu.Timing.RetryUntilTimeoutTimingStrategy;
+import coypu.Timing.StopwatchWaiter;
+import coypu.Timing.TimingStrategy;
+import coypu.Timing.Waiter;
+import coypu.UrlBuilder;
 import coypu.WebRequests.RestrictedResourceDownloader;
-//import coypu.WebRequests.RestrictedResourceDownloader;
-//import coypu.WebRequests.WebClientWithCookies;
+import coypu.WebRequests.WebClientWithCookies;
+import CS2JNet.System.LCC.IDisposable;
 
 /**
 * A browser session
 */
-public class BrowserSession extends BrowserWindow {
+public class BrowserSession  extends BrowserWindow implements IDisposable
+{
+    private final RestrictedResourceDownloader restrictedResourceDownloader;
+    private boolean __WasDisposed;
+    public boolean getWasDisposed() {
+        return __WasDisposed;
+    }
 
-    private boolean wasDisposed;
-    private RestrictedResourceDownloader restrictedResourceDownloader;
-    //private final RestrictedResourceDownloader restrictedResourceDownloader;
+    public void setWasDisposed(boolean value) {
+        __WasDisposed = value;
+    }
 
-   /**
-    *  A new Browser session. Control the lifecycle of this session with using{} / session.dispose()
-    *
-    *  @return                    The new Session with default configuration
+    /**
+    * A new browser session. Control the lifecycle of this session with using{} / session.Dispose()
+    * 
+    *  @return The new session with default configuration
     */
-    public BrowserSession() {
+    public BrowserSession() throws Exception {
         this(new SessionConfiguration());
     }
 
-   /**
-    *  The native driver for the coypu.Driver / browser combination you supplied. E.g. for SeleniumWebDriver + Firefox it will currently be a OpenQA.Selenium.Firefox.FirefoxDriver.
-    */
-    public Object getNative() {
-        return driver.getNative();
+    /// <summary>
+    /// A new browser session. Control the lifecycle of this session with using{} / session.Dispose()
+    /// </summary>
+    /// <param name="SessionConfigurationconfiguration for this session</param>
+    /// <returns>The new session</returns>
+    public BrowserSession(SessionConfiguration SessionConfiguration) throws Exception {
+        this(new ActivatorDriverFactory(), SessionConfiguration, new RetryUntilTimeoutTimingStrategy(), new StopwatchWaiter(), new WebClientWithCookies(), new FullyQualifiedUrlBuilder(), new FinderOptionsDisambiguationStrategy());
     }
 
-   /**
-    *  A new Browser session. Control the lifecycle of this session with using{} / session.dispose()
-    *
-    *  @param   sessionConfiguration    Your configuration for this session
-    *  @return                    The new Session
-    */
-    public BrowserSession(SessionConfiguration sessionConfiguration) {
-        this(new ActivatorDriverFactory(),
-                sessionConfiguration,
-                new RetryUntilTimeoutRobustWrapper(),
-                new StopwatchWaiter(),
-                null, // TODO: Cookies
-                new FullyQualifiedUrlBuilder());
-    }
-
-    public BrowserSession(DriverFactory driver, SessionConfiguration sessionConfiguration, RobustWrapper robustWrapper, Waiter waiter,
-                          RestrictedResourceDownloader restrictedResourceDownloader,
-                          UrlBuilder urlBuilder) {
-        super(sessionConfiguration, null, driver.newWebDriver(sessionConfiguration.Driver, sessionConfiguration.Browser), robustWrapper, waiter, urlBuilder);
+    public BrowserSession(DriverFactory driver, SessionConfiguration SessionConfiguration, TimingStrategy timingStrategy, Waiter waiter, RestrictedResourceDownloader restrictedResourceDownloader, UrlBuilder urlBuilder, DisambiguationStrategy disambiguationStrategy) throws Exception {
+        super(SessionConfiguration, null, driver.newWebDriver(SessionConfiguration.getDriver(),SessionConfiguration.getBrowser()), timingStrategy, waiter, urlBuilder, disambiguationStrategy);
         this.restrictedResourceDownloader = restrictedResourceDownloader;
     }
 
-    public Driver driver() {
+    public Driver getDriver() throws Exception {
         return driver;
     }
 
-
-    public boolean wasDisposed() {
-        return wasDisposed;
-    }
-
-   /**
-    *  Disposes the current session, closing any open browser.
+    /**
+    * The native driver for the Coypu.Driver / browser combination you supplied. E.g. for SeleniumWebDriver + Firefox it will currently be a OpenQA.Selenium.Firefox.FirefoxDriver.
     */
-    public void dispose() {
-        if (wasDisposed)
-            return;
-
-        driver.dispose();
-        ActivatorDriverFactory.OpenDrivers--;
-
-        wasDisposed = true;
+    public Object getNative() throws Exception {
+        return driver.getNative();
     }
 
-   /**
-    *  Saves a resource from the web to a local file using the cookies from the current browser session.
-    *  Allows you to sign in through the browser and then directly download a resource restricted to signed-in users.
-    *
-    *  @param   resource     The getLocation of the resource to download
-    *  @param   saveAs    Path to save the file to
+    /**
+    * Saves a resource from the web to a local file using the cookies from the current browser session.
+    * Allows you to sign in through the browser and then directly download a resource restricted to signed-in users.
+    * 
+    *  @param resource  The location of the resource to download
+    *  @param saveAs Path to save the file to
     */
-    public void saveWebResource(String resource, String saveAs) {
-        //restrictedResourceDownloader.setCookies(driver.getBrowserCookies());
-        //restrictedResourceDownloader.downloadFile(urlBuilder.getFullyQualifiedUrl(resource, configuration), saveAs);
+    public void saveWebResource(String resource, String saveAs) throws Exception {
+        restrictedResourceDownloader.setCookies(driver.getBrowserCookies());
+        restrictedResourceDownloader.downloadFile(urlBuilder.getFullyQualifiedUrl(resource,SessionConfiguration),saveAs);
     }
 
-    public BrowserWindow findWindow(String titleOrName) {
-        return findWindow(titleOrName, sessionConfiguration);
+    /**
+    * Find an open browser window or tab by its title or name. If no exact match is found a partial match on title will be considered.
+    * 
+    *  @param locator Window title or name
+    *  @param options Override the way Coypu is configured to find elements for this call only.E.g. A longer wait:
+    *  {@code new Options{Timeout = TimeSpan.FromSeconds(60)}}
+    * 
+    *  @return The matching BrowserWindow scope
+    */
+    public BrowserWindow findWindow(String locator, Options options) throws Exception {
+        return new RobustWindowScope(new WindowFinder(driver, locator, this, merge(options)),this,merge(options));
     }
 
-    public BrowserWindow findWindow(String titleOrName, Options options) {
-        return new RobustWindowScope(driver, sessionConfiguration, robustWrapper, waiter, urlBuilder, setOptions(options), new WindowFinder(driver, titleOrName, this));
+    /**
+    * Disposes the current session, closing any open browser.
+    */
+    public void dispose() throws Exception {
+        if (getWasDisposed())
+            return ;
+         
+        driver.close();
+        ActivatorDriverFactory.setOpenDrivers(ActivatorDriverFactory.getOpenDrivers() - 1);
+        setWasDisposed(true);
     }
+
 }
+
+

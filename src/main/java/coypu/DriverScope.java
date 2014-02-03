@@ -1,370 +1,343 @@
+//
+// Translated by CS2J (http://www.cs2j.com): 03/02/2014 09:15:16
+//
+
 package coypu;
 
-import coypu.Actions.*;
-import coypu.Finders.*;
-import coypu.Queries.*;
-import coypu.Robustness.RobustWrapper;
-import coypu.Robustness.Waiter;
-
-import java.util.ArrayList;
-import java.util.List;
+import coypu.Actions.BrowserAction;
+import coypu.Actions.CheckAction;
+import coypu.Actions.Choose;
+import coypu.Actions.LambdaBrowserAction;
+import coypu.Actions.Uncheck;
+import coypu.Actions.WaitThenClick;
+import coypu.Driver;
+import coypu.Drivers.Browser;
+import coypu.DriverScope;
+import coypu.ElementFound;
+import coypu.ElementScope;
+import coypu.FillInWith;
+import coypu.Finders.ButtonFinder;
+import coypu.Finders.CssFinder;
+import coypu.Finders.DisambiguationStrategy;
+import coypu.Finders.DocumentElementFinder;
+import coypu.Finders.ElementFinder;
+import coypu.Finders.FieldFinder;
+import coypu.Finders.FieldsetFinder;
+import coypu.Finders.FinderOptionsDisambiguationStrategy;
+import coypu.Finders.FrameFinder;
+import coypu.Finders.IdFinder;
+import coypu.Finders.LinkFinder;
+import coypu.Finders.SectionFinder;
+import coypu.Finders.StateFinder;
+import coypu.Finders.XPathFinder;
+import coypu.Options;
+import coypu.Queries.FindAllCssWithPredicateQuery;
+import coypu.Queries.FindAllXPathWithPredicateQuery;
+import coypu.Queries.HasContentMatchQuery;
+import coypu.Queries.HasContentQuery;
+import coypu.Queries.HasNoContentMatchQuery;
+import coypu.Queries.HasNoContentQuery;
+import coypu.Queries.LambdaPredicateQuery;
+import coypu.Queries.LambdaQuery;
+import coypu.Queries.PredicateQuery;
+import coypu.Queries.Query;
+import coypu.Scope;
+import coypu.SelectFrom;
+import coypu.SessionConfiguration;
+import coypu.SnapshotElementScope;
+import coypu.State;
+import coypu.Timing.TimingStrategy;
+import coypu.Timing.Waiter;
+import coypu.UrlBuilder;
+import CS2JNet.System.Collections.LCC.IEnumerable;
+import CS2JNet.System.TimeSpan;
+import java.net.URI;
 import java.util.regex.Pattern;
 
-public class DriverScope implements coypu.Scope {
-    protected SessionConfiguration sessionConfiguration;
-    private ElementFinder elementFinder;
-    protected DriverScope outerScope;
+public class DriverScope   implements Scope
+{
+    protected final SessionConfiguration SessionConfiguration;
+    public final ElementFinder elementFinder;
     protected Driver driver;
-    protected RobustWrapper robustWrapper;
-    protected Waiter waiter;
-    protected UrlBuilder urlBuilder;
-    protected StateFinder stateFinder;
+    protected TimingStrategy timingStrategy;
+    protected final Waiter waiter;
+    public UrlBuilder urlBuilder;
+    public StateFinder stateFinder;
     private ElementFound element;
-    private Options options;
-
-    public DriverScope(SessionConfiguration sessionConfiguration, ElementFinder elementFinder, Driver driver, RobustWrapper robustWrapper, Waiter waiter, UrlBuilder urlBuilder) {
-        this.elementFinder = elementFinder == null ? new DocumentElementFinder(driver) : elementFinder;
-        this.sessionConfiguration = sessionConfiguration;
+    private final DriverScope outerScope;
+    private final DisambiguationStrategy disambiguationStrategy = new FinderOptionsDisambiguationStrategy();
+    public DriverScope(SessionConfiguration sessionConfiguration, ElementFinder elementFinder, Driver driver, TimingStrategy timingStrategy, Waiter waiter, UrlBuilder urlBuilder, DisambiguationStrategy disambiguationStrategy) throws Exception {
+        this.elementFinder = elementFinder != null ? elementFinder : new DocumentElementFinder(driver, sessionConfiguration);
+        this.SessionConfiguration = sessionConfiguration;
         this.driver = driver;
-        this.robustWrapper = robustWrapper;
+        this.timingStrategy = timingStrategy;
         this.waiter = waiter;
         this.urlBuilder = urlBuilder;
-        stateFinder = new StateFinder(robustWrapper);
+        this.disambiguationStrategy = disambiguationStrategy;
+        stateFinder = new StateFinder(timingStrategy);
     }
 
-    protected DriverScope(ElementFinder elementFinder, DriverScope outer) {
+    public DriverScope(ElementFinder elementFinder, DriverScope outerScope) throws Exception {
         this.elementFinder = elementFinder;
-        this.outerScope = outer;
-        driver = outer.driver;
-        robustWrapper = outer.robustWrapper;
-        urlBuilder = outer.urlBuilder;
-        stateFinder = outer.stateFinder;
-        waiter = outer.waiter;
-        options = outer.sessionConfiguration;
-        sessionConfiguration = outer.sessionConfiguration;
+        this.outerScope = outerScope;
+        driver = outerScope.driver;
+        timingStrategy = outerScope.timingStrategy;
+        urlBuilder = outerScope.urlBuilder;
+        disambiguationStrategy = outerScope.disambiguationStrategy;
+        stateFinder = outerScope.stateFinder;
+        waiter = outerScope.waiter;
+        SessionConfiguration = outerScope.SessionConfiguration;
     }
 
-    public String getLocation() {
-        return driver.getLocation(this);
+    public DriverScope getOuterScope() throws Exception {
+        return outerScope;
     }
 
-    public boolean considerInvisibleElements() {
-        return defaultWhereNull(options).ConsiderInvisibleElements;
+    public URI getLocation() throws Exception {
+        return driver.location(this);
     }
 
-    protected Options setOptions(Options options) {
-        return this.options = defaultWhereNull(options);
+    public String getText() throws Exception {
+        return now().getText();
     }
 
-    private Options defaultWhereNull(Options options) {
-        return options == null ? sessionConfiguration : options;
+    public Browser getBrowser() throws Exception {
+        return SessionConfiguration.getBrowser();
     }
 
-    public void clickButton(String locator) {
-        clickButton(locator, sessionConfiguration);
+    public ElementFinder getElementFinder() throws Exception {
+        return elementFinder;
     }
 
-    public void clickButton(String locator, Options options) {
-        retryUntilTimeout(waitThenClickButton(locator, setOptions(options)));
+    public Options merge(Options options) throws Exception {
+        /* [UNSUPPORTED] 'var' as type is unsupported "var" */ mergeWith = getElementFinder() != null ? getElementFinder().getOptions() : SessionConfiguration;
+        return Options.Merge(options, mergeWith);
     }
 
-    public void clickLink(String locator) {
-        clickLink(locator, sessionConfiguration);
+    public void clickButton(String locator, Options options) throws Exception {
+        retryUntilTimeout(waitThenClickButton(locator,merge(options)));
     }
 
-    public void clickLink(String locator, Options options) {
-        retryUntilTimeout(waitThenClickLink(locator, setOptions(options)));
+    public void clickLink(String locator, Options options) throws Exception {
+        retryUntilTimeout(waitThenClickLink(locator,merge(options)));
     }
 
-
-    private WaitThenClick waitThenClickLink(String locator, Options options) {
-        return new WaitThenClick(driver, setOptions(options), waiter, new LinkFinder(driver, locator, this));
+    private WaitThenClick waitThenClickLink(String locator, Options options) throws Exception {
+        return new WaitThenClick(driver, merge(options), waiter, new LinkFinder(driver, locator, this, merge(options)), disambiguationStrategy);
     }
 
-    private WaitThenClick waitThenClickButton(String locator, Options options) {
-        return new WaitThenClick(driver, setOptions(options), waiter, new ButtonFinder(driver, locator, this));
+    private WaitThenClick waitThenClickButton(String locator, Options options) throws Exception {
+        return new WaitThenClick(driver, merge(options), waiter, new ButtonFinder(driver, locator, this, merge(options)), disambiguationStrategy);
     }
 
-    public DriverScope clickButton(String locator, PredicateQuery until, TimeSpan waitBeforeRetry) {
-        return clickButton(locator, until, waitBeforeRetry, sessionConfiguration);
-    }
-
-    public DriverScope clickButton(String locator, PredicateQuery until, TimeSpan waitBeforeRetry, Options options) {
-        options = setOptions(options);
-        tryUntil(waitThenClickButton(locator, options), until, waitBeforeRetry, options);
+    public Scope clickButton(String locator, PredicateQuery until, Options options) throws Exception {
+        tryUntil(waitThenClickButton(locator,merge(options)),until,merge(options));
         return this;
     }
 
-    public DriverScope clickLink(String locator, PredicateQuery until, TimeSpan waitBeforeRetry) {
-        return clickLink(locator, until, waitBeforeRetry, sessionConfiguration);
-    }
-
-    public DriverScope clickLink(String locator, PredicateQuery until, TimeSpan waitBeforeRetry, Options options) {
-        options = setOptions(options);
-        tryUntil(waitThenClickLink(locator, options), until, waitBeforeRetry, options);
+    public Scope clickLink(String locator, PredicateQuery until, Options options) throws Exception {
+        tryUntil(waitThenClickLink(locator,merge(options)),until,merge(options));
         return this;
     }
 
-    public ElementScope findButton(String locator) {
-        return findButton(locator, sessionConfiguration);
+    public ElementScope findButton(String locator, Options options) throws Exception {
+        return (new ButtonFinder(driver, locator, this, merge(options))).asScope();
     }
 
-    public ElementScope findButton(String locator, Options options) {
-        return new RobustDeferredElementScope(new ButtonFinder(driver, locator, this), this, setOptions(options));
+    public ElementScope findLink(String locator, Options options) throws Exception {
+        return (new LinkFinder(driver, locator, this, merge(options))).asScope();
     }
 
-    public ElementScope findLink(String locator) {
-        return findLink(locator, sessionConfiguration);
+    public ElementScope findField(String locator, Options options) throws Exception {
+        return (new FieldFinder(driver, locator, this, merge(options))).asScope();
     }
 
-    public ElementScope findLink(String locator, Options options) {
-        return new RobustDeferredElementScope(new LinkFinder(driver, locator, this), this, setOptions(options));
+    public FillInWith fillIn(String locator, Options options) throws Exception {
+        return new FillInWith(findField(locator,options),driver,timingStrategy,merge(options));
     }
 
-    public ElementScope findField(String locator) {
-        return findField(locator, sessionConfiguration);
+    public SelectFrom select(String option, Options options) throws Exception {
+        return new SelectFrom(option,driver,timingStrategy,this,merge(options),disambiguationStrategy);
     }
 
-    public ElementScope findField(String locator, Options options) {
-        return new RobustDeferredElementScope(new FieldFinder(driver, locator, this), this, setOptions(options));
+    public boolean hasContent(String text, Options options) throws Exception {
+        return Query(new HasContentQuery(this, text, merge(options)));
     }
 
-    public FillInWith fillIn(String locator) {
-        return fillIn(locator, sessionConfiguration);
+    public boolean hasContentMatch(Pattern pattern, Options options) throws Exception {
+        return Query(new HasContentMatchQuery(this, pattern, merge(options)));
     }
 
-    public FillInWith fillIn(String locator, Options options) {
-        return new FillInWith(locator, driver, robustWrapper, this, setOptions(options));
+    public boolean hasNoContent(String text, Options options) throws Exception {
+        return Query(new HasNoContentQuery(this, text, merge(options)));
     }
 
-    public SelectFrom select(String option) {
-        return select(option, sessionConfiguration);
+    public boolean hasNoContentMatch(Pattern pattern, Options options) throws Exception {
+        return Query(new HasNoContentMatchQuery(this, pattern, merge(options)));
     }
 
-    public SelectFrom select(String option, Options options) {
-        return new SelectFrom(option, driver, robustWrapper, this, setOptions(options));
+    public ElementScope findCss(String cssSelector, Options options) throws Exception {
+        return (new CssFinder(driver, cssSelector, this, merge(options))).asScope();
     }
 
-    public boolean hasContent(String text) {
-        return hasContent(text, sessionConfiguration);
+    public ElementScope findCss(String cssSelector, String text, Options options) throws Exception {
+        return (new CssFinder(driver, cssSelector, this, merge(options), text)).asScope();
     }
 
-    public boolean hasContent(String text, Options options) {
-        return query(new HasContentQuery(driver, this, text, setOptions(options)));
+    public ElementScope findCss(String cssSelector, Pattern text, Options options) throws Exception {
+        return (new CssFinder(driver, cssSelector, this, merge(options), text)).asScope();
     }
 
-    public boolean hasContentMatch(Pattern pattern) {
-        return hasContentMatch(pattern, sessionConfiguration);
+    public ElementScope findXPath(String xpath, Options options) throws Exception {
+        return (new XPathFinder(driver, xpath, this, merge(options))).asScope();
     }
 
-    public boolean hasContentMatch(Pattern pattern, Options options) {
-        return query(new HasContentMatchQuery(driver, this, pattern, setOptions(options)));
+    public boolean hasCss(String cssSelector, String text, Options options) throws Exception {
+        return findCss(cssSelector,text,options).exists();
     }
 
-    public boolean hasNoContent(String text) {
-        return hasNoContent(text, sessionConfiguration);
+    public boolean hasCss(String cssSelector, Pattern text, Options options) throws Exception {
+        return findCss(cssSelector,text,options).exists();
     }
 
-    public boolean hasNoContent(String text, Options options) {
-        return query(new HasNoContentQuery(driver, this, text, setOptions(options)));
+    public boolean hasXPath(String xpath, Options options) throws Exception {
+        return findXPath(xpath,options).exists();
     }
 
-    public boolean hasNoContentMatch(Pattern pattern) {
-        return hasNoContentMatch(pattern, sessionConfiguration);
+    public boolean hasNoCss(String cssSelector, String text, Options options) throws Exception {
+        return findCss(cssSelector,text,options).missing();
     }
 
-    public boolean hasNoContentMatch(Pattern pattern, Options options) {
-        return query(new HasNoContentMatchQuery(driver, this, pattern, setOptions(options)));
+    public boolean hasNoCss(String cssSelector, Pattern text, Options options) throws Exception {
+        return findCss(cssSelector,text,options).missing();
     }
 
-    public boolean hasCss(String cssSelector) {
-        return hasCss(cssSelector, sessionConfiguration);
+    public boolean hasNoXPath(String xpath, Options options) throws Exception {
+        return findXPath(xpath,options).missing();
     }
 
-    public boolean hasCss(String cssSelector, Options options) {
-        return query(new HasCssQuery(driver, this, cssSelector, setOptions(options)));
+    public IEnumerable<SnapshotElementScope> findAllCss(String cssSelector, Func<IEnumerable<SnapshotElementScope>, Boolean> predicate, Options options) throws Exception {
+        if (predicate != null)
+            return Query(new FindAllCssWithPredicateQuery(cssSelector, predicate, this, merge(options)));
+         
+        return findAllCssNoPredicate(cssSelector,merge(options));
     }
 
-    public boolean hasNoCss(String cssSelector) {
-        return hasNoCss(cssSelector, sessionConfiguration);
+    public IEnumerable<SnapshotElementScope> findAllCssNoPredicate(String cssSelector, Options options) throws Exception {
+        return driver.FindAllCss(cssSelector, this, options).AsSnapshotElementScopes(this, options);
     }
 
-    public boolean hasNoCss(String cssSelector, Options options) {
-        return query(new HasNoCssQuery(driver, this, cssSelector, setOptions(options)));
+    public IEnumerable<SnapshotElementScope> findAllXPath(String xpath, Func<IEnumerable<SnapshotElementScope>, Boolean> predicate, Options options) throws Exception {
+        if (predicate != null)
+            return Query(new FindAllXPathWithPredicateQuery(xpath, predicate, this, merge(options)));
+         
+        return findAllXPathNoPredicate(xpath,merge(options));
     }
 
-    public boolean hasXPath(String xpath) {
-        return hasXPath(xpath, sessionConfiguration);
-    }
-    
-    public boolean hasXPath(String xpath, Options options) {
-        return query(new HasXPathQuery(driver, this, xpath, setOptions(options)));
+    public IEnumerable<SnapshotElementScope> findAllXPathNoPredicate(String xpath, Options options) throws Exception {
+        return driver.findAllXPath(xpath,this,options).AsSnapshotElementScopes(this, options);
     }
 
-    public boolean hasNoXPath(String xpath) {
-        return hasNoXPath(xpath, sessionConfiguration);
-    }
-    
-    public boolean hasNoXPath(String xpath, Options options) {
-        return query(new HasNoXPathQuery(driver, this, xpath, setOptions(options)));
+    public ElementScope findSection(String locator, Options options) throws Exception {
+        return (new SectionFinder(driver, locator, this, merge(options))).asScope();
     }
 
-    public ElementScope findCss(String cssSelector, Options options) {
-        return new RobustDeferredElementScope(new CssFinder(driver, cssSelector, this), this, setOptions(options));
+    public ElementScope findFieldset(String locator, Options options) throws Exception {
+        return (new FieldsetFinder(driver, locator, this, merge(options))).asScope();
     }
 
-    public ElementScope findCss(String cssSelector) {
-        return findCss(cssSelector, sessionConfiguration);
+    public ElementScope findId(String id, Options options) throws Exception {
+        return (new IdFinder(driver, id, this, merge(options))).asScope();
     }
 
-    public ElementScope findXPath(String xpath) {
-        return findXPath(xpath, sessionConfiguration);
-    }
-    
-    public ElementScope findXPath(String xpath, Options options) {
-        return new RobustDeferredElementScope(new XPathFinder(driver, xpath, this), this, setOptions(options));
+    public void check(String locator, Options options) throws Exception {
+        retryUntilTimeout(new CheckAction(driver, findField(locator,options), merge(options)));
     }
 
-    public List<ElementScope> findAllCss(String cssSelector) {
-        return findAllCss(cssSelector, sessionConfiguration);
-    }
-    
-    public List<ElementScope> findAllCss(String cssSelector, Options options) {
-        setOptions(options);
-        return AlreadyFound(driver.findAllCss(cssSelector, this));
+    public void uncheck(String locator, Options options) throws Exception {
+        retryUntilTimeout(new Uncheck(driver, findField(locator,options), merge(options)));
     }
 
-    private List<ElementScope> AlreadyFound(List<ElementFound> elements) {
-        List<ElementScope> scopes = new ArrayList<ElementScope>();
-        for (ElementFound element : elements) {
-            scopes.add(new DeferredElementScope(new AlreadyFoundElementFinder(element),this));
-        }
-        return scopes;
+    public void choose(String locator, Options options) throws Exception {
+        retryUntilTimeout(new Choose(driver, findField(locator,options), merge(options)));
     }
 
-    public List<ElementScope> findAllXPath(String xpath) {
-        return findAllXPath(xpath, sessionConfiguration);
-    }
-    
-    public List<ElementScope> findAllXPath(String xpath, Options options) {
-        setOptions(options);
-        return AlreadyFound(driver.findAllXPath(xpath, this));
+    public void retryUntilTimeout(Action action, Options options) throws Exception {
+        timingStrategy.Synchronise(new LambdaBrowserAction(action, merge(options)));
     }
 
-    public ElementScope findSection(String locator) {
-        return findSection(locator, sessionConfiguration);
-    }
-    
-    public ElementScope findSection(String locator, Options options) {
-        return new RobustDeferredElementScope(new SectionFinder(driver, locator, this), this, setOptions(options));
+    public <TResult>TResult retryUntilTimeout(Func<TResult> function, Options options) throws Exception {
+        return timingStrategy.Synchronise(new LambdaQuery<TResult>(function, merge(options)));
     }
 
-    public ElementScope findFieldset(String locator) {
-        return findFieldset(locator, sessionConfiguration);
+    public void retryUntilTimeout(BrowserAction action) throws Exception {
+        Query(action);
     }
 
-    public ElementScope findFieldset(String locator, Options options) {
-        return new RobustDeferredElementScope(new FieldsetFinder(driver, locator, this), this, setOptions(options));
+    public ElementScope findFrame(String locator, Options options) throws Exception {
+        return (new FrameFinder(driver, locator, this, merge(options))).asScope();
     }
 
-    public ElementScope findId(String id) {
-        return findId(id, sessionConfiguration);
+    public <T>T query(Func<T> query, T expecting, Options options) throws Exception {
+        return timingStrategy.synchronise(new LambdaQuery<T>(query, expecting, merge(options)));
     }
 
-    public ElementScope findId(String id, Options options) {
-        return new RobustDeferredElementScope(new IdFinder(driver, id, this), this, setOptions(options));
+    public <T>T query(Query<T> query) throws Exception {
+        return timingStrategy.synchronise(query);
     }
 
-    public void check(String locator) {
-        check(locator, sessionConfiguration);
-    }    
-    
-    public void check(String locator, Options options) {
-        retryUntilTimeout(new Check(driver, this, locator, setOptions(options)));
+    public void tryUntil(Action tryThis, Func<Boolean> until, TimeSpan waitBeforeRetry, Options options) throws Exception {
+        Options mergedOptions = merge(options);
+        Options predicateOptions = Options.merge(new Options(),mergedOptions);
+        timingStrategy.TryUntil(new LambdaBrowserAction(tryThis, mergedOptions), new LambdaPredicateQuery(WithZeroTimeout(until), predicateOptions), mergedOptions);
     }
 
-    public void uncheck(String locator) {
-        uncheck(locator, sessionConfiguration);
+    private Func<Boolean> withZeroTimeout(Func<Boolean> query) throws Exception {
+        /* [UNSUPPORTED] 'var' as type is unsupported "var" */ zeroTimeoutUntil = new Func<Boolean>(/* [UNSUPPORTED] to translate lambda expressions we need an explicit delegate type, try adding a cast "() => {
+            Boolean was = timingStrategy.getZeroTimeout();
+            timingStrategy.setZeroTimeout(true);
+            try
+            {
+                return query();
+            }
+            finally
+            {
+                timingStrategy.setZeroTimeout(was);
+            }
+        }" */);
+        return zeroTimeoutUntil;
     }
 
-    public void uncheck(String locator, Options options) {
-        retryUntilTimeout(new Uncheck(driver, this, locator, setOptions(options)));
+    public void tryUntil(BrowserAction tryThis, PredicateQuery until, Options options) throws Exception {
+        timingStrategy.TryUntil(tryThis, until, merge(options));
     }
 
-    public void choose(String locator) {
-        choose(locator, sessionConfiguration);
+    public State findState(State[] states, Options options) throws Exception {
+        return stateFinder.FindState(states, this, merge(options));
     }
 
-    public void choose(String locator, Options options) {
-        retryUntilTimeout(new Choose(driver, this, locator, setOptions(options)));
+    public State findState(State... states) throws Exception {
+        return findState(states,null);
     }
 
-    public String executeScript(String javascript) {
-        return driver.executeScript(javascript, this);
-    }
-
-    public boolean has(ElementScope findElement) {
-        return has(findElement, sessionConfiguration);
-    }
-
-    public boolean has(ElementScope findElement, Options options) {
-        return findElement.exists(options);
-    }
-
-    public boolean hasNo(ElementScope findElement) {
-        return hasNo(findElement, sessionConfiguration);
-    }
-
-    public boolean hasNo(ElementScope findElement, Options options) {
-        return findElement.missing(options);
-    }
-
-    public void retryUntilTimeout(BrowserAction action) {
-        query(action);
-    }
-
-    public ElementScope findFrame(String locator) {
-        return findFrame(locator, sessionConfiguration);
-    }
-
-    public DeferredElementScope findFrame(String locator, Options options) {
-        return new RobustDeferredElementScope(new FrameFinder(driver, locator, this), this, setOptions(options));
-    }
-
-    public void tryUntil(BrowserAction tryThis, PredicateQuery until, TimeSpan waitBeforeRetry) {
-        tryUntil(tryThis,until,waitBeforeRetry, sessionConfiguration);
-    }
-
-    public void tryUntil(BrowserAction tryThis, PredicateQuery until, TimeSpan waitBeforeRetry, Options options) {
-        robustWrapper.tryUntil(tryThis, until, setOptions(options).Timeout, waitBeforeRetry);
-    }
-
-    public State findState(State... states) {
-        return findState(states,options);
-    }
-
-    public State findState(State[] states, Options options) {
-        return stateFinder.findState(setOptions(options), states);
-    }
-
-   /**
-    *  Try and find this scope now
-    *
-    *  @return
+    /**
+    * Try and find this scope now
+    * 
+    *  @return 
+    *  @throws T:Coypu.MissingHtmlException Thrown if the element cannot be found
+    *  @throws T:Coypu.AmbiguousHtmlException Thrown if the there is more than one matching element and the Match.Single option is set
     */
-    @Override
-    public ElementFound now() {
+    public ElementFound now() throws Exception {
         return findElement();
     }
 
-    public ElementFound findElement() {
-        if (element == null || element.stale())
-            element = elementFinder.find();
-
+    protected public ElementFound findElement() throws Exception {
+        if (element == null || element.Stale(getElementFinder().getOptions()))
+            element = disambiguationStrategy.resolveQuery(getElementFinder());
+         
         return element;
     }
 
-    public <T> T query(Query<T> query) {
-        return robustWrapper.robustly(query);
-    }
 }
+
+

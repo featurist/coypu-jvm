@@ -1,5 +1,16 @@
+//
+// Translated by CS2J (http://www.cs2j.com): 03/02/2014 09:15:13
+//
+
 package coypu;
 
-public interface DriverFactory {
-    Driver newWebDriver(Class driverType, coypu.Drivers.Browser browser);
+import coypu.Driver;
+import coypu.Drivers.Browser;
+
+public interface DriverFactory   
+{
+    Driver newWebDriver(Class driverType, Browser browser) throws Exception ;
+
 }
+
+

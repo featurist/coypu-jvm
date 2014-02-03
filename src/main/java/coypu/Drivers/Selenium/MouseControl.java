@@ -1,22 +1,25 @@
+//
+// Translated by CS2J (http://www.cs2j.com): 03/02/2014 09:15:13
+//
+
 package coypu.Drivers.Selenium;
 
 import coypu.Element;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
 
-class MouseControl {
-    private final WebDriver selenium;
-
-    public MouseControl(WebDriver selenium) {
+public class MouseControl   
+{
+    private final IWebDriver selenium = new IWebDriver();
+    public MouseControl(IWebDriver selenium) throws Exception {
         this.selenium = selenium;
     }
 
-    public void hover(Element element) {
-        Actions sequenceBuilder = new Actions(selenium);
-        Actions actionSequenceBuilder = sequenceBuilder.moveToElement((WebElement) element.getNative());
-        Action action = actionSequenceBuilder.build();
-        action.perform();
+    public void hover(Element element) throws Exception {
+        /* [UNSUPPORTED] 'var' as type is unsupported "var" */ sequenceBuilder = new OpenQA.Selenium.Interactions.Actions(selenium);
+        /* [UNSUPPORTED] 'var' as type is unsupported "var" */ actionSequenceBuilder = sequenceBuilder.MoveToElement((IWebElement)element.getNative());
+        /* [UNSUPPORTED] 'var' as type is unsupported "var" */ action = actionSequenceBuilder.Build();
+        action.Perform();
     }
+
 }
+
+

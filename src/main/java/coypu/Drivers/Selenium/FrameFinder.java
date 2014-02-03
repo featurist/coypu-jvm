@@ -1,52 +1,55 @@
+//
+// Translated by CS2J (http://www.cs2j.com): 03/02/2014 09:15:13
+//
+
 package coypu.Drivers.Selenium;
 
-import com.google.common.base.Predicate;
+import coypu.Drivers.Selenium.ElementFinder;
 import coypu.Drivers.XPath;
-import coypu.Iterators;
+import coypu.Options;
 import coypu.Scope;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import CS2JNet.System.Collections.LCC.IEnumerable;
+import CS2JNet.System.StringSupport;
 
-import javax.annotation.Nullable;
-
-class FrameFinder {
-    private final WebDriver selenium;
+public class FrameFinder   
+{
+    private final IWebDriver selenium = new IWebDriver();
     private final ElementFinder elementFinder;
     private final XPath xPath;
-
-    public FrameFinder(WebDriver selenium, ElementFinder elementFinder, XPath xPath) {
+    public FrameFinder(IWebDriver selenium, ElementFinder elementFinder, XPath xPath) throws Exception {
         this.selenium = selenium;
         this.elementFinder = elementFinder;
         this.xPath = xPath;
     }
 
-    public WebElement findFrame(final String locator, Scope scope) {
-        Predicate<WebElement> predicate = new Predicate<WebElement>() {
-            @Override
-            public boolean apply(@Nullable WebElement e) {
-                return e.getAttribute("id").equals(locator) ||
-                        e.getAttribute("title").equals(locator) ||
-                        e.getAttribute("name").equals(locator) ||
-                        frameContentsMatch(e, locator);
-            }
-        };
-        WebElement iFrame = Iterators.firstOrDefault(elementFinder.find(By.tagName("iframe"), scope), predicate, scope);
-        if (iFrame != null)
-            return iFrame;
-
-        return Iterators.firstOrDefault(elementFinder.find(By.tagName("frame"), scope), predicate, scope);
+    public IEnumerable<IWebElement> findFrame(String locator, Scope scope, Options options) throws Exception {
+        /* [UNSUPPORTED] 'var' as type is unsupported "var" */ frames = AllElementsByTag(scope, "iframe", options).Union(AllElementsByTag(scope, "frame", options));
+        return WebElement(locator, frames, options);
     }
 
-    private boolean frameContentsMatch(WebElement e, String locator) {
-        String currentHandle = selenium.getWindowHandle();
-        try {
-            WebDriver frame = selenium.switchTo().frame(e);
-            return
-                    frame.getTitle().equals(locator) ||
-                    frame.findElements(By.xpath(xPath.format(".//h1[text() = %1$s]", locator))).size() > 0;
-        } finally {
-            selenium.switchTo().window(currentHandle);
+    private IEnumerable<IWebElement> allElementsByTag(Scope scope, String tagNameToFind, Options options) throws Exception {
+        return elementFinder.FindAll(By.TagName(tagNameToFind), scope, options);
+    }
+
+    private IEnumerable<IWebElement> webElement(String locator, IEnumerable<IWebElement> webElements, Options options) throws Exception {
+        return webElements.Where(/* [UNSUPPORTED] to translate lambda expressions we need an explicit delegate type, try adding a cast "(e) => {
+            return StringSupport.equals(e.GetAttribute("id"), locator) || StringSupport.equals(e.GetAttribute("name"), locator) || (options.getTextPrecisionExact() ? StringSupport.equals(e.GetAttribute("title"), locator) : e.GetAttribute("title").Contains(locator)) || FrameContentsMatch(e, locator, options);
+        }" */);
+    }
+
+    private boolean frameContentsMatch(IWebElement e, String locator, Options options) throws Exception {
+        /* [UNSUPPORTED] 'var' as type is unsupported "var" */ currentHandle = selenium.CurrentWindowHandle;
+        try
+        {
+            /* [UNSUPPORTED] 'var' as type is unsupported "var" */ frame = selenium.SwitchTo().Frame(e);
+            return StringSupport.equals(frame.Title, locator) || frame.FindElements(By.XPath(".//h1[" + xPath.IsText(locator, options) + "]")).Any();
+        }
+        finally
+        {
+            selenium.SwitchTo().Window(currentHandle);
         }
     }
+
 }
+
+

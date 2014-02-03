@@ -1,24 +1,40 @@
+//
+// Translated by CS2J (http://www.cs2j.com): 03/02/2014 09:15:18
+//
+
 package coypu.Queries;
 
 import coypu.DriverScope;
 import coypu.MissingHtmlException;
-import coypu.Options;
+import coypu.MissingWindowException;
 
-public class ElementMissingQuery extends DriverScopeQuery<Boolean> {
-    public Boolean getExpectedResult() {
+public class ElementMissingQuery  extends DriverScopeQuery<Boolean> 
+{
+    protected public ElementMissingQuery(DriverScope driverScope) throws Exception {
+        super(driverScope, driverScope.getElementFinder().getOptions());
+    }
+
+    public Boolean getExpectedResult() throws Exception {
         return true;
     }
 
-    public ElementMissingQuery(DriverScope driverScope, Options options) {
-        super(driverScope, options);
-    }
-
-    public Boolean run() {
-        try {
-            driverScope().findElement();
+    public Boolean run() throws Exception {
+        try
+        {
+            getDriverScope().FindElement();
             return false;
-        } catch (MissingHtmlException ex) {
+        }
+        catch (MissingHtmlException __dummyCatchVar0)
+        {
             return true;
         }
+        catch (MissingWindowException __dummyCatchVar1)
+        {
+            return true;
+        }
+    
     }
+
 }
+
+

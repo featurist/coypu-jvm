@@ -1,12 +1,24 @@
+//
+// Translated by CS2J (http://www.cs2j.com): 03/02/2014 09:15:13
+//
+
 package coypu.Drivers;
 
-import java.lang.reflect.Type;
+import CS2JNet.System.StringSupport;
 
-/// <summary>
-/// Thrown when your chosen browser is not supported by your chosen driver
-///
-public class BrowserNotSupportedException extends Exception {
-    public BrowserNotSupportedException(Browser browser, Type driverType,Throwable inner) {
-        super(String.format("%1$s is not supported by %2$s", browser.toString(), driverType.toString()),inner);
+/**
+* Thrown when your chosen browser is not supported by your chosen driver
+*/
+public class BrowserNotSupportedException  extends Exception 
+{
+    public BrowserNotSupportedException(Browser browser, Class driverType) throws Exception {
+        this(browser, driverType, null);
     }
+
+    public BrowserNotSupportedException(Browser browser, Class driverType, Exception inner) throws Exception {
+        super(String.format(StringSupport.CSFmtStrToJFmtStr("{0} is not supported by {1}"),browser,driverType.getName()), inner);
+    }
+
 }
+
+

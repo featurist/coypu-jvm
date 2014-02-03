@@ -27,7 +27,7 @@ To use Coypu from Maven add the following dependencies in your [POM](http://mave
 
 Open a browser session like so:
 
-	import coypu.BrowserSession;
+	import BrowserSession;
 
 	BrowserSession browser = new BrowserSession();
 	
@@ -57,7 +57,7 @@ If you don't specify any of these, Coypu will default to http, localhost and por
 
 #### Driver
 
-Coypu drivers implement the `coypu.Driver` interface and read the `SessionConfiguration.Browser` setting to pick the correct browser.
+Coypu drivers implement the `Driver` interface and read the `SessionConfiguration.Browser` setting to pick the correct browser.
 
 Choose your driver/browser combination like so:
 
@@ -67,7 +67,7 @@ Choose your driver/browser combination like so:
 These settings are the default sessionConfiguration.
 
 ##### Selenium WebDriver
-`coypu.Drivers.Selenium.SeleniumWebDriver` tracks the latest version of WebDriver and supports Firefox, IE (slowest) and Chrome (Fastest) as the browser. Any other Selenium implementation of WebDriver can be configured by subclassing `SeleniumWebDriver` and passing an instance of WebDriver to the base constructor.
+`SeleniumWebDriver` tracks the latest version of WebDriver and supports Firefox, IE (slowest) and Chrome (Fastest) as the browser. Any other Selenium implementation of WebDriver can be configured by subclassing `SeleniumWebDriver` and passing an instance of WebDriver to the base constructor.
 
 The Selenium Driver is included in the Coypu package.
 

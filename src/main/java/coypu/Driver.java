@@ -1,75 +1,76 @@
+//
+// Translated by CS2J (http://www.cs2j.com): 03/02/2014 09:15:13
+//
+
 package coypu;
 
-import java.util.List;
+import coypu.Element;
+import coypu.ElementFound;
+import coypu.Options;
+import coypu.Scope;
+import CS2JNet.System.Collections.LCC.IEnumerable;
+import CS2JNet.System.LCC.IDisposable;
+import java.net.URI;
 import java.util.regex.Pattern;
 
-public interface Driver {
-    void dispose();
+public interface Driver   extends IDisposable
+{
+    Object getNative() throws Exception ;
 
-    ElementFound findButton(String locator, Scope scope);
+    boolean getDisposed() throws Exception ;
 
-    ElementFound findLink(String linkText, Scope scope);
+    IEnumerable<ElementFound> findAllCss(String cssSelector, Scope scope, Options options, Pattern textPattern) throws Exception ;
 
-    ElementFound findField(String locator, Scope scope);
+    IEnumerable<ElementFound> findAllXPath(String xpath, Scope scope, Options options) throws Exception ;
 
-    public void click(Element element);
+    IEnumerable<ElementFound> findWindows(String locator, Scope scope, Options options) throws Exception ;
 
-    void visit(String url);
+    IEnumerable<ElementFound> findFrames(String locator, Scope scope, Options options) throws Exception ;
 
-    void set(Element element, String value, boolean forceAllEvents);
+    ElementFound getWindow() throws Exception ;
 
-    void select(Element element, String option);
+    URI location(Scope scope) throws Exception ;
 
-    Object getNative();
+    String title(Scope scope) throws Exception ;
 
-    boolean hasContent(String text, Scope scope);
+    String executeScript(String javascript, Scope scope) throws Exception ;
 
-    boolean hasContentMatch(Pattern pattern, Scope scope);
+    IEnumerable<Cookie> getBrowserCookies() throws Exception ;
 
-    boolean hasCss(String cssSelector, Scope scope);
+    void click(Element element) throws Exception ;
 
-    boolean hasXPath(String xpath, Scope scope);
+    void acceptModalDialog(Scope scope) throws Exception ;
 
-    boolean hasDialog(String withText, Scope scope);
+    void cancelModalDialog(Scope scope) throws Exception ;
 
-    ElementFound findCss(String cssSelector, Scope scope);
+    boolean hasDialog(String withText, Scope scope) throws Exception ;
 
-    ElementFound findXPath(String xpath, Scope scope);
+    void choose(Element field) throws Exception ;
 
-    List<ElementFound> findAllCss(String cssSelector, Scope scope);
+    void check(Element field) throws Exception ;
 
-    List<ElementFound> findAllXPath(String xpath, Scope scope);
+    void uncheck(Element field) throws Exception ;
 
-    void check(Element field);
+    void set(Element element, String value) throws Exception ;
 
-    void uncheck(Element field);
+    void visit(String url, Scope scope) throws Exception ;
 
-    void choose(Element field);
+    void goBack(Scope scope) throws Exception ;
 
-    boolean disposed();
+    void goForward(Scope scope) throws Exception ;
 
-    String getLocation(Scope scope);
+    void hover(Element element) throws Exception ;
 
-    ElementFound window();
+    void maximiseWindow(Scope scope) throws Exception ;
 
-    void acceptModalDialog(Scope scope);
+    void refresh(Scope scope) throws Exception ;
 
-    void cancelModalDialog(Scope scope);
+    void resizeTo(Size size, Scope Scope) throws Exception ;
 
-    String executeScript(String javascript, Scope scope);
+    void saveScreenshot(String fileName, Scope scope) throws Exception ;
 
-    ElementFound findFieldset(String locator, Scope scope);
+    void sendKeys(Element element, String keys) throws Exception ;
 
-    ElementFound findSection(String locator, Scope scope);
-
-    ElementFound findId(String id, Scope scope);
-
-    ElementFound findFrame(String locator, Scope scope);
-
-    void hover(Element element);
-
-    //List<Cookie> getBrowserCookies();
-    ElementFound findWindow(String locator, Scope scope);
-
-    String getTitle(Scope scope);
 }
+
+

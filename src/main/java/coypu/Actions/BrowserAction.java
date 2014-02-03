@@ -1,41 +1,38 @@
+//
+// Translated by CS2J (http://www.cs2j.com): 03/02/2014 09:15:12
+//
+
 package coypu.Actions;
 
 import coypu.Options;
 import coypu.Queries.Query;
-import coypu.TimeSpan;
 
-public abstract class BrowserAction extends Query<Object> {
-    private TimeSpan timeout;
-    private TimeSpan retryInterval;
-
-    public TimeSpan getTimeout() {
-        return timeout;
+public abstract class BrowserAction   implements Query<Object>
+{
+    private Options __Options;
+    public Options getOptions() {
+        return __Options;
     }
 
-    public TimeSpan getRetryInterval() {
-        return retryInterval;
+    public void setOptions(Options value) {
+        __Options = value;
     }
 
-    protected BrowserAction() {}
-
-    protected BrowserAction(Options options) {
-        super(options);
-        timeout = options.Timeout;
-        retryInterval = options.RetryInterval;
+    protected BrowserAction(Options options) throws Exception {
+        setOptions(options);
     }
 
-    public abstract void act();
+    public abstract void act() throws Exception ;
 
-    public Object run() {
+    public Object run() throws Exception {
         act();
         return null;
     }
 
-    public Object getExpectedResult() {
+    public Object getExpectedResult() throws Exception {
         return null;
     }
 
-    public Object result() {
-        return null;
-    }
 }
+
+

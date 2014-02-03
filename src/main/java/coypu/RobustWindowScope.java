@@ -1,19 +1,28 @@
+//
+// Translated by CS2J (http://www.cs2j.com): 03/02/2014 09:15:18
+//
+
 package coypu;
 
+import coypu.BrowserSession;
+import coypu.BrowserWindow;
+import coypu.ElementFound;
 import coypu.Finders.WindowFinder;
+import coypu.Options;
 import coypu.Queries.ElementQuery;
-import coypu.Robustness.RobustWrapper;
-import coypu.Robustness.Waiter;
 
-public class RobustWindowScope extends BrowserWindow {
+public class RobustWindowScope  extends BrowserWindow 
+{
     private final Options options;
-
-    public RobustWindowScope(Driver driver, SessionConfiguration sessionConfiguration, RobustWrapper robustWrapper, Waiter waiter, UrlBuilder urlBuilder, Options options, WindowFinder windowFinder) {
-        super(sessionConfiguration, windowFinder, driver, robustWrapper, waiter, urlBuilder);
+    public RobustWindowScope(WindowFinder windowFinder, BrowserSession scope, Options options) throws Exception {
+        super(windowFinder, scope);
         this.options = options;
     }
 
-    public ElementFound now() {
-        return robustWrapper.robustly(new ElementQuery(this, options));
+    public ElementFound now() throws Exception {
+        return timingStrategy.Synchronise(new ElementQuery(this, options));
     }
+
 }
+
+

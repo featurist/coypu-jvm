@@ -1,9 +1,17 @@
+//
+// Translated by CS2J (http://www.cs2j.com): 03/02/2014 09:15:19
+//
+
 package coypu.WebRequests;
 
-import java.util.List;
+import CS2JNet.System.Collections.LCC.IEnumerable;
 
-public interface RestrictedResourceDownloader
+public interface RestrictedResourceDownloader   
 {
-    void setCookies(List<Cookie> getBrowserCookies);
-    void downloadFile(String resource, String saveAs);
+    void setCookies(IEnumerable<Cookie> getBrowserCookies) throws Exception ;
+
+    void downloadFile(String resource, String saveAs) throws Exception ;
+
 }
+
+

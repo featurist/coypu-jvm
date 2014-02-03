@@ -1,373 +1,276 @@
+//
+// Translated by CS2J (http://www.cs2j.com): 03/02/2014 09:15:14
+//
+
 package coypu.Drivers.Selenium;
 
-import com.google.common.base.Predicate;
-import com.google.gson.Gson;
-import coypu.*;
+import coypu.Driver;
 import coypu.Drivers.Browser;
-import coypu.Drivers.BrowserNotSupportedException;
+import coypu.Drivers.Selenium.WindowHandleFinder;
 import coypu.Drivers.XPath;
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
+import coypu.Element;
+import coypu.ElementFound;
+import coypu.Options;
+import coypu.Scope;
+import CS2JNet.System.Collections.LCC.IEnumerable;
+import CS2JNet.System.InvalidOperationException;
+import java.net.URI;
 import java.util.regex.Pattern;
+import org.openqa.selenium.*;
 
-public class SeleniumWebDriver implements Driver {
-    private Browser browser;
-    private boolean disposed;
-
-    public boolean disposed() {
-        return disposed;
+public class SeleniumWebDriver   implements Driver
+{
+    private boolean __Disposed;
+    public boolean getDisposed() {
+        return __Disposed;
     }
 
-    public String getLocation(Scope scope) {
-        elementFinder.seleniumScope(scope);
-        return webDriver.getCurrentUrl();
+    public void setDisposed(boolean value) {
+        __Disposed = value;
     }
 
-    public ElementFound window() {
-        return new WindowHandle(webDriver, webDriver.getWindowHandle());
-    }
-
-    private WebDriver webDriver;
+    private IWebDriver webDriver = new IWebDriver();
     private final ElementFinder elementFinder;
-    private final FieldFinder fieldFinder;
     private final FrameFinder frameFinder;
-    private final ButtonFinder buttonFinder;
-    private final SectionFinder sectionFinder;
     private final TextMatcher textMatcher;
     private final Dialogs dialogs;
     private final MouseControl mouseControl;
-    private final OptionSelector optionSelector;
     private final XPath xPath;
-
-    public SeleniumWebDriver(Browser browser) throws BrowserNotSupportedException {
-        this(new DriverFactory().newRemoteWebDriver(browser));
-        this.browser = browser;
+    private final Browser browser;
+    private final WindowHandleFinder windowHandleFinder;
+    public SeleniumWebDriver(Browser browser) throws Exception {
+        this((new DriverFactory()).NewWebDriver(browser), browser);
     }
 
-    protected SeleniumWebDriver(WebDriver webDriver) {
+    protected SeleniumWebDriver(IWebDriver webDriver, Browser browser) throws Exception {
         this.webDriver = webDriver;
-        xPath = new XPath();
-        elementFinder = new ElementFinder(xPath);
-        fieldFinder = new FieldFinder(elementFinder, xPath);
-        frameFinder = new FrameFinder(this.webDriver, elementFinder, xPath);
+        this.browser = browser;
+        xPath = new XPath(browser.getUppercaseTagNames());
+        elementFinder = new ElementFinder();
+        frameFinder = new FrameFinder(this.webDriver,elementFinder,xPath);
         textMatcher = new TextMatcher();
-        buttonFinder = new ButtonFinder(elementFinder, textMatcher, xPath);
-        sectionFinder = new SectionFinder(elementFinder, textMatcher);
+        windowHandleFinder = new WindowHandleFinder(this.webDriver);
         dialogs = new Dialogs(this.webDriver);
         mouseControl = new MouseControl(this.webDriver);
-        optionSelector = new OptionSelector();
     }
 
-    private boolean javascript() {
-        return browser.javascript();
-    }
-    private boolean noJavascript() {
-        return !javascript();
+    public URI location(Scope scope) throws Exception {
+        elementFinder.SeleniumScope(scope);
+        return new URI(webDriver.Url);
     }
 
-    private JavascriptExecutor javaScriptExecutor()
-    {
-        return (JavascriptExecutor) webDriver;
-    }
-    public Object getNative() {
-        return window().getNative();
+    public String title(Scope scope) throws Exception {
+        elementFinder.SeleniumScope(scope);
+        return webDriver.Title;
     }
 
-    public ElementFound findField(String locator, Scope scope) {
-        return buildElement(fieldFinder.findField(locator, scope), "No such field: " + locator);
+    public ElementFound getWindow() throws Exception {
+        return new SeleniumWindow(webDriver, webDriver.CurrentWindowHandle);
     }
 
-    public ElementFound findButton(String locator, Scope scope) {
-        return buildElement(buttonFinder.findButton(locator, scope), "No such button: " + locator);
+    protected boolean getNoJavascript() throws Exception {
+        return !browser.Javascript;
     }
 
-    public ElementFound findFrame(String locator, Scope scope) {
-        WebElement element = frameFinder.findFrame(locator, scope);
-
-        if (element == null)
-            throw new MissingHtmlException("Failed to find frame: " + locator);
-
-        return new SeleniumFrame(element, webDriver);
+    private IJavaScriptExecutor getJavaScriptExecutor() throws Exception {
+        return webDriver instanceof IJavaScriptExecutor ? (IJavaScriptExecutor)webDriver : (IJavaScriptExecutor)null;
     }
 
-    public ElementFound findLink(String linkText, Scope scope) {
-        return buildElement(Iterators.firstOrDefault(find(By.linkText(linkText), scope), scope), "No such link: " + linkText);
+    public Object getNative() throws Exception {
+        return webDriver;
     }
 
-    public ElementFound findId(String id, Scope scope) {
-        return buildElement(Iterators.firstOrDefault(find(By.id(id), scope), scope), "Failed to find id: " + id);
+    public IEnumerable<ElementFound> findFrames(String locator, Scope scope, Options options) throws Exception {
+        return frameFinder.FindFrame(locator, scope, options).Select(BuildElement);
     }
 
-    public ElementFound findFieldset(String locator, Scope scope) {
-
-        WebElement fieldset = Iterators.firstOrDefault(find(By.xpath(xPath.format(".//fieldset[legend[text() = %1$s]]", locator)), scope), scope);
-
-        if (fieldset == null)
-            fieldset = Iterators.firstOrDefault(find(By.id(locator), scope), tagNameMatches("fieldset"), scope);
-
-        return buildElement(fieldset, "Failed to find fieldset: " + locator);
+    public IEnumerable<ElementFound> findAllCss(String cssSelector, Scope scope, Options options, Pattern textPattern) throws Exception {
+        /* [UNSUPPORTED] 'var' as type is unsupported "var" */ textMatches = (textPattern == null) ? (Func<IWebElement, Boolean>)null : (/* [UNSUPPORTED] to translate lambda expressions we need an explicit delegate type, try adding a cast "(e) => {
+            return textMatcher.TextMatches(e, textPattern);
+        }" */);
+        if (textPattern != null && options.getConsiderInvisibleElements())
+            throw new NotSupportedException("Cannot inspect the text of invisible elements.");
+         
+        return FindAll(By.CssSelector(cssSelector), scope, options, textMatches).Select(BuildElement);
     }
 
-    public Predicate<WebElement> tagNameMatches(final String tagName) {
-        return new Predicate<WebElement>() {
-            @Override
-            public boolean apply(@Nullable WebElement e) {
-                return e.getTagName().equals(tagName);
-            }
-        };
+    public IEnumerable<ElementFound> findAllXPath(String xpath, Scope scope, Options options) throws Exception {
+        return FindAll(By.XPath(xpath), scope, options).Select(BuildElement);
     }
 
-    public ElementFound findSection(String locator, Scope scope) {
-        return buildElement(sectionFinder.findSection(locator, scope), "Failed to find section: " + locator);
+    private IEnumerable<IWebElement> findAll(By by, Scope scope, Options options, Func<IWebElement, Boolean> predicate) throws Exception {
+        return elementFinder.FindAll(by, scope, options, predicate);
     }
 
-    public ElementFound findCss(String cssSelector, Scope scope) {
-        return buildElement(Iterators.firstOrDefault(find(By.cssSelector(cssSelector), scope), scope), "No element found by css: " + cssSelector);
+    private ElementFound buildElement(IWebElement element) throws Exception {
+        return ().Contains(element.TagName.ToLower()) ? new SeleniumFrame(element,webDriver) : new SeleniumElement(element,webDriver);
     }
 
-    public ElementFound findXPath(String xpath, Scope scope) {
-        return buildElement(Iterators.firstOrDefault(find(By.xpath(xpath), scope), scope), "No element found by xpath: " + xpath);
-    }
-
-    public List<ElementFound> findAllCss(String cssSelector, Scope scope) {
-        ArrayList<WebElement> allVisible = Iterators.allVisible(find(By.cssSelector(cssSelector), scope), scope);
-
-        return asElementsFound(allVisible);
-    }
-
-    public List<ElementFound> findAllXPath(String xpath, Scope scope) {
-        ArrayList<WebElement> allVisible = Iterators.allVisible(find(By.xpath(xpath), scope), scope);
-
-        return asElementsFound(allVisible);
-    }
-
-    private List<ElementFound> asElementsFound(ArrayList<WebElement> allVisible) {
-        ArrayList<ElementFound> elements = new ArrayList<ElementFound>();
-        for (WebElement seleniumElement : allVisible) {
-            elements.add(buildElement(seleniumElement));
-        }
-        return elements;
-    }
-
-    private List<WebElement> find(By by, Scope scope) {
-        return elementFinder.find(by, scope);
-    }
-
-    private ElementFound buildElement(WebElement element, String failureMessage) {
-        if (element == null)
-            throw new MissingHtmlException(failureMessage);
-
-        return buildElement(element);
-    }
-
-    private SeleniumElement buildElement(WebElement element) {
-        return new SeleniumElement(element);
-    }
-
-    public boolean hasContent(String text, Scope scope) {
-        return getContent(scope).contains(text);
-    }
-
-    public boolean hasContentMatch(Pattern pattern, Scope scope) {
-        return pattern.matcher(getContent(scope)).find();
-    }
-
-    private String getContent(Scope scope) {
-        SearchContext seleniumScope = elementFinder.seleniumScope(scope);
-        return seleniumScope instanceof WebDriver
-                ? getText(By.cssSelector("body"), seleniumScope)
-                : getText(By.xpath("."), seleniumScope);
-    }
-
-    private String getText(By xpath, SearchContext seleniumScope) {
-        String pageText = seleniumScope.findElement(xpath).getText();
-        return normalizeCRLFBetweenBrowserImplementations(pageText);
-    }
-
-    public boolean hasCss(String cssSelector, Scope scope) {
-        return Iterators.allVisible(find(By.cssSelector(cssSelector), scope), scope).size() > 0;
-    }
-
-    public boolean hasXPath(String xpath, Scope scope) {
-        return Iterators.allVisible(find(By.xpath(xpath), scope), scope).size() > 0;
-    }
-
-    public boolean hasDialog(String withText, Scope scope) {
-        elementFinder.seleniumScope(scope);
+    public boolean hasDialog(String withText, Scope scope) throws Exception {
+        elementFinder.SeleniumScope(scope);
         return dialogs.hasDialog(withText);
     }
 
-    public void visit(String url) {
-        webDriver.navigate().to(url);
+    public void visit(String url, Scope scope) throws Exception {
+        elementFinder.SeleniumScope(scope);
+        webDriver.Navigate().GoToUrl(url);
     }
 
-    public void click(Element element) {
-        seleniumElement(element).click();
+    public void click(Element element) throws Exception {
+        SeleniumElement(element).Click();
     }
 
-    public void hover(Element element) {
-        mouseControl.hover(element);
+    public void hover(Element element) throws Exception {
+        mouseControl.Hover(element);
     }
 
-//    public List<Cookie> getBrowserCookies()
-//    {
-//        ArrayList<Cookie> elements = new ArrayList<Cookie>();
-//        for (Cookie c : webDriver.manage().getCookies()) {
-//            elements.add(new Cookie(c.Name(), c.Value(), c.getPath(), c.getDomain()));
-//        }
-//    }
-
-    public ElementFound findWindow(String titleOrName, Scope scope) {
-        return new WindowHandle(webDriver, findWindowHandle(titleOrName));
+    public void sendKeys(Element element, String keys) throws Exception {
+        SeleniumElement(element).SendKeys(keys);
     }
 
-    public String getTitle(Scope scope) {
-        return  webDriver.getTitle();
+    public void maximiseWindow(Scope scope) throws Exception {
+        elementFinder.SeleniumScope(scope);
+        webDriver.Manage().Window.Maximize();
     }
 
-    private String findWindowHandle(String titleOrName) {
-        String currentHandle = getCurrentWindowHandle();
-        String matchingWindowHandle = null;
-
-        try {
-            webDriver.switchTo().window(titleOrName);
-            matchingWindowHandle = webDriver.getWindowHandle();
-        } catch (NoSuchWindowException ex) {
-            for (String windowHandle : webDriver.getWindowHandles()) {
-                webDriver.switchTo().window(windowHandle);
-                if (windowHandle.equals(titleOrName) || webDriver.getTitle().equals(titleOrName)) {
-                    matchingWindowHandle = windowHandle;
-                    break;
-                }
-            }
-        }
-
-        if (matchingWindowHandle == null)
-            throw new MissingHtmlException("No such window found: " + titleOrName);
-
-        webDriver.switchTo().window(currentHandle);
-        return matchingWindowHandle;
+    public void refresh(Scope scope) throws Exception {
+        elementFinder.SeleniumScope(scope);
+        webDriver.Navigate().Refresh();
     }
 
-    private String getCurrentWindowHandle() {
-        try {
-            return webDriver.getWindowHandle();
-        } catch (Exception ex) // was InvalidOperationException in c#
+    public void resizeTo(Size size, Scope scope) throws Exception {
+        elementFinder.SeleniumScope(scope);
+        webDriver.Manage().Window.Size = size;
+    }
 
+    public void saveScreenshot(String fileName, Scope scope) throws Exception {
+        elementFinder.SeleniumScope(scope);
+        /* [UNSUPPORTED] 'var' as type is unsupported "var" */ format = ImageFormatParser.getImageFormat(fileName);
+        /* [UNSUPPORTED] 'var' as type is unsupported "var" */ screenshot = ((ITakesScreenshot)webDriver).GetScreenshot();
+        screenshot.SaveAsFile(fileName, format);
+    }
+
+    public void goBack(Scope scope) throws Exception {
+        elementFinder.SeleniumScope(scope);
+        webDriver.Navigate().Back();
+    }
+
+    public void goForward(Scope scope) throws Exception {
+        elementFinder.SeleniumScope(scope);
+        webDriver.Navigate().Forward();
+    }
+
+    public IEnumerable<Cookie> getBrowserCookies() throws Exception {
+        return webDriver.Manage().Cookies.AllCookies.Select(/* [UNSUPPORTED] to translate lambda expressions we need an explicit delegate type, try adding a cast "(c) => {
+            return new Cookie(c.Name, c.Value, c.Path, c.Domain);
+        }" */);
+    }
+
+    public IEnumerable<ElementFound> findWindows(String titleOrName, Scope scope, Options options) throws Exception {
+        elementFinder.SeleniumScope(scope);
+        return windowHandleFinder.FindWindowHandles(titleOrName, options).Select(/* [UNSUPPORTED] to translate lambda expressions we need an explicit delegate type, try adding a cast "(h) => {
+            return new SeleniumWindow(webDriver, h);
+        }" */).<ElementFound>Cast();
+    }
+
+    public void set(Element element, String value) throws Exception {
+        try
         {
-            return null;
+            SeleniumElement(element).Clear();
         }
-    }
-
-    public void set(Element element, String value, boolean forceAllEvents) {
-        WebElement seleniumElement = seleniumElement(element);
-
-        try {
-            seleniumElement.clear();
-        }
-        catch (InvalidElementStateException ex) // Non user-editable elements (file inputs) - chrome/IE
+        catch (InvalidElementStateException __dummyCatchVar0)
         {
-            seleniumElement.sendKeys(value);
-            return;
         }
-        catch (WebDriverException ex)  // Non user-editable elements (file inputs) - firefox
+        catch (InvalidOperationException __dummyCatchVar1)
         {
-            seleniumElement.sendKeys(value);
-            return;
         }
-        SetByIdOrSendKeys(value, seleniumElement, forceAllEvents);
+
+        // Non user-editable elements (file inputs) - chrome/IE
+        // Non user-editable elements (file inputs) - firefox
+        SendKeys(element, value);
     }
 
-    private void SetByIdOrSendKeys(String value, WebElement seleniumElement, boolean forceAllEvents)
-    {
-        String id = seleniumElement.getAttribute("id");
-        if (id.isEmpty() || forceAllEvents || !noJavascript())
-            seleniumElement.sendKeys(value);
-        else
-            javaScriptExecutor().executeScript(String.format("document.getElementById('%1$s').value = {%2$s}", id, toJson(value)));
-    }
-
-    private String toJson(Object value) {
-        return new Gson().toJson(value);
-    }
-
-    public void select(Element element, String option) {
-        optionSelector.select(element, option);
-    }
-
-    public void acceptModalDialog(Scope scope) {
-        elementFinder.seleniumScope(scope);
+    public void acceptModalDialog(Scope scope) throws Exception {
+        elementFinder.SeleniumScope(scope);
         dialogs.acceptModalDialog();
     }
 
-    public void cancelModalDialog(Scope scope) {
-        elementFinder.seleniumScope(scope);
+    public void cancelModalDialog(Scope scope) throws Exception {
+        elementFinder.SeleniumScope(scope);
         dialogs.cancelModalDialog();
     }
 
-    public void check(Element field) {
-        WebElement seleniumElement = seleniumElement(field);
-
-        if (!seleniumElement.isSelected())
-            seleniumElement.click();
+    public void check(Element field) throws Exception {
+        /* [UNSUPPORTED] 'var' as type is unsupported "var" */ seleniumElement = SeleniumElement(field);
+        if (!seleniumElement.Selected)
+            seleniumElement.Click();
+         
     }
 
-    public void uncheck(Element field) {
-        WebElement seleniumElement = seleniumElement(field);
-
-        if (seleniumElement.isSelected())
-            seleniumElement.click();
+    public void uncheck(Element field) throws Exception {
+        /* [UNSUPPORTED] 'var' as type is unsupported "var" */ seleniumElement = SeleniumElement(field);
+        if (seleniumElement.Selected)
+            seleniumElement.Click();
+         
     }
 
-    public void choose(Element field) {
-        seleniumElement(field).click();
+    public void choose(Element field) throws Exception {
+        SeleniumElement(field).Click();
     }
 
-    public String executeScript(String javascript, Scope scope) {
-        if (noJavascript())
-            throw new UnsupportedOperationException("Javascript is not supported by " + browser);
-
-        elementFinder.seleniumScope(scope);
-        Object result = javaScriptExecutor().executeScript(javascript);
-        return result == null ? null : result.toString();
+    public String executeScript(String javascript, Scope scope) throws Exception {
+        if (getNoJavascript())
+            throw new NotSupportedException("Javascript is not supported by " + browser);
+         
+        elementFinder.SeleniumScope(scope);
+        /* [UNSUPPORTED] 'var' as type is unsupported "var" */ result = getJavaScriptExecutor().ExecuteScript(javascript);
+        return result == null ? null : result.ToString();
     }
 
-    private String normalizeCRLFBetweenBrowserImplementations(String text) {
-        if (webDriver instanceof ChromeDriver) // Which adds extra whitespace around CRLF
+    private String normalizeCRLFBetweenBrowserImplementations(String text) throws Exception {
+        if (webDriver instanceof ChromeDriver)
+            // Which adds extra whitespace around CRLF
             text = stripWhitespaceAroundCRLFs(text);
-
+         
         return Pattern.compile("(\r\n)+").matcher(text).replaceAll("\r\n");
     }
 
-    private String stripWhitespaceAroundCRLFs(String pageText) {
-        return Pattern.compile("\\s*\r\n\\s*").matcher(pageText).replaceAll("\r\n");
+    private String stripWhitespaceAroundCRLFs(String pageText) throws Exception {
+        return Pattern.compile("\\s*\\r\\n\\s*").matcher(pageText).replaceAll("\r\n");
     }
 
-    private WebElement seleniumElement(Element element) {
-        return ((WebElement) element.getNative());
+    private IWebElement seleniumElement(Element element) throws Exception {
+        return ((IWebElement)element.getNative());
     }
 
-    public void dispose() {
+    public void dispose() throws Exception {
         if (webDriver == null)
-            return;
-
+            return ;
+         
         acceptAnyAlert();
-
-        webDriver.quit();
+        webDriver.Quit();
         webDriver = null;
-        disposed = true;
+        setDisposed(true);
     }
 
-    private void acceptAnyAlert() {
-        try {
-            webDriver.switchTo().alert().accept();
-        } catch (WebDriverException ex) {
+    private void acceptAnyAlert() throws Exception {
+        try
+        {
+            webDriver.SwitchTo().Alert().Accept();
         }
-//        catch (KeyNotFoundException){} // Chrome
-//        catch (InvalidOperationException){}
+        catch (WebDriverException __dummyCatchVar2)
+        {
+        }
+        catch (KeyNotFoundException __dummyCatchVar3)
+        {
+        }
+        catch (InvalidOperationException __dummyCatchVar4)
+        {
+        }
+    
     }
+
 }
+
+
+// Chrome

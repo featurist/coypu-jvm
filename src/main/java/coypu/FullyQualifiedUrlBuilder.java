@@ -1,28 +1,25 @@
+//
+// Translated by CS2J (http://www.cs2j.com): 03/02/2014 09:15:17
+//
+
 package coypu;
 
+import coypu.SessionConfiguration;
+import coypu.UrlBuilder;
+import CS2JNet.System.StringSupport;
 import java.net.URI;
-import java.net.URISyntaxException;
 
-public class FullyQualifiedUrlBuilder implements UrlBuilder {
-    public String getFullyQualifiedUrl(String virtualPath, SessionConfiguration sessionConfiguration) {
-        try {
-            if (new URI(virtualPath).getScheme() == null)
-                return configured(virtualPath, sessionConfiguration);
-
+public class FullyQualifiedUrlBuilder   implements UrlBuilder
+{
+    public String getFullyQualifiedUrl(String virtualPath, SessionConfiguration SessionConfiguration) throws Exception {
+        if (URI.IsWellFormedUriString(virtualPath, UriKind.Absolute))
             return virtualPath;
-        } catch (URISyntaxException ex) {
-            return configured(virtualPath, sessionConfiguration);
-        }
+         
+        virtualPath = StringSupport.TrimStart(virtualPath, new char[] {'/'});
+        String scheme = SessionConfiguration.getSSL() ? "https" : "http";
+        return SessionConfiguration.getPort() == 80 ? String.format(StringSupport.CSFmtStrToJFmtStr("{0}://{1}/{2}"),scheme,SessionConfiguration.getAppHost(),virtualPath) : String.Format("{0}://{1}:{2}/{3}", scheme, SessionConfiguration.getAppHost(), SessionConfiguration.getPort(), virtualPath);
     }
 
-    private String configured(String virtualPath, SessionConfiguration sessionConfiguration) {
-        if (virtualPath.startsWith("/"))
-            virtualPath = virtualPath.substring(1);
-
-        String scheme = sessionConfiguration.SSL ? "https" : "http";
-
-        return sessionConfiguration.Port == 80
-                ? String.format("%1$s://%2$s/%3$s", scheme, sessionConfiguration.getAppHost(), virtualPath)
-                : String.format("%1$s://%2$s:%3$s/%4$s", scheme, sessionConfiguration.getAppHost(), sessionConfiguration.Port, virtualPath);
-    }
 }
+
+

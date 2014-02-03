@@ -1,44 +1,48 @@
+//
+// Translated by CS2J (http://www.cs2j.com): 03/02/2014 09:15:17
+//
+
 package coypu.Finders;
 
-import coypu.MissingHtmlException;
 import coypu.Options;
-import coypu.Queries.PredicateQuery;
-import coypu.Robustness.RobustWrapper;
+import coypu.Queries.LambdaPredicateQuery;
+import coypu.Scope;
 import coypu.State;
+import coypu.Timing.TimingStrategy;
 
-public class StateFinder {
-    private RobustWrapper robustWrapper;
-
-    public StateFinder(RobustWrapper robustWrapper) {
-        this.robustWrapper = robustWrapper;
+public class StateFinder   
+{
+    private final TimingStrategy timingStrategy;
+    public StateFinder(TimingStrategy timingStrategy) throws Exception {
+        this.timingStrategy = timingStrategy;
     }
 
-    public State findState(Options options, final State[] states) {
-        PredicateQuery query = new PredicateQuery(options) {
-            @Override
-            public Boolean predicate() {
-                boolean was = robustWrapper.getZeroTimeout();
-                robustWrapper.setZeroTimeout(true);
-                try {
-                    for (State state : states) {
-                        if (state.checkCondition())
-                            return true;
-                    }
-                    return false;
-                } finally {
-                    robustWrapper.setZeroTimeout(was);
-                }
+    public State findState(State[] states, Scope scope, Options options) throws Exception {
+        LambdaPredicateQuery query = new LambdaPredicateQuery(/* [UNSUPPORTED] to translate lambda expressions we need an explicit delegate type, try adding a cast "() => {
+            Boolean was = timingStrategy.getZeroTimeout();
+            timingStrategy.setZeroTimeout(true);
+            try
+            {
+                return ((Func<Boolean>)(/* [UNSUPPORTED] to translate lambda expressions we need an explicit delegate type, try adding a cast "() => {
+                    return states.Any(/* [UNSUPPORTED] to translate lambda expressions we need an explicit delegate type, try adding a cast "(s) => {
+                        return s.CheckCondition();
+                    }" */);
+                }" */))();
             }
-        };
-
-        robustWrapper.robustly(query);
-
-        for (State state : states) {
-            if (state.conditionWasMet())
-                return state;
-        }
-
-        throw new MissingHtmlException("None of the given states was reached within the configured getTimeout.");
-
+            finally
+            {
+                timingStrategy.setZeroTimeout(was);
+            }
+        }" */, options);
+        /* [UNSUPPORTED] 'var' as type is unsupported "var" */ foundState = timingStrategy.Synchronise(query);
+        if (!foundState)
+            throw new MissingHtmlException("None of the given states was reached within the configured timeout.");
+         
+        return states.First(/* [UNSUPPORTED] to translate lambda expressions we need an explicit delegate type, try adding a cast "(e) => {
+            return e.ConditionWasMet;
+        }" */);
     }
+
 }
+
+

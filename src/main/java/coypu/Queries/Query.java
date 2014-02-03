@@ -1,29 +1,19 @@
+//
+// Translated by CS2J (http://www.cs2j.com): 03/02/2014 09:15:18
+//
+
 package coypu.Queries;
 
 import coypu.Options;
-import coypu.TimeSpan;
 
-public abstract class Query<TReturn> {
-    protected TimeSpan timeout;
-    protected TimeSpan retryInterval;
+public interface Query <TReturn>  
+{
+    TReturn run() throws Exception ;
 
-    public Query() {
-    }
+    TReturn getExpectedResult() throws Exception ;
 
-    public Query(Options options) {
-        this.timeout = options.Timeout;
-        this.retryInterval = options.RetryInterval;
-    }
+    Options getOptions() throws Exception ;
 
-    public abstract TReturn run();
-
-    public abstract TReturn getExpectedResult();
-
-    public TimeSpan getTimeout() {
-        return timeout;
-    }
-
-    public TimeSpan getRetryInterval() {
-        return retryInterval;
-    }
 }
+
+

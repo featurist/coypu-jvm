@@ -1,35 +1,36 @@
+//
+// Translated by CS2J (http://www.cs2j.com): 03/02/2014 09:15:18
+//
+
 package coypu.Queries;
 
 import coypu.Options;
-import coypu.TimeSpan;
 
-public abstract class PredicateQuery extends Query<Boolean> {
-
-    private TimeSpan timeout;
-    private TimeSpan retryInterval;
-
-    protected PredicateQuery() {}
-
-    protected PredicateQuery(Options options) {
-        this.timeout = options.Timeout;
-        this.retryInterval = options.RetryInterval;
+public abstract class PredicateQuery   implements Query<Boolean>
+{
+    private Options __Options;
+    public Options getOptions() {
+        return __Options;
     }
 
-    public Boolean getExpectedResult() {
+    public void setOptions(Options value) {
+        __Options = value;
+    }
+
+    protected PredicateQuery(Options options) throws Exception {
+        setOptions(options);
+    }
+
+    public abstract boolean predicate() throws Exception ;
+
+    public boolean run() throws Exception {
+        return predicate();
+    }
+
+    public boolean getExpectedResult() throws Exception {
         return true;
     }
 
-    public TimeSpan getTimeout() {
-        return timeout;
-    }
-
-    public TimeSpan getRetryInterval() {
-        return retryInterval;
-    }
-
-    public Boolean run() {
-       return this.predicate();
-    }
-
-    protected abstract Boolean predicate();
 }
+
+

@@ -1,44 +1,129 @@
+//
+// Translated by CS2J (http://www.cs2j.com): 03/02/2014 09:15:13
+//
+
 package coypu;
 
-/**
- * Created with IntelliJ IDEA.
- * User: adrian
- * Date: 04/04/2012
- * Time: 08:36
- * To change this template use File | Settings | File Templates.
- */
-public interface ElementScope extends Scope, Element {
-    String getId();
+import coypu.Actions.CheckAction;
+import coypu.Actions.ClickAction;
+import coypu.Actions.DriverAction;
+import coypu.Actions.FillIn;
+import coypu.Actions.Hover;
+import coypu.Actions.SendKeys;
+import coypu.Actions.Uncheck;
+import coypu.DriverScope;
+import coypu.Element;
+import coypu.ElementFound;
+import coypu.ElementScope;
+import coypu.Finders.ElementFinder;
+import coypu.Options;
+import coypu.Queries.ElementExistsQuery;
+import coypu.Queries.ElementMissingQuery;
+import coypu.Queries.HasNoValueQuery;
+import coypu.Queries.HasValueQuery;
+import coypu.Queries.Query;
 
-    String getText();
+public abstract class ElementScope  extends DriverScope implements Element
+{
+    public ElementScope(ElementFinder elementFinder, DriverScope outerScope) throws Exception {
+        super(elementFinder, outerScope);
+    }
 
-    String getValue();
+    public abstract void try(DriverAction action) throws Exception ;
 
-    String getName();
+    public abstract boolean try(Query<Boolean> query) throws Exception ;
 
-    String getSelectedOption();
+    public String getId() throws Exception {
+        return now().getId();
+    }
 
-    boolean getSelected();
+    public String getText() throws Exception {
+        return now().getText();
+    }
 
-    Object getNative();
+    public String getValue() throws Exception {
+        return now().getValue();
+    }
 
-    String getAttribute(String attributeName);
+    public String getName() throws Exception {
+        return now().getName();
+    }
 
-    DeferredElementScope click();
+    public String getOuterHTML() throws Exception {
+        return now().getOuterHTML();
+    }
 
-    DeferredElementScope click(Options options);
+    public String getInnerHTML() throws Exception {
+        return now().getInnerHTML();
+    }
 
-    DeferredElementScope hover();
+    public String getTitle() throws Exception {
+        return now().getTitle();
+    }
 
-    DeferredElementScope hover(Options options);
+    public String getSelectedOption() throws Exception {
+        return now().getSelectedOption();
+    }
 
-    boolean exists();
+    public boolean getSelected() throws Exception {
+        return now().getSelected();
+    }
 
-    boolean exists(Options options);
+    public Object getNative() throws Exception {
+        return now().getNative();
+    }
 
-    boolean missing();
+    public String get___idx(String attributeName) throws Exception {
+        ElementFound elementFound = now();
+        return elementFound.get___idx(attributeName);
+    }
 
-    boolean missing(Options options);
+    public ElementScope click(Options options) throws Exception {
+        try(new ClickAction(this, driver, merge(options)));
+        return this;
+    }
+
+    public ElementScope fillInWith(String value, Options options) throws Exception {
+        try(new FillIn(driver, this, value, merge(options)));
+        return this;
+    }
+
+    public ElementScope hover(Options options) throws Exception {
+        try(new Hover(this, driver, merge(options)));
+        return this;
+    }
+
+    public ElementScope sendKeys(String keys, Options options) throws Exception {
+        try(new SendKeys(keys, this, driver, merge(options)));
+        return this;
+    }
+
+    public ElementScope check(Options options) throws Exception {
+        try(new CheckAction(driver, this, merge(options)));
+        return this;
+    }
+
+    public ElementScope uncheck(Options options) throws Exception {
+        try(new Uncheck(driver, this, merge(options)));
+        return this;
+    }
+
+    public boolean exists() throws Exception {
+        return try(new ElementExistsQuery(this));
+    }
+
+    public boolean missing() throws Exception {
+        return try(new ElementMissingQuery(this));
+    }
+
+    public boolean hasValue(String text, Options options) throws Exception {
+        return try(new HasValueQuery(this, text, merge(options)));
+    }
+
+    public boolean hasNoValue(String text, Options options) throws Exception {
+        return try(new HasNoValueQuery(this, text, merge(options)));
+    }
 
 }
+
 

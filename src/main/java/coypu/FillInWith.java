@@ -1,50 +1,38 @@
+//
+// Translated by CS2J (http://www.cs2j.com): 03/02/2014 09:15:16
+//
+
 package coypu;
 
 import coypu.Actions.FillIn;
-import coypu.Robustness.RobustWrapper;
+import coypu.Driver;
+import coypu.ElementScope;
+import coypu.Options;
+import coypu.Timing.TimingStrategy;
 
-public class FillInWith {
-    private final String locator;
+public class FillInWith   
+{
     private final Driver driver;
-    private final RobustWrapper robustWrapper;
-    private final DriverScope scope;
+    private final TimingStrategy timingStrategy;
     private final Options options;
-    private final Element element;
-
-    public FillInWith(String locator, Driver driver, RobustWrapper robustWrapper, DriverScope scope, Options options) {
-        this.locator = locator;
-        this.driver = driver;
-        this.robustWrapper = robustWrapper;
-        this.scope = scope;
-        this.options = options;
-        this.element = null;
-    }
-
-    public FillInWith(Element element, Driver driver, RobustWrapper robustWrapper, DriverScope scope, Options options) {
+    private final ElementScope element;
+    public FillInWith(ElementScope element, Driver driver, TimingStrategy timingStrategy, Options options) throws Exception {
         this.element = element;
         this.driver = driver;
-        this.robustWrapper = robustWrapper;
-        this.scope = scope;
+        this.timingStrategy = timingStrategy;
         this.options = options;
-        this.locator = null;
     }
 
     /**
-     *  Supply a value for the text field
-     *
-     *  @param   value    The value to fill in
-     */
-    public void with(String value) {
-        with(value,false);
+    * Supply a value for the text field
+    * 
+    *  @param value The value to fill in
+    *  @throws T:Coypu.MissingHtmlException Thrown if the element cannot be found
+    */
+    public void with(String value) throws Exception {
+        timingStrategy.Synchronise(new FillIn(driver, element, value, options));
     }
 
-    /**
-     *  Supply a value for the text field
-     *
-     *  @param   value          The value to fill in
-     *  @param   forceAllEvents Use native driver implementation to ensure all keyboard events are fired, rather than the default of setting with JavaScript
-     */
-    public void with(String value, boolean forceAllEvents) {
-        robustWrapper.robustly(new FillIn(driver, scope, locator, element, value, forceAllEvents, options));
-    }
 }
+
+

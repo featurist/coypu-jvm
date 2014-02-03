@@ -1,22 +1,27 @@
-//package coypu.WebRequests;
-//public class WebRequestCookieInjector
-//{
-//    public WebRequest injectCookies(WebRequest webRequest, List<Cookie> cookies)
-//    {
-//        WebRequest request = webRequest;
 //
-//        return request is HttpWebRequest
-//                   ? addCookiesToCookieContainer((HttpWebRequest) request, cookies)
-//                   : request;
-//    }
+// Translated by CS2J (http://www.cs2j.com): 03/02/2014 09:15:19
 //
-//    public static HttpWebRequest addCookiesToCookieContainer(HttpWebRequest httpRequest, List<Cookie> cookies)
-//    {
-//        httpRequest.CookieContainer = new CookieContainer();
-//
-//        foreach (Cookie cookie in cookies)
-//            httpRequest.CookieContainer.add(cookie);
-//
-//        return httpRequest;
-//    }
-//}
+
+package coypu.WebRequests;
+
+import CS2JNet.System.Collections.LCC.IEnumerable;
+import CS2JNet.System.Net.CookieContainer;
+import java.net.HttpURLConnection;
+
+public class WebRequestCookieInjector   
+{
+    public ** NONE System.Net.WebRequest ** injectCookies(** NONE System.Net.WebRequest ** webRequest, IEnumerable<Cookie> cookies) throws Exception {
+        ** NONE System.Net.WebRequest ** request = webRequest;
+        return request instanceof HttpURLConnection ? addCookiesToCookieContainer((HttpURLConnection)request,cookies) : request;
+    }
+
+    public static HttpURLConnection addCookiesToCookieContainer(HttpURLConnection httpRequest, IEnumerable<Cookie> cookies) throws Exception {
+        httpRequest.CookieContainer = new CookieContainer();
+        for (Cookie cookie : cookies)
+            httpRequest.CookieContainer.Add(cookie);
+        return httpRequest;
+    }
+
+}
+
+
